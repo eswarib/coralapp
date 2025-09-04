@@ -1,0 +1,26 @@
+{
+	"folders": [
+		{
+			"path": "coral"
+		},
+		{
+			"path": "coral-electron"
+		},
+		{
+			"path": "../cluely/free-cluely"
+		},
+		{
+			"path": "../coral.AppDirWithUI"
+		},
+		{
+			"path": "build"
+		},
+		{
+			"path": "coral.appdir"
+		},
+		{
+			"path": "logo"
+		}
+	],
+	"settings": {}
+}

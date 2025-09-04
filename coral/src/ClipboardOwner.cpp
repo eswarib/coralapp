@@ -1,0 +1,108 @@
+#include "ClipboardOwner.h"
+#include "Logger.h"
+#include <X11/Xatom.h>
+#include <cstring>
+#include <thread>
+#include <chrono>
+
+ClipboardOwner::ClipboardOwner(Display* display, Window ownerWindow)
+    : _display(display), _window(ownerWindow)
+{
+    _clipboardAtom = XInternAtom(_display, "CLIPBOARD", False);
+    _primaryAtom = XInternAtom(_display, "PRIMARY", False);
+    _utf8Atom = XInternAtom(_display, "UTF8_STRING", False);
+    _targetsAtom = XInternAtom(_display, "TARGETS", False);
+
+    XSetSelectionOwner(_display, _clipboardAtom, _window, CurrentTime);
+    XSetSelectionOwner(_display, _primaryAtom, _window, CurrentTime);
+    XFlush(_display);
+    XSync(_display, False);
+}
+
+void ClipboardOwner::serveRequests(const std::string& text,
+                                   int timeoutMs,
+                                   int pollIntervalMs,
+                                   int idleExitMs)
+{
+    XEvent event;
+    auto start = std::chrono::steady_clock::now();
+    auto lastActivity = start;
+    int servedRequests = 0;
+    bool hasServedUTF8 = false;  // Track if we've already served UTF8 to prevent duplicates
+
+    while (std::chrono::steady_clock::now() - start < std::chrono::milliseconds(timeoutMs))
+    {
+        while (XCheckTypedWindowEvent(_display, _window, SelectionRequest, &event))
+        {
+            XSelectionRequestEvent* req = &event.xselectionrequest;
+
+            XEvent respond;
+            memset(&respond, 0, sizeof(respond));
+            respond.xselection.type = SelectionNotify;
+            respond.xselection.display = req->display;
+            respond.xselection.requestor = req->requestor;
+            respond.xselection.selection = req->selection;
+            respond.xselection.target = req->target;
+            respond.xselection.time = req->time;
+            respond.xselection.property = req->property;
+
+            if (req->selection != _clipboardAtom && req->selection != _primaryAtom)
+            {
+                respond.xselection.property = None;
+                XSendEvent(_display, req->requestor, 0, 0, &respond);
+                XFlush(_display);
+                continue;
+            }
+
+            if (req->target == _utf8Atom && !hasServedUTF8)
+            {
+                DEBUG(3, "Setting clipboard with UTF8_STRING target and text is " + text);
+                XChangeProperty(_display, req->requestor, req->property, _utf8Atom, 8,
+                                PropModeReplace, (const unsigned char*)text.c_str(), text.size());
+                servedRequests++;
+                lastActivity = std::chrono::steady_clock::now();
+                hasServedUTF8 = true;  // Mark that we've served UTF8 to prevent duplicates
+            }
+            else if (req->target == XA_STRING)
+            {
+                XChangeProperty(_display, req->requestor, req->property, XA_STRING, 8,
+                                PropModeReplace, (const unsigned char*)text.c_str(), text.size());
+                servedRequests++;
+                lastActivity = std::chrono::steady_clock::now();
+            }
+            else if (req->target == _targetsAtom)
+            {
+                Atom targets[2] = { _utf8Atom, XA_STRING };
+                XChangeProperty(_display, req->requestor, req->property, XA_ATOM, 32,
+                                PropModeReplace, (unsigned char*)targets, 2);
+                lastActivity = std::chrono::steady_clock::now();
+            }
+            else
+            {
+                DEBUG(3, "Unsupported target type");
+                respond.xselection.property = None;
+            }
+
+            XSendEvent(_display, req->requestor, 0, 0, &respond);
+            XFlush(_display);
+            lastActivity = std::chrono::steady_clock::now();
+        }
+
+        // Exit early if we've served requests and been idle
+        if (servedRequests > 0 && std::chrono::steady_clock::now() - lastActivity > std::chrono::milliseconds(idleExitMs))
+        {
+            DEBUG(3, "Exiting clipboard serving after " + std::to_string(servedRequests) + " requests served");
+            break;
+        }
+
+        std::this_thread::sleep_for(std::chrono::milliseconds(pollIntervalMs));
+    }
+    
+    if (servedRequests == 0) {
+        DEBUG(3, "No clipboard requests were served during timeout period");
+    } else {
+        DEBUG(3, "Served " + std::to_string(servedRequests) + " clipboard requests");
+    }
+}
+
+

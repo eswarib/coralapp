@@ -1,0 +1,12 @@
+{
+  "silenceTimeoutSeconds": 300,
+  "audioSampleRate": 16000,
+  "audioChannels": 1,
+  "triggerKey": "Alt+z",
+  "cmdTriggerKey": "Alt+x",
+  "whisperModelPath": "/home/eswari/gitcode/coral.AppDir/usr/share/coral/models/ggml-base.en.bin",
+  "whisperLanguage": "en",
+  "debugLevel": 5,
+  "logFilePath": "/home/eswari/coral.log",
+  "logToConsole": true
+}

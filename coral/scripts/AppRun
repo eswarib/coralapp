@@ -1,0 +1,13 @@
+#!/bin/bash
+HERE="$(dirname "$(readlink -f "$0")")"
+cd "$HERE"
+if [ -x "./node_modules/.bin/electron" ]; then
+    ./node_modules/.bin/electron . "$@"
+elif command -v electron > /dev/null; then
+    electron . "$@"
+elif command -v npm > /dev/null; then
+    npm start
+else
+    echo "No Electron runtime found!"
+    exit 1
+fi

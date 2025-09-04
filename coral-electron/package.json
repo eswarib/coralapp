@@ -1,0 +1,21 @@
+{
+  "name": "coral-electron",
+  "version": "1.0.0",
+  "description": "Electron UI and tray for Coral app",
+  "main": "main.js",
+  "scripts": {
+    "build:prod": "electron-builder build --dir --linux AppImage"
+  },
+  "author": "Eswari M",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^38.0.0"
+  },
+  "devDependencies": {
+    "electron-builder": "^24.13.3",
+    "electron-chromedriver": "^35.7.5",
+    "jest": "^30.0.4",
+    "mocha": "^11.7.1",
+    "spectron": "^10.0.1"
+  }
+}

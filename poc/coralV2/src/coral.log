@@ -1,0 +1,1737 @@
+[2025-06-24 13:54:33] [INFO] Vocal is up and running
+[2025-06-24 13:58:24] [INFO] Vocal is up and running
+[2025-06-24 13:58:49] [DEBUG3] Recording audio to: input_20250624_135849_232.wav
+[2025-06-24 13:58:54] [DEBUG3] Finished recording: input_20250624_135849_232.wav
+[2025-06-24 13:58:54] [DEBUG3] Starting transcription for: input_20250624_135849_232.wav
+[2025-06-24 13:58:55] [DEBUG3] Finished transcription for: input_20250624_135849_232.wav
+[2025-06-24 13:58:55] [DEBUG3] Typing text: ' [clears throat] '
+[2025-06-24 13:58:55] [DEBUG3] Deleted audio file: input_20250624_135849_232.wav
+[2025-06-24 13:58:55] [DEBUG3] Finished typing text.
+[2025-06-24 13:59:06] [DEBUG3] Recording audio to: input_20250624_135906_854.wav
+[2025-06-24 13:59:11] [DEBUG3] Finished recording: input_20250624_135906_854.wav
+[2025-06-24 13:59:11] [DEBUG3] Starting transcription for: input_20250624_135906_854.wav
+[2025-06-24 13:59:13] [DEBUG3] Finished transcription for: input_20250624_135906_854.wav
+[2025-06-24 13:59:13] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 13:59:13] [DEBUG3] Deleted audio file: input_20250624_135906_854.wav
+[2025-06-24 13:59:13] [DEBUG3] Finished typing text.
+[2025-06-24 13:59:19] [DEBUG3] Recording audio to: input_20250624_135919_805.wav
+[2025-06-24 13:59:24] [DEBUG3] Finished recording: input_20250624_135919_805.wav
+[2025-06-24 14:04:20] [INFO] Vocal is up and running
+[2025-06-24 14:04:39] [DEBUG3] Recording audio to: input_20250624_140439_912.wav
+[2025-06-24 14:04:45] [DEBUG3] Finished recording: input_20250624_140439_912.wav
+[2025-06-24 14:04:45] [DEBUG3] Inserting audio file into queue: input_20250624_140439_912.wav
+[2025-06-24 14:04:45] [DEBUG3] Starting transcription for: input_20250624_140439_912.wav
+[2025-06-24 14:04:46] [DEBUG3] Finished transcription for: input_20250624_140439_912.wav
+[2025-06-24 14:04:46] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:04:46] [DEBUG3] Deleted audio file: input_20250624_140439_912.wav
+[2025-06-24 14:04:46] [DEBUG3] Finished typing text.
+[2025-06-24 14:05:04] [DEBUG3] Recording audio to: input_20250624_140504_649.wav
+[2025-06-24 14:05:09] [DEBUG3] Finished recording: input_20250624_140504_649.wav
+[2025-06-24 14:05:09] [DEBUG3] Inserting audio file into queue: input_20250624_140504_649.wav
+[2025-06-24 14:05:09] [DEBUG3] Starting transcription for: input_20250624_140504_649.wav
+[2025-06-24 14:05:11] [DEBUG3] Finished transcription for: input_20250624_140504_649.wav
+[2025-06-24 14:05:11] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:05:11] [DEBUG3] Deleted audio file: input_20250624_140504_649.wav
+[2025-06-24 14:05:11] [DEBUG3] Finished typing text.
+[2025-06-24 14:05:15] [DEBUG3] Recording audio to: input_20250624_140515_978.wav
+[2025-06-24 14:05:21] [DEBUG3] Finished recording: input_20250624_140515_978.wav
+[2025-06-24 14:05:21] [DEBUG3] Inserting audio file into queue: input_20250624_140515_978.wav
+[2025-06-24 14:10:30] [INFO] Vocal is up and running
+[2025-06-24 14:10:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:31] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:32] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:33] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:34] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:34] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:35] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:35] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:36] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:36] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:37] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:37] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:38] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:38] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:38] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:38] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:38] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:38] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:38] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:38] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:38] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:38] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:38] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:38] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:38] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:38] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:38] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:38] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:38] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:38] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:39] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:39] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:40] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:40] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Recording audio to: input_20250624_141041_800.wav
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:41] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:41] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:42] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:42] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:43] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:43] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:44] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:44] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:45] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:45] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:46] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:46] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:46] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:46] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:46] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:46] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:46] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:46] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:46] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:46] [DEBUG3] Finished recording: input_20250624_141041_800.wav
+[2025-06-24 14:10:46] [DEBUG3] Inserting audio file into queue: input_20250624_141041_800.wav
+[2025-06-24 14:10:46] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:10:46] [DEBUG3] Transcriber thread running, queue size: 1
+[2025-06-24 14:10:46] [DEBUG3] Transcriber picked up audio event: input_20250624_141041_800.wav
+[2025-06-24 14:10:46] [DEBUG3] Starting transcription for: input_20250624_141041_800.wav
+[2025-06-24 14:10:48] [DEBUG3] Finished transcription for: input_20250624_141041_800.wav
+[2025-06-24 14:10:48] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:10:48] [DEBUG3] Deleted audio file: input_20250624_141041_800.wav
+[2025-06-24 14:10:48] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:48] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:48] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:48] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:48] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:48] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:48] [DEBUG3] Finished typing text.
+[2025-06-24 14:10:48] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:48] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:48] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:48] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:48] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:48] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:48] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:48] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:48] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:48] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:48] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:48] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:49] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:49] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Recording audio to: input_20250624_141050_472.wav
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:50] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:50] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:51] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:51] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:52] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:52] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:53] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:53] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:54] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:54] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:55] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:55] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:55] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:55] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:55] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:55] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:55] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:55] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:55] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:55] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:55] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:55] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:55] [DEBUG3] Finished recording: input_20250624_141050_472.wav
+[2025-06-24 14:10:55] [DEBUG3] Inserting audio file into queue: input_20250624_141050_472.wav
+[2025-06-24 14:10:55] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:10:55] [DEBUG3] Transcriber thread running, queue size: 1
+[2025-06-24 14:10:55] [DEBUG3] Transcriber picked up audio event: input_20250624_141050_472.wav
+[2025-06-24 14:10:55] [DEBUG3] Starting transcription for: input_20250624_141050_472.wav
+[2025-06-24 14:10:56] [DEBUG3] Recording audio to: input_20250624_141056_897.wav
+[2025-06-24 14:10:56] [DEBUG3] Finished transcription for: input_20250624_141050_472.wav
+[2025-06-24 14:10:56] [DEBUG3] Typing text: ' [ Silence ] '
+[2025-06-24 14:10:56] [DEBUG3] Deleted audio file: input_20250624_141050_472.wav
+[2025-06-24 14:10:56] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:56] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Finished typing text.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:57] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:57] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:58] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:10:59] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:10:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:00] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:01] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:02] [DEBUG3] Finished recording: input_20250624_141056_897.wav
+[2025-06-24 14:11:02] [DEBUG3] Inserting audio file into queue: input_20250624_141056_897.wav
+[2025-06-24 14:11:02] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:11:02] [DEBUG3] Transcriber thread running, queue size: 1
+[2025-06-24 14:11:02] [DEBUG3] Transcriber picked up audio event: input_20250624_141056_897.wav
+[2025-06-24 14:11:02] [DEBUG3] Starting transcription for: input_20250624_141056_897.wav
+[2025-06-24 14:11:03] [DEBUG3] Finished transcription for: input_20250624_141056_897.wav
+[2025-06-24 14:11:03] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:11:03] [DEBUG3] Deleted audio file: input_20250624_141056_897.wav
+[2025-06-24 14:11:03] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:03] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:03] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:03] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:03] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:03] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:03] [DEBUG3] Finished typing text.
+[2025-06-24 14:11:03] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:03] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:03] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:03] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:03] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:03] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:03] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:03] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:04] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:04] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Recording audio to: input_20250624_141105_189.wav
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:05] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:05] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:06] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:06] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:07] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:07] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:08] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:08] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:09] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:09] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:10] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:10] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:10] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:10] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:10] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:10] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:10] [DEBUG3] Finished recording: input_20250624_141105_189.wav
+[2025-06-24 14:11:10] [DEBUG3] Inserting audio file into queue: input_20250624_141105_189.wav
+[2025-06-24 14:11:10] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:11:10] [DEBUG3] Transcriber thread running, queue size: 1
+[2025-06-24 14:11:10] [DEBUG3] Transcriber picked up audio event: input_20250624_141105_189.wav
+[2025-06-24 14:11:10] [DEBUG3] Starting transcription for: input_20250624_141105_189.wav
+[2025-06-24 14:11:11] [DEBUG3] Finished transcription for: input_20250624_141105_189.wav
+[2025-06-24 14:11:11] [DEBUG3] Typing text: ''
+[2025-06-24 14:11:11] [DEBUG3] Deleted audio file: input_20250624_141105_189.wav
+[2025-06-24 14:11:11] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:11] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:11] [DEBUG3] Finished typing text.
+[2025-06-24 14:11:11] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:11] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:11] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:11] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:11] [DEBUG3] Recording audio to: input_20250624_141111_835.wav
+[2025-06-24 14:11:11] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:11] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:11] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:11] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:12] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:12] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:13] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:13] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:13] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:13] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:13] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:13] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:13] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:13] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:13] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:13] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:13] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:13] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:13] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:13] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:13] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:13] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:13] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:13] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:14] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:14] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:15] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:15] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:16] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:16] [DEBUG3] Finished recording: input_20250624_141111_835.wav
+[2025-06-24 14:11:16] [DEBUG3] Inserting audio file into queue: input_20250624_141111_835.wav
+[2025-06-24 14:11:16] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:11:17] [DEBUG3] Transcriber thread running, queue size: 1
+[2025-06-24 14:11:17] [DEBUG3] Transcriber picked up audio event: input_20250624_141111_835.wav
+[2025-06-24 14:11:17] [DEBUG3] Starting transcription for: input_20250624_141111_835.wav
+[2025-06-24 14:11:18] [DEBUG3] Finished transcription for: input_20250624_141111_835.wav
+[2025-06-24 14:11:18] [DEBUG3] Typing text: ' [ Silence ] '
+[2025-06-24 14:11:18] [DEBUG3] Deleted audio file: input_20250624_141111_835.wav
+[2025-06-24 14:11:18] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:18] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:18] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:18] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:18] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:18] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:18] [DEBUG3] Finished typing text.
+[2025-06-24 14:11:18] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:18] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:18] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:18] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:18] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:18] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:18] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:18] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:18] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:18] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:19] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:19] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:20] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:20] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:21] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:21] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:22] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:22] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:23] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:23] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:24] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:24] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:25] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:25] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:26] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:26] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:27] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:27] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:28] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:29] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:11:30] [DEBUG3] Transcriber thread running, queue size: 0
+[2025-06-24 14:11:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:58] [INFO] Vocal is up and running
+[2025-06-24 14:13:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:58] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:13:59] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:00] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:01] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:28] [INFO] Vocal is up and running
+[2025-06-24 14:14:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:28] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:29] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:30] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:31] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:32] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:33] [DEBUG3] Transcriber found queue empty.
+[2025-06-24 14:14:38] [INFO] Vocal is up and running
+[2025-06-24 14:14:46] [DEBUG3] Recording audio to: input_20250624_141446_304.wav
+[2025-06-24 14:14:51] [DEBUG3] Finished recording: input_20250624_141446_304.wav
+[2025-06-24 14:14:51] [DEBUG3] Inserting audio file into queue: input_20250624_141446_304.wav
+[2025-06-24 14:14:51] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:14:51] [DEBUG3] Transcriber picked up audio event: input_20250624_141446_304.wav
+[2025-06-24 14:14:52] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:14:52] [DEBUG3] Deleted audio file: input_20250624_141446_304.wav
+[2025-06-24 14:14:53] [DEBUG3] Finished typing text.
+[2025-06-24 14:14:57] [DEBUG3] Recording audio to: input_20250624_141457_165.wav
+[2025-06-24 14:15:02] [DEBUG3] Finished recording: input_20250624_141457_165.wav
+[2025-06-24 14:15:02] [DEBUG3] Inserting audio file into queue: input_20250624_141457_165.wav
+[2025-06-24 14:15:02] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:15:02] [DEBUG3] Transcriber picked up audio event: input_20250624_141457_165.wav
+[2025-06-24 14:15:03] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:15:03] [DEBUG3] Deleted audio file: input_20250624_141457_165.wav
+[2025-06-24 14:15:03] [DEBUG3] Finished typing text.
+[2025-06-24 14:15:08] [DEBUG3] Recording audio to: input_20250624_141508_187.wav
+[2025-06-24 14:15:13] [DEBUG3] Finished recording: input_20250624_141508_187.wav
+[2025-06-24 14:15:13] [DEBUG3] Inserting audio file into queue: input_20250624_141508_187.wav
+[2025-06-24 14:15:13] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:15:13] [DEBUG3] Transcriber picked up audio event: input_20250624_141508_187.wav
+[2025-06-24 14:15:14] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:15:14] [DEBUG3] Deleted audio file: input_20250624_141508_187.wav
+[2025-06-24 14:15:14] [DEBUG3] Finished typing text.
+[2025-06-24 14:15:18] [DEBUG3] Recording audio to: input_20250624_141518_609.wav
+[2025-06-24 14:15:23] [DEBUG3] Finished recording: input_20250624_141518_609.wav
+[2025-06-24 14:15:23] [DEBUG3] Inserting audio file into queue: input_20250624_141518_609.wav
+[2025-06-24 14:15:23] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:15:23] [DEBUG3] Transcriber picked up audio event: input_20250624_141518_609.wav
+[2025-06-24 14:15:25] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:15:25] [DEBUG3] Deleted audio file: input_20250624_141518_609.wav
+[2025-06-24 14:15:25] [DEBUG3] Finished typing text.
+[2025-06-24 14:15:28] [DEBUG3] Recording audio to: input_20250624_141528_507.wav
+[2025-06-24 14:15:33] [DEBUG3] Finished recording: input_20250624_141528_507.wav
+[2025-06-24 14:15:33] [DEBUG3] Inserting audio file into queue: input_20250624_141528_507.wav
+[2025-06-24 14:15:33] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:15:33] [DEBUG3] Transcriber picked up audio event: input_20250624_141528_507.wav
+[2025-06-24 14:15:34] [DEBUG3] Typing text: ' [ Silence ] '
+[2025-06-24 14:15:34] [DEBUG3] Deleted audio file: input_20250624_141528_507.wav
+[2025-06-24 14:15:35] [DEBUG3] Finished typing text.
+[2025-06-24 14:15:38] [DEBUG3] Recording audio to: input_20250624_141538_86.wav
+[2025-06-24 14:15:43] [DEBUG3] Finished recording: input_20250624_141538_86.wav
+[2025-06-24 14:15:43] [DEBUG3] Inserting audio file into queue: input_20250624_141538_86.wav
+[2025-06-24 14:15:43] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:20:06] [INFO] Vocal is up and running
+[2025-06-24 14:20:15] [DEBUG3] Recording audio to: input_20250624_142015_339.wav
+[2025-06-24 14:20:20] [DEBUG3] Finished recording: input_20250624_142015_339.wav
+[2025-06-24 14:20:20] [DEBUG3] Inserting audio file into queue: input_20250624_142015_339.wav
+[2025-06-24 14:20:20] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:20:20] [DEBUG3] Transcriber picked up audio event: input_20250624_142015_339.wav
+[2025-06-24 14:20:21] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:20:21] [DEBUG3] Deleted audio file: input_20250624_142015_339.wav
+[2025-06-24 14:20:21] [DEBUG3] Finished typing text.
+[2025-06-24 14:20:26] [DEBUG3] Recording audio to: input_20250624_142026_142.wav
+[2025-06-24 14:20:31] [DEBUG3] Finished recording: input_20250624_142026_142.wav
+[2025-06-24 14:20:31] [DEBUG3] Inserting audio file into queue: input_20250624_142026_142.wav
+[2025-06-24 14:20:31] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:20:31] [DEBUG3] Transcriber picked up audio event: input_20250624_142026_142.wav
+[2025-06-24 14:20:32] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:20:32] [DEBUG3] Deleted audio file: input_20250624_142026_142.wav
+[2025-06-24 14:20:32] [DEBUG3] Finished typing text.
+[2025-06-24 14:20:41] [DEBUG3] Recording audio to: input_20250624_142041_132.wav
+[2025-06-24 14:20:46] [DEBUG3] Finished recording: input_20250624_142041_132.wav
+[2025-06-24 14:20:46] [DEBUG3] Inserting audio file into queue: input_20250624_142041_132.wav
+[2025-06-24 14:20:46] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:20:46] [DEBUG3] Transcriber picked up audio event: input_20250624_142041_132.wav
+[2025-06-24 14:20:47] [DEBUG3] Typing text: ' It's safe. '
+[2025-06-24 14:20:47] [DEBUG3] Deleted audio file: input_20250624_142041_132.wav
+[2025-06-24 14:20:47] [DEBUG3] Finished typing text.
+[2025-06-24 14:20:59] [DEBUG3] Recording audio to: input_20250624_142059_716.wav
+[2025-06-24 14:21:04] [DEBUG3] Finished recording: input_20250624_142059_716.wav
+[2025-06-24 14:21:04] [DEBUG3] Inserting audio file into queue: input_20250624_142059_716.wav
+[2025-06-24 14:21:04] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:21:04] [DEBUG3] Transcriber picked up audio event: input_20250624_142059_716.wav
+[2025-06-24 14:21:06] [DEBUG3] Typing text: ' [MUSIC] '
+[2025-06-24 14:21:06] [DEBUG3] Deleted audio file: input_20250624_142059_716.wav
+[2025-06-24 14:21:06] [DEBUG3] Finished typing text.
+[2025-06-24 14:21:06] [INFO] VoiceOut application shutting down.
+[2025-06-24 14:23:44] [INFO] Vocal is up and running
+[2025-06-24 14:23:48] [DEBUG3] Recording audio to: input_20250624_142348_269.wav
+[2025-06-24 14:23:53] [DEBUG3] Finished recording: input_20250624_142348_269.wav
+[2025-06-24 14:23:53] [DEBUG3] Inserting audio file into queue: input_20250624_142348_269.wav
+[2025-06-24 14:23:53] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:23:53] [DEBUG3] Transcriber picked up audio event: input_20250624_142348_269.wav
+[2025-06-24 14:23:54] [DEBUG3] Typing text: ' [coughing] '
+[2025-06-24 14:23:54] [DEBUG3] Deleted audio file: input_20250624_142348_269.wav
+[2025-06-24 14:23:54] [DEBUG3] Finished typing text.
+[2025-06-24 14:23:58] [DEBUG3] Recording audio to: input_20250624_142358_399.wav
+[2025-06-24 14:24:03] [DEBUG3] Finished recording: input_20250624_142358_399.wav
+[2025-06-24 14:24:03] [DEBUG3] Inserting audio file into queue: input_20250624_142358_399.wav
+[2025-06-24 14:24:03] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:24:03] [DEBUG3] Transcriber picked up audio event: input_20250624_142358_399.wav
+[2025-06-24 14:24:04] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:24:04] [DEBUG3] Deleted audio file: input_20250624_142358_399.wav
+[2025-06-24 14:24:05] [DEBUG3] Finished typing text.
+[2025-06-24 14:24:07] [DEBUG3] Recording audio to: input_20250624_142407_283.wav
+[2025-06-24 14:24:12] [DEBUG3] Finished recording: input_20250624_142407_283.wav
+[2025-06-24 14:24:12] [DEBUG3] Inserting audio file into queue: input_20250624_142407_283.wav
+[2025-06-24 14:24:12] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:24:12] [DEBUG3] Transcriber picked up audio event: input_20250624_142407_283.wav
+[2025-06-24 14:24:13] [DEBUG3] Typing text: ' Yes. '
+[2025-06-24 14:24:13] [DEBUG3] Deleted audio file: input_20250624_142407_283.wav
+[2025-06-24 14:24:13] [DEBUG3] Finished typing text.
+[2025-06-24 14:24:20] [DEBUG3] Recording audio to: input_20250624_142420_220.wav
+[2025-06-24 14:24:25] [DEBUG3] Finished recording: input_20250624_142420_220.wav
+[2025-06-24 14:24:25] [DEBUG3] Inserting audio file into queue: input_20250624_142420_220.wav
+[2025-06-24 14:24:25] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:24:25] [DEBUG3] Transcriber picked up audio event: input_20250624_142420_220.wav
+[2025-06-24 14:24:26] [DEBUG3] Typing text: ' [inaudible] '
+[2025-06-24 14:24:26] [DEBUG3] Deleted audio file: input_20250624_142420_220.wav
+[2025-06-24 14:24:26] [DEBUG3] Finished typing text.
+[2025-06-24 14:24:31] [DEBUG3] Recording audio to: input_20250624_142431_345.wav
+[2025-06-24 14:24:36] [DEBUG3] Finished recording: input_20250624_142431_345.wav
+[2025-06-24 14:24:36] [DEBUG3] Inserting audio file into queue: input_20250624_142431_345.wav
+[2025-06-24 14:24:36] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:24:36] [DEBUG3] Transcriber picked up audio event: input_20250624_142431_345.wav
+[2025-06-24 14:24:37] [DEBUG3] Deleted audio file: input_20250624_142431_345.wav
+[2025-06-24 14:24:37] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:24:38] [DEBUG3] Finished typing text.
+[2025-06-24 14:24:41] [DEBUG3] Recording audio to: input_20250624_142441_898.wav
+[2025-06-24 14:24:47] [DEBUG3] Finished recording: input_20250624_142441_898.wav
+[2025-06-24 14:24:47] [DEBUG3] Inserting audio file into queue: input_20250624_142441_898.wav
+[2025-06-24 14:24:47] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:24:47] [DEBUG3] Transcriber picked up audio event: input_20250624_142441_898.wav
+[2025-06-24 14:24:48] [DEBUG3] Typing text: ' Okay. '
+[2025-06-24 14:24:48] [DEBUG3] Deleted audio file: input_20250624_142441_898.wav
+[2025-06-24 14:24:48] [DEBUG3] Finished typing text.
+[2025-06-24 14:24:51] [DEBUG3] Recording audio to: input_20250624_142451_269.wav
+[2025-06-24 14:24:56] [DEBUG3] Finished recording: input_20250624_142451_269.wav
+[2025-06-24 14:24:56] [DEBUG3] Inserting audio file into queue: input_20250624_142451_269.wav
+[2025-06-24 14:24:56] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:24:56] [DEBUG3] Transcriber picked up audio event: input_20250624_142451_269.wav
+[2025-06-24 14:24:57] [DEBUG3] Typing text: ' Okay.  Okay.  Okay.  Okay.  Okay. '
+[2025-06-24 14:24:57] [DEBUG3] Deleted audio file: input_20250624_142451_269.wav
+[2025-06-24 14:24:58] [DEBUG3] Finished typing text.
+[2025-06-24 14:25:38] [DEBUG3] Recording audio to: input_20250624_142538_560.wav
+[2025-06-24 14:25:43] [DEBUG3] Finished recording: input_20250624_142538_560.wav
+[2025-06-24 14:25:43] [DEBUG3] Inserting audio file into queue: input_20250624_142538_560.wav
+[2025-06-24 14:25:43] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:25:43] [DEBUG3] Transcriber picked up audio event: input_20250624_142538_560.wav
+[2025-06-24 14:25:44] [DEBUG3] Typing text: ' Hello? '
+[2025-06-24 14:25:44] [DEBUG3] Deleted audio file: input_20250624_142538_560.wav
+[2025-06-24 14:25:45] [DEBUG3] Finished typing text.
+[2025-06-24 14:25:51] [DEBUG3] Recording audio to: input_20250624_142551_270.wav
+[2025-06-24 14:25:56] [DEBUG3] Finished recording: input_20250624_142551_270.wav
+[2025-06-24 14:25:56] [DEBUG3] Inserting audio file into queue: input_20250624_142551_270.wav
+[2025-06-24 14:25:56] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:25:56] [DEBUG3] Transcriber picked up audio event: input_20250624_142551_270.wav
+[2025-06-24 14:25:57] [DEBUG3] Typing text: ' I think it's from the headphone. '
+[2025-06-24 14:25:57] [DEBUG3] Deleted audio file: input_20250624_142551_270.wav
+[2025-06-24 14:25:58] [DEBUG3] Finished typing text.
+[2025-06-24 14:26:05] [DEBUG3] Recording audio to: input_20250624_142605_828.wav
+[2025-06-24 14:26:10] [DEBUG3] Finished recording: input_20250624_142605_828.wav
+[2025-06-24 14:26:10] [DEBUG3] Inserting audio file into queue: input_20250624_142605_828.wav
+[2025-06-24 14:26:10] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:26:10] [DEBUG3] Transcriber picked up audio event: input_20250624_142605_828.wav
+[2025-06-24 14:26:12] [DEBUG3] Typing text: ' Okay, it did well. '
+[2025-06-24 14:26:12] [DEBUG3] Deleted audio file: input_20250624_142605_828.wav
+[2025-06-24 14:26:12] [DEBUG3] Finished typing text.
+[2025-06-24 14:26:28] [DEBUG3] Recording audio to: input_20250624_142628_346.wav
+[2025-06-24 14:26:33] [DEBUG3] Finished recording: input_20250624_142628_346.wav
+[2025-06-24 14:26:33] [DEBUG3] Inserting audio file into queue: input_20250624_142628_346.wav
+[2025-06-24 14:26:33] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:26:33] [DEBUG3] Transcriber picked up audio event: input_20250624_142628_346.wav
+[2025-06-24 14:26:34] [DEBUG3] Typing text: ' Let's try now. '
+[2025-06-24 14:26:34] [DEBUG3] Deleted audio file: input_20250624_142628_346.wav
+[2025-06-24 14:26:34] [DEBUG3] Finished typing text.
+[2025-06-24 14:26:39] [DEBUG3] Recording audio to: input_20250624_142639_33.wav
+[2025-06-24 14:26:44] [DEBUG3] Finished recording: input_20250624_142639_33.wav
+[2025-06-24 14:26:44] [DEBUG3] Inserting audio file into queue: input_20250624_142639_33.wav
+[2025-06-24 14:26:44] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:26:44] [DEBUG3] Transcriber picked up audio event: input_20250624_142639_33.wav
+[2025-06-24 14:26:45] [DEBUG3] Typing text: ' One more duck. '
+[2025-06-24 14:26:45] [DEBUG3] Deleted audio file: input_20250624_142639_33.wav
+[2025-06-24 14:26:45] [DEBUG3] Finished typing text.
+[2025-06-24 14:26:48] [DEBUG3] Recording audio to: input_20250624_142648_135.wav
+[2025-06-24 14:26:53] [DEBUG3] Finished recording: input_20250624_142648_135.wav
+[2025-06-24 14:26:53] [DEBUG3] Inserting audio file into queue: input_20250624_142648_135.wav
+[2025-06-24 14:26:53] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:26:53] [DEBUG3] Transcriber picked up audio event: input_20250624_142648_135.wav
+[2025-06-24 14:26:54] [DEBUG3] Typing text: ' One more time. '
+[2025-06-24 14:26:54] [DEBUG3] Deleted audio file: input_20250624_142648_135.wav
+[2025-06-24 14:26:54] [DEBUG3] Finished typing text.
+[2025-06-24 14:27:02] [DEBUG3] Recording audio to: input_20250624_142702_775.wav
+[2025-06-24 14:27:07] [DEBUG3] Finished recording: input_20250624_142702_775.wav
+[2025-06-24 14:27:07] [DEBUG3] Inserting audio file into queue: input_20250624_142702_775.wav
+[2025-06-24 14:27:07] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:27:07] [DEBUG3] Transcriber picked up audio event: input_20250624_142702_775.wav
+[2025-06-24 14:27:09] [DEBUG3] Typing text: ' Why is this happening? '
+[2025-06-24 14:27:09] [DEBUG3] Deleted audio file: input_20250624_142702_775.wav
+[2025-06-24 14:27:09] [DEBUG3] Finished typing text.
+[2025-06-24 14:27:23] [DEBUG3] Recording audio to: input_20250624_142723_644.wav
+[2025-06-24 14:27:28] [DEBUG3] Finished recording: input_20250624_142723_644.wav
+[2025-06-24 14:27:28] [DEBUG3] Inserting audio file into queue: input_20250624_142723_644.wav
+[2025-06-24 14:27:28] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:27:28] [DEBUG3] Transcriber picked up audio event: input_20250624_142723_644.wav
+[2025-06-24 14:27:29] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:27:29] [DEBUG3] Deleted audio file: input_20250624_142723_644.wav
+[2025-06-24 14:27:30] [DEBUG3] Finished typing text.
+[2025-06-24 14:27:36] [DEBUG3] Recording audio to: input_20250624_142736_592.wav
+[2025-06-24 14:27:41] [DEBUG3] Finished recording: input_20250624_142736_592.wav
+[2025-06-24 14:27:41] [DEBUG3] Inserting audio file into queue: input_20250624_142736_592.wav
+[2025-06-24 14:27:41] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:27:41] [DEBUG3] Transcriber picked up audio event: input_20250624_142736_592.wav
+[2025-06-24 14:27:42] [DEBUG3] Typing text: ' [coughing] '
+[2025-06-24 14:27:42] [DEBUG3] Deleted audio file: input_20250624_142736_592.wav
+[2025-06-24 14:27:43] [DEBUG3] Finished typing text.
+[2025-06-24 14:33:56] [INFO] Vocal is up and running
+[2025-06-24 14:34:00] [DEBUG3] Recording audio to: input_20250624_143400_435.wav
+[2025-06-24 14:34:05] [DEBUG3] Finished recording: input_20250624_143400_435.wav
+[2025-06-24 14:34:05] [DEBUG3] Inserting audio file into queue: input_20250624_143400_435.wav
+[2025-06-24 14:34:05] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:34:05] [DEBUG3] Transcriber picked up audio event: input_20250624_143400_435.wav
+[2025-06-24 14:34:06] [DEBUG3] Typing text: ' Okay. '
+[2025-06-24 14:34:06] [DEBUG3] Deleted audio file: input_20250624_143400_435.wav
+[2025-06-24 14:34:06] [DEBUG3] Finished typing text.
+[2025-06-24 14:34:15] [DEBUG3] Recording audio to: input_20250624_143415_127.wav
+[2025-06-24 14:34:20] [DEBUG3] Finished recording: input_20250624_143415_127.wav
+[2025-06-24 14:34:20] [DEBUG3] Inserting audio file into queue: input_20250624_143415_127.wav
+[2025-06-24 14:34:20] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:34:20] [DEBUG3] Transcriber picked up audio event: input_20250624_143415_127.wav
+[2025-06-24 14:34:21] [DEBUG3] Typing text: ' Okay. '
+[2025-06-24 14:34:21] [DEBUG3] Deleted audio file: input_20250624_143415_127.wav
+[2025-06-24 14:34:21] [DEBUG3] Finished typing text.
+[2025-06-24 14:34:24] [DEBUG3] Recording audio to: input_20250624_143424_891.wav
+[2025-06-24 14:34:29] [DEBUG3] Finished recording: input_20250624_143424_891.wav
+[2025-06-24 14:34:29] [DEBUG3] Inserting audio file into queue: input_20250624_143424_891.wav
+[2025-06-24 14:34:29] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:34:29] [DEBUG3] Transcriber picked up audio event: input_20250624_143424_891.wav
+[2025-06-24 14:34:31] [DEBUG3] Typing text: ' [coughing] '
+[2025-06-24 14:34:31] [DEBUG3] Deleted audio file: input_20250624_143424_891.wav
+[2025-06-24 14:34:31] [DEBUG3] Finished typing text.
+[2025-06-24 14:34:41] [DEBUG3] Recording audio to: input_20250624_143441_505.wav
+[2025-06-24 14:34:46] [DEBUG3] Finished recording: input_20250624_143441_505.wav
+[2025-06-24 14:34:46] [DEBUG3] Inserting audio file into queue: input_20250624_143441_505.wav
+[2025-06-24 14:34:46] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:34:46] [DEBUG3] Transcriber picked up audio event: input_20250624_143441_505.wav
+[2025-06-24 14:34:47] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:34:47] [DEBUG3] Deleted audio file: input_20250624_143441_505.wav
+[2025-06-24 14:34:48] [DEBUG3] Finished typing text.
+[2025-06-24 14:34:56] [DEBUG3] Recording audio to: input_20250624_143456_684.wav
+[2025-06-24 14:35:01] [DEBUG3] Finished recording: input_20250624_143456_684.wav
+[2025-06-24 14:35:01] [DEBUG3] Inserting audio file into queue: input_20250624_143456_684.wav
+[2025-06-24 14:35:01] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:35:01] [DEBUG3] Transcriber picked up audio event: input_20250624_143456_684.wav
+[2025-06-24 14:35:03] [DEBUG3] Typing text: ' Don't do that for me '
+[2025-06-24 14:35:03] [DEBUG3] Deleted audio file: input_20250624_143456_684.wav
+[2025-06-24 14:35:03] [DEBUG3] Finished typing text.
+[2025-06-24 14:35:09] [DEBUG3] Recording audio to: input_20250624_143509_192.wav
+[2025-06-24 14:35:14] [DEBUG3] Finished recording: input_20250624_143509_192.wav
+[2025-06-24 14:35:14] [DEBUG3] Inserting audio file into queue: input_20250624_143509_192.wav
+[2025-06-24 14:35:14] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:35:14] [DEBUG3] Transcriber picked up audio event: input_20250624_143509_192.wav
+[2025-06-24 14:35:15] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:35:15] [DEBUG3] Deleted audio file: input_20250624_143509_192.wav
+[2025-06-24 14:35:15] [DEBUG3] Finished typing text.
+[2025-06-24 14:35:20] [DEBUG3] Recording audio to: input_20250624_143520_116.wav
+[2025-06-24 14:35:25] [DEBUG3] Finished recording: input_20250624_143520_116.wav
+[2025-06-24 14:35:25] [DEBUG3] Inserting audio file into queue: input_20250624_143520_116.wav
+[2025-06-24 14:35:25] [DEBUG3] Queue size after push: 1
+[2025-06-24 14:35:25] [DEBUG3] Transcriber picked up audio event: input_20250624_143520_116.wav
+[2025-06-24 14:35:26] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 14:35:26] [DEBUG3] Deleted audio file: input_20250624_143520_116.wav
+[2025-06-24 14:35:26] [DEBUG3] Finished typing text.
+[2025-06-24 16:43:21] [INFO] Vocal is up and running
+[2025-06-24 16:43:24] [DEBUG3] Recording audio to: input_20250624_164324_730.wav
+[2025-06-24 16:43:29] [DEBUG3] Finished recording: input_20250624_164324_730.wav
+[2025-06-24 16:43:29] [DEBUG3] Inserting audio file into queue: input_20250624_164324_730.wav
+[2025-06-24 16:43:29] [DEBUG3] Queue size after push: 1
+[2025-06-24 16:43:29] [DEBUG3] Transcriber picked up audio event: input_20250624_164324_730.wav
+[2025-06-24 16:43:31] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 16:43:31] [DEBUG3] Deleted audio file: input_20250624_164324_730.wav
+[2025-06-24 16:43:31] [DEBUG3] Finished typing text.
+[2025-06-24 16:51:06] [DEBUG3] Recording audio to: input_20250624_165106_449.wav
+[2025-06-24 16:51:11] [DEBUG3] Finished recording: input_20250624_165106_449.wav
+[2025-06-24 16:51:12] [DEBUG3] Inserting audio file into queue: input_20250624_165106_449.wav
+[2025-06-24 16:51:12] [DEBUG3] Queue size after push: 1
+[2025-06-24 16:51:12] [DEBUG3] Transcriber picked up audio event: input_20250624_165106_449.wav
+[2025-06-24 16:51:14] [DEBUG3] Typing text: ' The traditional is not per window steam. It's a different thing. '
+[2025-06-24 16:51:14] [DEBUG3] Deleted audio file: input_20250624_165106_449.wav
+[2025-06-24 16:51:15] [DEBUG3] Recording audio to: input_20250624_165115_662.wav
+[2025-06-24 16:51:15] [DEBUG3] Finished typing text.
+[2025-06-24 16:51:20] [DEBUG3] Finished recording: input_20250624_165115_662.wav
+[2025-06-24 16:51:24] [DEBUG3] Inserting audio file into queue: input_20250624_165115_662.wav
+[2025-06-24 16:51:24] [DEBUG3] Queue size after push: 1
+[2025-06-24 16:51:24] [DEBUG3] Transcriber picked up audio event: input_20250624_165115_662.wav
+[2025-06-24 16:51:26] [DEBUG3] Typing text: ' the changes, the progression in the changes, who does that now? '
+[2025-06-24 16:51:26] [DEBUG3] Deleted audio file: input_20250624_165115_662.wav
+[2025-06-24 16:51:27] [DEBUG3] Finished typing text.
+[2025-06-24 16:52:41] [DEBUG3] Recording audio to: input_20250624_165241_321.wav
+[2025-06-24 16:52:46] [DEBUG3] Finished recording: input_20250624_165241_321.wav
+[2025-06-24 16:52:46] [DEBUG3] Inserting audio file into queue: input_20250624_165241_321.wav
+[2025-06-24 16:52:46] [DEBUG3] Queue size after push: 1
+[2025-06-24 16:52:46] [DEBUG3] Transcriber picked up audio event: input_20250624_165241_321.wav
+[2025-06-24 16:52:48] [DEBUG3] Typing text: ' Mm-hmm. '
+[2025-06-24 16:52:48] [DEBUG3] Deleted audio file: input_20250624_165241_321.wav
+[2025-06-24 16:52:48] [DEBUG3] Finished typing text.
+[2025-06-24 16:55:21] [DEBUG3] Recording audio to: input_20250624_165521_356.wav
+[2025-06-24 16:55:26] [DEBUG3] Finished recording: input_20250624_165521_356.wav
+[2025-06-24 16:55:26] [DEBUG3] Inserting audio file into queue: input_20250624_165521_356.wav
+[2025-06-24 16:55:26] [DEBUG3] Queue size after push: 1
+[2025-06-24 16:55:26] [DEBUG3] Transcriber picked up audio event: input_20250624_165521_356.wav
+[2025-06-24 16:55:28] [DEBUG3] Typing text: ' When it is C++17, I'm curious how it is. '
+[2025-06-24 16:55:28] [DEBUG3] Deleted audio file: input_20250624_165521_356.wav
+[2025-06-24 16:55:29] [DEBUG3] Finished typing text.
+[2025-06-24 16:58:03] [DEBUG3] Recording audio to: input_20250624_165803_712.wav
+[2025-06-24 16:58:08] [DEBUG3] Finished recording: input_20250624_165803_712.wav
+[2025-06-24 16:58:08] [DEBUG3] Inserting audio file into queue: input_20250624_165803_712.wav
+[2025-06-24 16:58:08] [DEBUG3] Queue size after push: 1
+[2025-06-24 16:58:08] [DEBUG3] Transcriber picked up audio event: input_20250624_165803_712.wav
+[2025-06-24 16:58:10] [DEBUG3] Typing text: ' [BLANK_AUDIO] '
+[2025-06-24 16:58:10] [DEBUG3] Deleted audio file: input_20250624_165803_712.wav
+[2025-06-24 16:58:11] [DEBUG3] Finished typing text.
+[2025-06-24 16:58:20] [DEBUG3] Recording audio to: input_20250624_165820_547.wav
+[2025-06-24 16:58:25] [DEBUG3] Finished recording: input_20250624_165820_547.wav
+[2025-06-24 16:58:25] [DEBUG3] Inserting audio file into queue: input_20250624_165820_547.wav
+[2025-06-24 16:58:25] [DEBUG3] Queue size after push: 1
+[2025-06-24 16:58:25] [DEBUG3] Transcriber picked up audio event: input_20250624_165820_547.wav
+[2025-06-24 16:58:28] [DEBUG3] Typing text: ' Thank you. '
+[2025-06-24 16:58:28] [DEBUG3] Deleted audio file: input_20250624_165820_547.wav
+[2025-06-24 16:58:28] [DEBUG3] Finished typing text.
+[2025-06-24 16:58:29] [DEBUG3] Recording audio to: input_20250624_165829_620.wav
+[2025-06-24 16:58:34] [DEBUG3] Finished recording: input_20250624_165829_620.wav
+[2025-06-24 16:58:34] [DEBUG3] Inserting audio file into queue: input_20250624_165829_620.wav
+[2025-06-24 16:58:34] [DEBUG3] Queue size after push: 1
+[2025-06-24 16:58:34] [DEBUG3] Transcriber picked up audio event: input_20250624_165829_620.wav
+[2025-06-24 16:58:37] [DEBUG3] Typing text: ' Bye. '
+[2025-06-24 16:58:37] [DEBUG3] Deleted audio file: input_20250624_165829_620.wav
+[2025-06-24 16:58:37] [DEBUG3] Finished typing text.
+[2025-06-25 12:34:44] [INFO] Vocal is up and running
+[2025-06-25 12:34:53] [DEBUG3] Recording audio to: input_20250625_123453_734.wav
+[2025-06-25 12:34:58] [DEBUG3] Finished recording: input_20250625_123453_734.wav
+[2025-06-25 12:34:58] [DEBUG3] Inserting audio file into queue: input_20250625_123453_734.wav
+[2025-06-25 12:34:58] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:34:58] [DEBUG3] Transcriber picked up audio event: input_20250625_123453_734.wav
+[2025-06-25 12:35:00] [DEBUG3] Typing text: ' I think '
+[2025-06-25 12:35:00] [DEBUG3] Deleted audio file: input_20250625_123453_734.wav
+[2025-06-25 12:35:00] [DEBUG3] Finished typing text.
+[2025-06-25 12:35:06] [DEBUG3] Recording audio to: input_20250625_123506_473.wav
+[2025-06-25 12:35:11] [DEBUG3] Finished recording: input_20250625_123506_473.wav
+[2025-06-25 12:35:11] [DEBUG3] Inserting audio file into queue: input_20250625_123506_473.wav
+[2025-06-25 12:35:11] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:35:11] [DEBUG3] Transcriber picked up audio event: input_20250625_123506_473.wav
+[2025-06-25 12:35:13] [DEBUG3] Typing text: ' That's it. '
+[2025-06-25 12:35:13] [DEBUG3] Deleted audio file: input_20250625_123506_473.wav
+[2025-06-25 12:35:13] [DEBUG3] Finished typing text.
+[2025-06-25 12:35:18] [DEBUG3] Recording audio to: input_20250625_123518_302.wav
+[2025-06-25 12:35:23] [DEBUG3] Finished recording: input_20250625_123518_302.wav
+[2025-06-25 12:35:23] [DEBUG3] Inserting audio file into queue: input_20250625_123518_302.wav
+[2025-06-25 12:35:23] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:35:23] [DEBUG3] Transcriber picked up audio event: input_20250625_123518_302.wav
+[2025-06-25 12:35:25] [DEBUG3] Typing text: ' Note that's set as a loop. '
+[2025-06-25 12:35:25] [DEBUG3] Deleted audio file: input_20250625_123518_302.wav
+[2025-06-25 12:35:25] [DEBUG3] Finished typing text.
+[2025-06-25 12:35:31] [DEBUG3] Recording audio to: input_20250625_123531_629.wav
+[2025-06-25 12:35:36] [DEBUG3] Finished recording: input_20250625_123531_629.wav
+[2025-06-25 12:35:36] [DEBUG3] Inserting audio file into queue: input_20250625_123531_629.wav
+[2025-06-25 12:35:36] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:35:36] [DEBUG3] Transcriber picked up audio event: input_20250625_123531_629.wav
+[2025-06-25 12:35:38] [DEBUG3] Typing text: ' If and... '
+[2025-06-25 12:35:38] [DEBUG3] Deleted audio file: input_20250625_123531_629.wav
+[2025-06-25 12:35:38] [DEBUG3] Finished typing text.
+[2025-06-25 12:35:44] [DEBUG3] Recording audio to: input_20250625_123544_7.wav
+[2025-06-25 12:35:49] [DEBUG3] Finished recording: input_20250625_123544_7.wav
+[2025-06-25 12:35:49] [DEBUG3] Inserting audio file into queue: input_20250625_123544_7.wav
+[2025-06-25 12:35:49] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:35:49] [DEBUG3] Transcriber picked up audio event: input_20250625_123544_7.wav
+[2025-06-25 12:35:50] [DEBUG3] Typing text: ' If... '
+[2025-06-25 12:35:50] [DEBUG3] Deleted audio file: input_20250625_123544_7.wav
+[2025-06-25 12:35:50] [DEBUG3] Finished typing text.
+[2025-06-25 12:36:00] [DEBUG3] Recording audio to: input_20250625_123600_689.wav
+[2025-06-25 12:36:05] [DEBUG3] Finished recording: input_20250625_123600_689.wav
+[2025-06-25 12:36:05] [DEBUG3] Inserting audio file into queue: input_20250625_123600_689.wav
+[2025-06-25 12:36:05] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:36:05] [DEBUG3] Transcriber picked up audio event: input_20250625_123600_689.wav
+[2025-06-25 12:36:07] [DEBUG3] Typing text: ' Make clean. '
+[2025-06-25 12:36:07] [DEBUG3] Deleted audio file: input_20250625_123600_689.wav
+[2025-06-25 12:36:07] [DEBUG3] Finished typing text.
+[2025-06-25 12:36:18] [DEBUG3] Recording audio to: input_20250625_123618_89.wav
+[2025-06-25 12:36:23] [DEBUG3] Finished recording: input_20250625_123618_89.wav
+[2025-06-25 12:36:23] [DEBUG3] Inserting audio file into queue: input_20250625_123618_89.wav
+[2025-06-25 12:36:23] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:36:23] [DEBUG3] Transcriber picked up audio event: input_20250625_123618_89.wav
+[2025-06-25 12:36:24] [DEBUG3] Typing text: ' Make clean. '
+[2025-06-25 12:36:24] [DEBUG3] Deleted audio file: input_20250625_123618_89.wav
+[2025-06-25 12:36:24] [DEBUG3] Finished typing text.
+[2025-06-25 12:36:27] [DEBUG3] Recording audio to: input_20250625_123627_387.wav
+[2025-06-25 12:36:32] [DEBUG3] Finished recording: input_20250625_123627_387.wav
+[2025-06-25 12:36:32] [DEBUG3] Inserting audio file into queue: input_20250625_123627_387.wav
+[2025-06-25 12:36:32] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:36:32] [DEBUG3] Transcriber picked up audio event: input_20250625_123627_387.wav
+[2025-06-25 12:36:33] [DEBUG3] Typing text: ' So this is what I'm trying. '
+[2025-06-25 12:36:33] [DEBUG3] Deleted audio file: input_20250625_123627_387.wav
+[2025-06-25 12:36:34] [DEBUG3] Finished typing text.
+[2025-06-25 12:36:39] [DEBUG3] Recording audio to: input_20250625_123639_479.wav
+[2025-06-25 12:36:44] [DEBUG3] Finished recording: input_20250625_123639_479.wav
+[2025-06-25 12:36:44] [DEBUG3] Inserting audio file into queue: input_20250625_123639_479.wav
+[2025-06-25 12:36:44] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:36:44] [DEBUG3] Transcriber picked up audio event: input_20250625_123639_479.wav
+[2025-06-25 12:36:46] [DEBUG3] Typing text: ' Okay. '
+[2025-06-25 12:36:46] [DEBUG3] Deleted audio file: input_20250625_123639_479.wav
+[2025-06-25 12:36:46] [DEBUG3] Finished typing text.
+[2025-06-25 12:36:51] [DEBUG3] Recording audio to: input_20250625_123651_895.wav
+[2025-06-25 12:36:57] [DEBUG3] Finished recording: input_20250625_123651_895.wav
+[2025-06-25 12:36:57] [DEBUG3] Inserting audio file into queue: input_20250625_123651_895.wav
+[2025-06-25 12:36:57] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:36:57] [DEBUG3] Transcriber picked up audio event: input_20250625_123651_895.wav
+[2025-06-25 12:36:58] [DEBUG3] Typing text: ' So this... '
+[2025-06-25 12:36:58] [DEBUG3] Deleted audio file: input_20250625_123651_895.wav
+[2025-06-25 12:36:58] [DEBUG3] Finished typing text.
+[2025-06-25 12:37:02] [DEBUG3] Recording audio to: input_20250625_123702_905.wav
+[2025-06-25 12:37:08] [DEBUG3] Finished recording: input_20250625_123702_905.wav
+[2025-06-25 12:37:08] [DEBUG3] Inserting audio file into queue: input_20250625_123702_905.wav
+[2025-06-25 12:37:08] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:37:08] [DEBUG3] Transcriber picked up audio event: input_20250625_123702_905.wav
+[2025-06-25 12:37:09] [DEBUG3] Typing text: ' So this is... '
+[2025-06-25 12:37:09] [DEBUG3] Deleted audio file: input_20250625_123702_905.wav
+[2025-06-25 12:37:09] [DEBUG3] Finished typing text.
+[2025-06-25 12:37:12] [DEBUG3] Recording audio to: input_20250625_123712_609.wav
+[2025-06-25 12:37:17] [DEBUG3] Finished recording: input_20250625_123712_609.wav
+[2025-06-25 12:37:17] [DEBUG3] Inserting audio file into queue: input_20250625_123712_609.wav
+[2025-06-25 12:37:17] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:37:17] [DEBUG3] Transcriber picked up audio event: input_20250625_123712_609.wav
+[2025-06-25 12:37:19] [DEBUG3] Typing text: ' So this is what? '
+[2025-06-25 12:37:19] [DEBUG3] Deleted audio file: input_20250625_123712_609.wav
+[2025-06-25 12:37:19] [DEBUG3] Finished typing text.
+[2025-06-25 12:49:37] [DEBUG3] Recording audio to: input_20250625_124937_853.wav
+[2025-06-25 12:49:42] [DEBUG3] Finished recording: input_20250625_124937_853.wav
+[2025-06-25 12:49:42] [DEBUG3] Inserting audio file into queue: input_20250625_124937_853.wav
+[2025-06-25 12:49:42] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:49:42] [DEBUG3] Transcriber picked up audio event: input_20250625_124937_853.wav
+[2025-06-25 12:49:44] [DEBUG3] Typing text: ' So this is it. '
+[2025-06-25 12:49:44] [DEBUG3] Deleted audio file: input_20250625_124937_853.wav
+[2025-06-25 12:49:44] [DEBUG3] Finished typing text.
+[2025-06-25 12:49:56] [DEBUG3] Recording audio to: input_20250625_124956_768.wav
+[2025-06-25 12:50:01] [DEBUG3] Finished recording: input_20250625_124956_768.wav
+[2025-06-25 12:50:01] [DEBUG3] Inserting audio file into queue: input_20250625_124956_768.wav
+[2025-06-25 12:50:01] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:50:01] [DEBUG3] Transcriber picked up audio event: input_20250625_124956_768.wav
+[2025-06-25 12:50:03] [DEBUG3] Typing text: ' So this is it doing. '
+[2025-06-25 12:50:03] [DEBUG3] Deleted audio file: input_20250625_124956_768.wav
+[2025-06-25 12:50:03] [DEBUG3] Finished typing text.
+[2025-06-25 12:50:13] [DEBUG3] Recording audio to: input_20250625_125013_628.wav
+[2025-06-25 12:50:18] [DEBUG3] Finished recording: input_20250625_125013_628.wav
+[2025-06-25 12:50:18] [DEBUG3] Inserting audio file into queue: input_20250625_125013_628.wav
+[2025-06-25 12:50:18] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:50:18] [DEBUG3] Transcriber picked up audio event: input_20250625_125013_628.wav
+[2025-06-25 12:50:20] [DEBUG3] Typing text: ' So this is it doing it. '
+[2025-06-25 12:50:20] [DEBUG3] Deleted audio file: input_20250625_125013_628.wav
+[2025-06-25 12:50:20] [DEBUG3] Finished typing text.
+[2025-06-25 12:50:32] [DEBUG3] Recording audio to: input_20250625_125032_317.wav
+[2025-06-25 12:50:37] [DEBUG3] Finished recording: input_20250625_125032_317.wav
+[2025-06-25 12:50:37] [DEBUG3] Inserting audio file into queue: input_20250625_125032_317.wav
+[2025-06-25 12:50:37] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:50:37] [DEBUG3] Transcriber picked up audio event: input_20250625_125032_317.wav
+[2025-06-25 12:50:38] [DEBUG3] Typing text: ' So this is what I am trying. '
+[2025-06-25 12:50:38] [DEBUG3] Deleted audio file: input_20250625_125032_317.wav
+[2025-06-25 12:50:39] [DEBUG3] Finished typing text.
+[2025-06-25 12:50:51] [DEBUG3] Recording audio to: input_20250625_125051_273.wav
+[2025-06-25 12:50:56] [DEBUG3] Finished recording: input_20250625_125051_273.wav
+[2025-06-25 12:50:56] [DEBUG3] Inserting audio file into queue: input_20250625_125051_273.wav
+[2025-06-25 12:50:56] [DEBUG3] Queue size after push: 1
+[2025-06-25 12:50:56] [DEBUG3] Transcriber picked up audio event: input_20250625_125051_273.wav
+[2025-06-25 12:50:57] [DEBUG3] Typing text: ' So... '
+[2025-06-25 12:50:57] [DEBUG3] Deleted audio file: input_20250625_125051_273.wav
+[2025-06-25 12:50:57] [DEBUG3] Finished typing text.
+[2025-06-25 13:34:00] [INFO] Vocal is up and running
+[2025-06-25 13:34:13] [DEBUG3] Recording audio to: input_20250625_133413_269.wav
+[2025-06-25 13:34:18] [DEBUG3] Finished recording: input_20250625_133413_269.wav
+[2025-06-25 13:34:18] [DEBUG3] Inserting audio file into queue: input_20250625_133413_269.wav
+[2025-06-25 13:34:18] [DEBUG3] Queue size after push: 1
+[2025-06-25 13:34:18] [DEBUG3] Transcriber picked up audio event: input_20250625_133413_269.wav
+[2025-06-25 13:34:19] [DEBUG3] Typing text: ' Hello. '
+[2025-06-25 13:34:19] [DEBUG3] Deleted audio file: input_20250625_133413_269.wav
+[2025-06-25 13:34:19] [DEBUG3] Finished typing text.

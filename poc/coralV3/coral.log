@@ -1,0 +1,386 @@
+[2025-06-26 10:28:23] [INFO] coral is up and running
+[2025-06-26 10:28:28] [DEBUG3] Starting recording to: input_20250626_102828_446.wav
+[2025-06-26 10:28:29] [DEBUG3] Finished recording: input_20250626_102828_446.wav
+[2025-06-26 10:28:29] [DEBUG3] Inserting audio file into queue: input_20250626_102828_446.wav, triggered by: a
+[2025-06-26 10:28:29] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:28:29] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:28:29] [DEBUG3] Transcriber picked up audio event: input_20250626_102828_446.wav, trigger key: a
+[2025-06-26 10:28:29] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:28:29] [DEBUG3] Typing text: ''
+[2025-06-26 10:28:29] [DEBUG3] Deleted audio file: input_20250626_102828_446.wav
+[2025-06-26 10:28:29] [DEBUG3] Finished typing text.
+[2025-06-26 10:28:32] [DEBUG3] Starting recording to: input_20250626_102832_937.wav
+[2025-06-26 10:28:33] [DEBUG3] Finished recording: input_20250626_102832_937.wav
+[2025-06-26 10:28:33] [DEBUG3] Inserting audio file into queue: input_20250626_102832_937.wav, triggered by: a
+[2025-06-26 10:28:33] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:28:33] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:28:33] [DEBUG3] Transcriber picked up audio event: input_20250626_102832_937.wav, trigger key: a
+[2025-06-26 10:28:33] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:28:33] [DEBUG3] Typing text: ''
+[2025-06-26 10:28:33] [DEBUG3] Deleted audio file: input_20250626_102832_937.wav
+[2025-06-26 10:28:33] [DEBUG3] Finished typing text.
+[2025-06-26 10:29:22] [DEBUG3] Starting recording to: input_20250626_102922_282.wav
+[2025-06-26 10:29:23] [DEBUG3] Finished recording: input_20250626_102922_282.wav
+[2025-06-26 10:29:23] [DEBUG3] Inserting audio file into queue: input_20250626_102922_282.wav, triggered by: a
+[2025-06-26 10:29:23] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:29:23] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:29:23] [DEBUG3] Transcriber picked up audio event: input_20250626_102922_282.wav, trigger key: a
+[2025-06-26 10:29:23] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:29:23] [DEBUG3] Typing text: ''
+[2025-06-26 10:29:23] [DEBUG3] Deleted audio file: input_20250626_102922_282.wav
+[2025-06-26 10:29:23] [DEBUG3] Finished typing text.
+[2025-06-26 10:29:31] [DEBUG3] cmdTriggerKey detected
+[2025-06-26 10:29:31] [DEBUG3] Starting recording to: input_20250626_102931_761.wav
+[2025-06-26 10:29:32] [DEBUG3] Finished recording: input_20250626_102931_761.wav
+[2025-06-26 10:29:32] [DEBUG3] Inserting audio file into queue: input_20250626_102931_761.wav, triggered by: z
+[2025-06-26 10:29:32] [DEBUG3] AudioEvent created with trigger key: z
+[2025-06-26 10:29:32] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:29:32] [DEBUG3] Transcriber picked up audio event: input_20250626_102931_761.wav, trigger key: z
+[2025-06-26 10:29:32] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-26 10:29:32] [DEBUG3] Deleted audio file: input_20250626_102931_761.wav
+[2025-06-26 10:29:32] [DEBUG3] Typing text: ''
+[2025-06-26 10:29:32] [DEBUG3] Finished typing text.
+[2025-06-26 10:30:36] [DEBUG3] Starting recording to: input_20250626_103036_228.wav
+[2025-06-26 10:30:36] [DEBUG3] Finished recording: input_20250626_103036_228.wav
+[2025-06-26 10:30:36] [DEBUG3] Inserting audio file into queue: input_20250626_103036_228.wav, triggered by: a
+[2025-06-26 10:30:36] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:30:36] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:30:36] [DEBUG3] Transcriber picked up audio event: input_20250626_103036_228.wav, trigger key: a
+[2025-06-26 10:30:36] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:30:36] [DEBUG3] Typing text: ''
+[2025-06-26 10:30:36] [DEBUG3] Deleted audio file: input_20250626_103036_228.wav
+[2025-06-26 10:30:36] [DEBUG3] Finished typing text.
+[2025-06-26 10:42:47] [DEBUG3] Starting recording to: input_20250626_104247_174.wav
+[2025-06-26 10:42:47] [DEBUG3] Finished recording: input_20250626_104247_174.wav
+[2025-06-26 10:42:47] [DEBUG3] Inserting audio file into queue: input_20250626_104247_174.wav, triggered by: a
+[2025-06-26 10:42:47] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:42:47] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:42:47] [DEBUG3] Transcriber picked up audio event: input_20250626_104247_174.wav, trigger key: a
+[2025-06-26 10:42:47] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:42:47] [DEBUG3] Typing text: ''
+[2025-06-26 10:42:47] [DEBUG3] Deleted audio file: input_20250626_104247_174.wav
+[2025-06-26 10:42:47] [DEBUG3] Finished typing text.
+[2025-06-26 10:42:51] [DEBUG3] Starting recording to: input_20250626_104251_574.wav
+[2025-06-26 10:42:51] [DEBUG3] Finished recording: input_20250626_104251_574.wav
+[2025-06-26 10:42:51] [DEBUG3] Inserting audio file into queue: input_20250626_104251_574.wav, triggered by: a
+[2025-06-26 10:42:51] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:42:51] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:42:51] [DEBUG3] Transcriber picked up audio event: input_20250626_104251_574.wav, trigger key: a
+[2025-06-26 10:42:51] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:42:51] [DEBUG3] Typing text: ''
+[2025-06-26 10:42:51] [DEBUG3] Deleted audio file: input_20250626_104251_574.wav
+[2025-06-26 10:42:51] [DEBUG3] Finished typing text.
+[2025-06-26 10:42:55] [DEBUG3] Starting recording to: input_20250626_104255_299.wav
+[2025-06-26 10:42:55] [DEBUG3] Finished recording: input_20250626_104255_299.wav
+[2025-06-26 10:42:55] [DEBUG3] Inserting audio file into queue: input_20250626_104255_299.wav, triggered by: a
+[2025-06-26 10:42:55] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:42:55] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:42:55] [DEBUG3] Transcriber picked up audio event: input_20250626_104255_299.wav, trigger key: a
+[2025-06-26 10:42:55] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:42:55] [DEBUG3] Typing text: ''
+[2025-06-26 10:42:55] [DEBUG3] Deleted audio file: input_20250626_104255_299.wav
+[2025-06-26 10:42:55] [DEBUG3] Finished typing text.
+[2025-06-26 10:43:21] [DEBUG3] Starting recording to: input_20250626_104321_252.wav
+[2025-06-26 10:43:21] [DEBUG3] Finished recording: input_20250626_104321_252.wav
+[2025-06-26 10:43:21] [DEBUG3] Inserting audio file into queue: input_20250626_104321_252.wav, triggered by: a
+[2025-06-26 10:43:21] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:43:21] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:43:21] [DEBUG3] Transcriber picked up audio event: input_20250626_104321_252.wav, trigger key: a
+[2025-06-26 10:43:21] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:43:21] [DEBUG3] Typing text: ''
+[2025-06-26 10:43:21] [DEBUG3] Deleted audio file: input_20250626_104321_252.wav
+[2025-06-26 10:43:21] [DEBUG3] Finished typing text.
+[2025-06-26 10:43:32] [DEBUG3] Starting recording to: input_20250626_104332_448.wav
+[2025-06-26 10:43:32] [DEBUG3] Finished recording: input_20250626_104332_448.wav
+[2025-06-26 10:43:32] [DEBUG3] Inserting audio file into queue: input_20250626_104332_448.wav, triggered by: a
+[2025-06-26 10:43:32] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:43:32] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:43:32] [DEBUG3] Transcriber picked up audio event: input_20250626_104332_448.wav, trigger key: a
+[2025-06-26 10:43:32] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:43:32] [DEBUG3] Typing text: ''
+[2025-06-26 10:43:32] [DEBUG3] Deleted audio file: input_20250626_104332_448.wav
+[2025-06-26 10:43:32] [DEBUG3] Finished typing text.
+[2025-06-26 10:44:01] [DEBUG3] Starting recording to: input_20250626_104401_144.wav
+[2025-06-26 10:44:01] [DEBUG3] Finished recording: input_20250626_104401_144.wav
+[2025-06-26 10:44:01] [DEBUG3] Inserting audio file into queue: input_20250626_104401_144.wav, triggered by: a
+[2025-06-26 10:44:01] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:44:01] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:44:01] [DEBUG3] Transcriber picked up audio event: input_20250626_104401_144.wav, trigger key: a
+[2025-06-26 10:44:01] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:44:01] [DEBUG3] Typing text: ''
+[2025-06-26 10:44:01] [DEBUG3] Deleted audio file: input_20250626_104401_144.wav
+[2025-06-26 10:44:01] [DEBUG3] Finished typing text.
+[2025-06-26 10:44:06] [DEBUG3] Starting recording to: input_20250626_104406_197.wav
+[2025-06-26 10:44:06] [DEBUG3] Finished recording: input_20250626_104406_197.wav
+[2025-06-26 10:44:06] [DEBUG3] Inserting audio file into queue: input_20250626_104406_197.wav, triggered by: a
+[2025-06-26 10:44:06] [DEBUG3] AudioEvent created with trigger key: a
+[2025-06-26 10:44:06] [DEBUG3] Queue size after push: 1
+[2025-06-26 10:44:06] [DEBUG3] Transcriber picked up audio event: input_20250626_104406_197.wav, trigger key: a
+[2025-06-26 10:44:06] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-26 10:44:06] [DEBUG3] Typing text: ''
+[2025-06-26 10:44:06] [DEBUG3] Deleted audio file: input_20250626_104406_197.wav
+[2025-06-26 10:44:06] [DEBUG3] Finished typing text.
+[2025-06-27 20:41:49] [INFO] coral is up and running
+[2025-06-27 20:42:38] [DEBUG3] Starting recording to: input_20250627_204238_556.wav
+[2025-06-27 20:42:40] [DEBUG3] Finished recording: input_20250627_204238_556.wav
+[2025-06-27 20:42:40] [DEBUG3] Inserting audio file into queue: input_20250627_204238_556.wav, triggered by: Ctrl+a
+[2025-06-27 20:42:40] [DEBUG3] AudioEvent created with trigger key: Ctrl+a
+[2025-06-27 20:42:40] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:42:40] [DEBUG3] Transcriber picked up audio event: input_20250627_204238_556.wav, trigger key: Ctrl+a
+[2025-06-27 20:42:40] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-27 20:42:40] [DEBUG3] Typing text: ''
+[2025-06-27 20:42:40] [DEBUG3] Deleted audio file: input_20250627_204238_556.wav
+[2025-06-27 20:42:40] [DEBUG3] Finished typing text.
+[2025-06-27 20:45:19] [INFO] coral is up and running
+[2025-06-27 20:45:57] [DEBUG3] Starting recording to: input_20250627_204557_208.wav
+[2025-06-27 20:45:58] [DEBUG3] Finished recording: input_20250627_204557_208.wav
+[2025-06-27 20:45:58] [DEBUG3] Inserting audio file into queue: input_20250627_204557_208.wav, triggered by: Ctrl+a
+[2025-06-27 20:45:58] [DEBUG3] AudioEvent created with trigger key: Ctrl+a
+[2025-06-27 20:45:58] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:45:58] [DEBUG3] Transcriber picked up audio event: input_20250627_204557_208.wav, trigger key: Ctrl+a
+[2025-06-27 20:45:58] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-27 20:45:58] [DEBUG3] Typing text: ''
+[2025-06-27 20:45:58] [DEBUG3] Deleted audio file: input_20250627_204557_208.wav
+[2025-06-27 20:45:58] [DEBUG3] Finished typing text.
+[2025-06-27 20:48:32] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 20:48:32] [DEBUG3] Starting recording to: input_20250627_204832_314.wav
+[2025-06-27 20:48:32] [DEBUG3] Finished recording: input_20250627_204832_314.wav
+[2025-06-27 20:48:32] [DEBUG3] Inserting audio file into queue: input_20250627_204832_314.wav, triggered by: Ctrl+z
+[2025-06-27 20:48:32] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 20:48:32] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:48:32] [DEBUG3] Transcriber picked up audio event: input_20250627_204832_314.wav, trigger key: Ctrl+z
+[2025-06-27 20:48:32] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 20:48:32] [DEBUG3] Typing text: ''
+[2025-06-27 20:48:32] [DEBUG3] Deleted audio file: input_20250627_204832_314.wav
+[2025-06-27 20:48:32] [DEBUG3] Finished typing text.
+[2025-06-27 20:49:52] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 20:49:52] [DEBUG3] Starting recording to: input_20250627_204952_78.wav
+[2025-06-27 20:49:52] [DEBUG3] Finished recording: input_20250627_204952_78.wav
+[2025-06-27 20:49:52] [DEBUG3] Inserting audio file into queue: input_20250627_204952_78.wav, triggered by: Ctrl+z
+[2025-06-27 20:49:52] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 20:49:52] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:49:52] [DEBUG3] Transcriber picked up audio event: input_20250627_204952_78.wav, trigger key: Ctrl+z
+[2025-06-27 20:49:52] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 20:49:52] [DEBUG3] Typing text: ''
+[2025-06-27 20:49:52] [DEBUG3] Deleted audio file: input_20250627_204952_78.wav
+[2025-06-27 20:49:52] [DEBUG3] Finished typing text.
+[2025-06-27 20:49:52] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 20:49:52] [DEBUG3] Starting recording to: input_20250627_204952_619.wav
+[2025-06-27 20:49:52] [DEBUG3] Finished recording: input_20250627_204952_619.wav
+[2025-06-27 20:49:52] [DEBUG3] Inserting audio file into queue: input_20250627_204952_619.wav, triggered by: Ctrl+z
+[2025-06-27 20:49:52] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 20:49:52] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:49:52] [DEBUG3] Transcriber picked up audio event: input_20250627_204952_619.wav, trigger key: Ctrl+z
+[2025-06-27 20:49:52] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 20:49:52] [DEBUG3] Typing text: ''
+[2025-06-27 20:49:52] [DEBUG3] Deleted audio file: input_20250627_204952_619.wav
+[2025-06-27 20:49:52] [DEBUG3] Finished typing text.
+[2025-06-27 20:49:53] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 20:49:53] [DEBUG3] Starting recording to: input_20250627_204953_552.wav
+[2025-06-27 20:49:53] [DEBUG3] Finished recording: input_20250627_204953_552.wav
+[2025-06-27 20:49:53] [DEBUG3] Inserting audio file into queue: input_20250627_204953_552.wav, triggered by: Ctrl+z
+[2025-06-27 20:49:53] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 20:49:53] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:49:53] [DEBUG3] Transcriber picked up audio event: input_20250627_204953_552.wav, trigger key: Ctrl+z
+[2025-06-27 20:49:53] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 20:49:53] [DEBUG3] Typing text: ''
+[2025-06-27 20:49:53] [DEBUG3] Deleted audio file: input_20250627_204953_552.wav
+[2025-06-27 20:49:53] [DEBUG3] Finished typing text.
+[2025-06-27 20:49:54] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 20:49:54] [DEBUG3] Starting recording to: input_20250627_204954_118.wav
+[2025-06-27 20:49:54] [DEBUG3] Finished recording: input_20250627_204954_118.wav
+[2025-06-27 20:49:54] [DEBUG3] Inserting audio file into queue: input_20250627_204954_118.wav, triggered by: Ctrl+z
+[2025-06-27 20:49:54] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 20:49:54] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:49:54] [DEBUG3] Transcriber picked up audio event: input_20250627_204954_118.wav, trigger key: Ctrl+z
+[2025-06-27 20:49:54] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 20:49:54] [DEBUG3] Deleted audio file: input_20250627_204954_118.wav
+[2025-06-27 20:49:54] [DEBUG3] Typing text: ''
+[2025-06-27 20:49:54] [DEBUG3] Finished typing text.
+[2025-06-27 20:49:54] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 20:49:54] [DEBUG3] Starting recording to: input_20250627_204954_642.wav
+[2025-06-27 20:49:54] [DEBUG3] Finished recording: input_20250627_204954_642.wav
+[2025-06-27 20:49:54] [DEBUG3] Inserting audio file into queue: input_20250627_204954_642.wav, triggered by: Ctrl+z
+[2025-06-27 20:49:54] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 20:49:54] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:49:54] [DEBUG3] Transcriber picked up audio event: input_20250627_204954_642.wav, trigger key: Ctrl+z
+[2025-06-27 20:49:54] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 20:49:54] [DEBUG3] Typing text: ''
+[2025-06-27 20:49:54] [DEBUG3] Deleted audio file: input_20250627_204954_642.wav
+[2025-06-27 20:49:54] [DEBUG3] Finished typing text.
+[2025-06-27 20:55:59] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 20:55:59] [DEBUG3] Starting recording to: input_20250627_205559_802.wav
+[2025-06-27 20:55:59] [DEBUG3] Finished recording: input_20250627_205559_802.wav
+[2025-06-27 20:55:59] [DEBUG3] Inserting audio file into queue: input_20250627_205559_802.wav, triggered by: Ctrl+z
+[2025-06-27 20:55:59] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 20:55:59] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:55:59] [DEBUG3] Transcriber picked up audio event: input_20250627_205559_802.wav, trigger key: Ctrl+z
+[2025-06-27 20:55:59] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 20:55:59] [DEBUG3] Typing text: ''
+[2025-06-27 20:55:59] [DEBUG3] Deleted audio file: input_20250627_205559_802.wav
+[2025-06-27 20:55:59] [DEBUG3] Finished typing text.
+[2025-06-27 20:56:02] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 20:56:02] [DEBUG3] Starting recording to: input_20250627_205602_957.wav
+[2025-06-27 20:56:03] [DEBUG3] Finished recording: input_20250627_205602_957.wav
+[2025-06-27 20:56:03] [DEBUG3] Inserting audio file into queue: input_20250627_205602_957.wav, triggered by: Ctrl+z
+[2025-06-27 20:56:03] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 20:56:03] [DEBUG3] Queue size after push: 1
+[2025-06-27 20:56:03] [DEBUG3] Transcriber picked up audio event: input_20250627_205602_957.wav, trigger key: Ctrl+z
+[2025-06-27 20:56:03] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 20:56:03] [DEBUG3] Typing text: ''
+[2025-06-27 20:56:03] [DEBUG3] Deleted audio file: input_20250627_205602_957.wav
+[2025-06-27 20:56:03] [DEBUG3] Finished typing text.
+[2025-06-27 21:27:17] [INFO] coral is up and running
+[2025-06-27 21:27:24] [DEBUG3] Starting recording to: input_20250627_212724_412.wav
+[2025-06-27 21:27:26] [DEBUG3] Finished recording: input_20250627_212724_412.wav
+[2025-06-27 21:27:26] [DEBUG3] Inserting audio file into queue: input_20250627_212724_412.wav, triggered by: Ctrl+a
+[2025-06-27 21:27:26] [DEBUG3] AudioEvent created with trigger key: Ctrl+a
+[2025-06-27 21:27:26] [DEBUG3] Queue size after push: 1
+[2025-06-27 21:27:26] [DEBUG3] Transcriber picked up audio event: input_20250627_212724_412.wav, trigger key: Ctrl+a
+[2025-06-27 21:27:27] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-27 21:27:27] [DEBUG3] Deleted audio file: input_20250627_212724_412.wav
+[2025-06-27 21:27:27] [DEBUG3] Typing text: ' Okay, let me try the... '
+[2025-06-27 21:27:28] [DEBUG3] Finished typing text.
+[2025-06-27 21:28:14] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 21:28:14] [DEBUG3] Starting recording to: input_20250627_212814_338.wav
+[2025-06-27 21:28:15] [DEBUG3] Finished recording: input_20250627_212814_338.wav
+[2025-06-27 21:28:15] [DEBUG3] Inserting audio file into queue: input_20250627_212814_338.wav, triggered by: Ctrl+z
+[2025-06-27 21:28:15] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 21:28:15] [DEBUG3] Queue size after push: 1
+[2025-06-27 21:28:15] [DEBUG3] Transcriber picked up audio event: input_20250627_212814_338.wav, trigger key: Ctrl+z
+[2025-06-27 21:28:16] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 21:28:16] [DEBUG3] Typing text: 't-d'
+[2025-06-27 21:28:16] [DEBUG3] Deleted audio file: input_20250627_212814_338.wav
+[2025-06-27 21:28:16] [DEBUG3] Finished typing text.
+[2025-06-27 21:28:25] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 21:28:25] [DEBUG3] Starting recording to: input_20250627_212825_93.wav
+[2025-06-27 21:28:25] [DEBUG3] Finished recording: input_20250627_212825_93.wav
+[2025-06-27 21:28:25] [DEBUG3] Inserting audio file into queue: input_20250627_212825_93.wav, triggered by: Ctrl+z
+[2025-06-27 21:28:25] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 21:28:25] [DEBUG3] Queue size after push: 1
+[2025-06-27 21:28:25] [DEBUG3] Transcriber picked up audio event: input_20250627_212825_93.wav, trigger key: Ctrl+z
+[2025-06-27 21:28:27] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 21:28:27] [DEBUG3] Typing text: 'hello'
+[2025-06-27 21:28:27] [DEBUG3] Deleted audio file: input_20250627_212825_93.wav
+[2025-06-27 21:28:27] [DEBUG3] Finished typing text.
+[2025-06-27 21:28:39] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 21:28:39] [DEBUG3] Starting recording to: input_20250627_212839_72.wav
+[2025-06-27 21:28:40] [DEBUG3] Finished recording: input_20250627_212839_72.wav
+[2025-06-27 21:28:40] [DEBUG3] Inserting audio file into queue: input_20250627_212839_72.wav, triggered by: Ctrl+z
+[2025-06-27 21:28:40] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 21:28:40] [DEBUG3] Queue size after push: 1
+[2025-06-27 21:28:40] [DEBUG3] Transcriber picked up audio event: input_20250627_212839_72.wav, trigger key: Ctrl+z
+[2025-06-27 21:28:41] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 21:28:41] [DEBUG3] Typing text: 'alayf'
+[2025-06-27 21:28:41] [DEBUG3] Deleted audio file: input_20250627_212839_72.wav
+[2025-06-27 21:28:41] [DEBUG3] Finished typing text.
+[2025-06-27 21:28:44] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 21:28:44] [DEBUG3] Starting recording to: input_20250627_212844_261.wav
+[2025-06-27 21:28:45] [DEBUG3] Finished recording: input_20250627_212844_261.wav
+[2025-06-27 21:28:45] [DEBUG3] Inserting audio file into queue: input_20250627_212844_261.wav, triggered by: Ctrl+z
+[2025-06-27 21:28:45] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 21:28:45] [DEBUG3] Queue size after push: 1
+[2025-06-27 21:28:45] [DEBUG3] Transcriber picked up audio event: input_20250627_212844_261.wav, trigger key: Ctrl+z
+[2025-06-27 21:28:46] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 21:28:46] [DEBUG3] Typing text: 'mink'
+[2025-06-27 21:28:46] [DEBUG3] Deleted audio file: input_20250627_212844_261.wav
+[2025-06-27 21:28:46] [DEBUG3] Finished typing text.
+[2025-06-27 21:28:48] [DEBUG3] cmdTriggerKey detected
+[2025-06-27 21:28:48] [DEBUG3] Starting recording to: input_20250627_212848_419.wav
+[2025-06-27 21:28:49] [DEBUG3] Finished recording: input_20250627_212848_419.wav
+[2025-06-27 21:28:49] [DEBUG3] Inserting audio file into queue: input_20250627_212848_419.wav, triggered by: Ctrl+z
+[2025-06-27 21:28:49] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-27 21:28:49] [DEBUG3] Queue size after push: 1
+[2025-06-27 21:28:49] [DEBUG3] Transcriber picked up audio event: input_20250627_212848_419.wav, trigger key: Ctrl+z
+[2025-06-27 21:28:50] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-27 21:28:50] [DEBUG3] Typing text: 'make'
+[2025-06-27 21:28:50] [DEBUG3] Deleted audio file: input_20250627_212848_419.wav
+[2025-06-27 21:28:50] [DEBUG3] Finished typing text.
+[2025-06-29 10:59:05] [INFO] coral is up and running
+[2025-06-29 10:59:26] [DEBUG3] Starting recording to: input_20250629_105926_299.wav
+[2025-06-29 10:59:30] [DEBUG3] Finished recording: input_20250629_105926_299.wav
+[2025-06-29 10:59:30] [DEBUG3] Inserting audio file into queue: input_20250629_105926_299.wav, triggered by: Ctrl+a
+[2025-06-29 10:59:30] [DEBUG3] AudioEvent created with trigger key: Ctrl+a
+[2025-06-29 10:59:30] [DEBUG3] Queue size after push: 1
+[2025-06-29 10:59:30] [DEBUG3] Transcriber picked up audio event: input_20250629_105926_299.wav, trigger key: Ctrl+a
+[2025-06-29 10:59:31] [DEBUG3] Pushing transcribed text to textEventQueue (triggerKey)
+[2025-06-29 10:59:31] [DEBUG3] Typing text: ' I'm going to test coral. This is the first testing. '
+[2025-06-29 10:59:31] [DEBUG3] Deleted audio file: input_20250629_105926_299.wav
+[2025-06-29 10:59:32] [DEBUG3] Finished typing text.
+[2025-06-29 10:59:45] [DEBUG3] cmdTriggerKey detected
+[2025-06-29 10:59:45] [DEBUG3] Starting recording to: input_20250629_105945_267.wav
+[2025-06-29 10:59:46] [DEBUG3] Finished recording: input_20250629_105945_267.wav
+[2025-06-29 10:59:46] [DEBUG3] Inserting audio file into queue: input_20250629_105945_267.wav, triggered by: Ctrl+z
+[2025-06-29 10:59:46] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-29 10:59:46] [DEBUG3] Queue size after push: 1
+[2025-06-29 10:59:46] [DEBUG3] Transcriber picked up audio event: input_20250629_105945_267.wav, trigger key: Ctrl+z
+[2025-06-29 10:59:47] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-29 10:59:47] [DEBUG3] Typing text: 'make'
+[2025-06-29 10:59:47] [DEBUG3] Deleted audio file: input_20250629_105945_267.wav
+[2025-06-29 10:59:47] [DEBUG3] Finished typing text.
+[2025-06-29 10:59:51] [DEBUG3] cmdTriggerKey detected
+[2025-06-29 10:59:51] [DEBUG3] Starting recording to: input_20250629_105951_349.wav
+[2025-06-29 10:59:52] [DEBUG3] Finished recording: input_20250629_105951_349.wav
+[2025-06-29 10:59:52] [DEBUG3] Inserting audio file into queue: input_20250629_105951_349.wav, triggered by: Ctrl+z
+[2025-06-29 10:59:52] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-29 10:59:52] [DEBUG3] Queue size after push: 1
+[2025-06-29 10:59:52] [DEBUG3] Transcriber picked up audio event: input_20250629_105951_349.wav, trigger key: Ctrl+z
+[2025-06-29 10:59:53] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-29 10:59:53] [DEBUG3] Typing text: 'i fell'
+[2025-06-29 10:59:53] [DEBUG3] Deleted audio file: input_20250629_105951_349.wav
+[2025-06-29 10:59:53] [DEBUG3] Finished typing text.
+[2025-06-29 10:59:55] [DEBUG3] cmdTriggerKey detected
+[2025-06-29 10:59:55] [DEBUG3] Starting recording to: input_20250629_105955_554.wav
+[2025-06-29 10:59:56] [DEBUG3] Finished recording: input_20250629_105955_554.wav
+[2025-06-29 10:59:56] [DEBUG3] Inserting audio file into queue: input_20250629_105955_554.wav, triggered by: Ctrl+z
+[2025-06-29 10:59:56] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-29 10:59:56] [DEBUG3] Queue size after push: 1
+[2025-06-29 10:59:56] [DEBUG3] Transcriber picked up audio event: input_20250629_105955_554.wav, trigger key: Ctrl+z
+[2025-06-29 10:59:58] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-29 10:59:58] [DEBUG3] Typing text: 'assalam o alaihi walaykum walaykum'
+[2025-06-29 10:59:58] [DEBUG3] Deleted audio file: input_20250629_105955_554.wav
+[2025-06-29 10:59:58] [DEBUG3] Finished typing text.
+[2025-06-29 11:00:00] [DEBUG3] cmdTriggerKey detected
+[2025-06-29 11:00:00] [DEBUG3] Starting recording to: input_20250629_110000_595.wav
+[2025-06-29 11:00:01] [DEBUG3] Finished recording: input_20250629_110000_595.wav
+[2025-06-29 11:00:01] [DEBUG3] Inserting audio file into queue: input_20250629_110000_595.wav, triggered by: Ctrl+z
+[2025-06-29 11:00:01] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-29 11:00:01] [DEBUG3] Queue size after push: 1
+[2025-06-29 11:00:01] [DEBUG3] Transcriber picked up audio event: input_20250629_110000_595.wav, trigger key: Ctrl+z
+[2025-06-29 11:00:04] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-29 11:00:04] [DEBUG3] Typing text: 'assalam o alaihi walaykum'
+[2025-06-29 11:00:04] [DEBUG3] Deleted audio file: input_20250629_110000_595.wav
+[2025-06-29 11:00:04] [DEBUG3] Finished typing text.
+[2025-06-29 11:00:07] [DEBUG3] cmdTriggerKey detected
+[2025-06-29 11:00:07] [DEBUG3] Starting recording to: input_20250629_110007_513.wav
+[2025-06-29 11:00:08] [DEBUG3] Finished recording: input_20250629_110007_513.wav
+[2025-06-29 11:00:08] [DEBUG3] Inserting audio file into queue: input_20250629_110007_513.wav, triggered by: Ctrl+z
+[2025-06-29 11:00:08] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-29 11:00:08] [DEBUG3] Queue size after push: 1
+[2025-06-29 11:00:08] [DEBUG3] Transcriber picked up audio event: input_20250629_110007_513.wav, trigger key: Ctrl+z
+[2025-06-29 11:00:09] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-29 11:00:09] [DEBUG3] Typing text: 'love'
+[2025-06-29 11:00:09] [DEBUG3] Deleted audio file: input_20250629_110007_513.wav
+[2025-06-29 11:00:09] [DEBUG3] Finished typing text.
+[2025-06-29 11:00:12] [DEBUG3] cmdTriggerKey detected
+[2025-06-29 11:00:12] [DEBUG3] Starting recording to: input_20250629_110012_672.wav
+[2025-06-29 11:00:13] [DEBUG3] Finished recording: input_20250629_110012_672.wav
+[2025-06-29 11:00:13] [DEBUG3] Inserting audio file into queue: input_20250629_110012_672.wav, triggered by: Ctrl+z
+[2025-06-29 11:00:13] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-29 11:00:13] [DEBUG3] Queue size after push: 1
+[2025-06-29 11:00:13] [DEBUG3] Transcriber picked up audio event: input_20250629_110012_672.wav, trigger key: Ctrl+z
+[2025-06-29 11:00:15] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-29 11:00:15] [DEBUG3] Typing text: 'i love'
+[2025-06-29 11:00:15] [DEBUG3] Deleted audio file: input_20250629_110012_672.wav
+[2025-06-29 11:00:15] [DEBUG3] Finished typing text.
+[2025-06-29 11:00:17] [DEBUG3] cmdTriggerKey detected
+[2025-06-29 11:00:17] [DEBUG3] Starting recording to: input_20250629_110017_10.wav
+[2025-06-29 11:00:18] [DEBUG3] Finished recording: input_20250629_110017_10.wav
+[2025-06-29 11:00:18] [DEBUG3] Inserting audio file into queue: input_20250629_110017_10.wav, triggered by: Ctrl+z
+[2025-06-29 11:00:18] [DEBUG3] AudioEvent created with trigger key: Ctrl+z
+[2025-06-29 11:00:18] [DEBUG3] Queue size after push: 1
+[2025-06-29 11:00:18] [DEBUG3] Transcriber picked up audio event: input_20250629_110017_10.wav, trigger key: Ctrl+z
+[2025-06-29 11:00:19] [DEBUG3] Pushing transcribed text to textEventQueue (cmdTriggerKey)
+[2025-06-29 11:00:19] [DEBUG3] Typing text: 'sl'
+[2025-06-29 11:00:19] [DEBUG3] Deleted audio file: input_20250629_110017_10.wav
+[2025-06-29 11:00:19] [DEBUG3] Finished typing text.

@@ -130,7 +130,7 @@ chmod +x "$APPDIR/AppRun"
 rm -f CoralApp-x86_64.AppImage
 
 echo "Building AppImage..."
-appimagetool "$APPDIR" ../CoralApp-x86_64.AppImage
+appimagetool "$APPDIR" ../CoralApp-${APP_VERSION}-x86_64.AppImage
 
 # Remove the AppDir after building the AppImage
 rm -rf "$APPDIR"

@@ -1,6 +1,6 @@
 // version.h.in - template, filled in by build.sh
 
-#define APP_VERSION "1.0.0"
-#define BUILD_DATE "2025-09-04"
-#define GIT_COMMIT "ac58d17"
+#define APP_VERSION "0.1.1"
+#define BUILD_DATE "2025-09-17"
+#define GIT_COMMIT "6a93ecb"
 

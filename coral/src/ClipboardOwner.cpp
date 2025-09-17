@@ -12,6 +12,10 @@ ClipboardOwner::ClipboardOwner(Display* display, Window ownerWindow)
     _primaryAtom = XInternAtom(_display, "PRIMARY", False);
     _utf8Atom = XInternAtom(_display, "UTF8_STRING", False);
     _targetsAtom = XInternAtom(_display, "TARGETS", False);
+    _textAtom = XInternAtom(_display, "TEXT", False);
+    _compoundTextAtom = XInternAtom(_display, "COMPOUND_TEXT", False);
+    _textPlainAtom = XInternAtom(_display, "text/plain", False);
+    _textPlainUtf8Atom = XInternAtom(_display, "text/plain;charset=utf-8", False);
 
     XSetSelectionOwner(_display, _clipboardAtom, _window, CurrentTime);
     XSetSelectionOwner(_display, _primaryAtom, _window, CurrentTime);
@@ -54,7 +58,8 @@ void ClipboardOwner::serveRequests(const std::string& text,
                 continue;
             }
 
-            if (req->target == _utf8Atom && !hasServedUTF8)
+            //if (req->target == _utf8Atom && !hasServedUTF8)
+            if (req->target == _utf8Atom)
             {
                 DEBUG(3, "Setting clipboard with UTF8_STRING target and text is " + text);
                 XChangeProperty(_display, req->requestor, req->property, _utf8Atom, 8,
@@ -70,16 +75,46 @@ void ClipboardOwner::serveRequests(const std::string& text,
                 servedRequests++;
                 lastActivity = std::chrono::steady_clock::now();
             }
+            else if (req->target == _textAtom)
+            {
+                XChangeProperty(_display, req->requestor, req->property, _textAtom, 8,
+                                PropModeReplace, (const unsigned char*)text.c_str(), text.size());
+                servedRequests++;
+                lastActivity = std::chrono::steady_clock::now();
+            }
+            else if (req->target == _compoundTextAtom)
+            {
+                XChangeProperty(_display, req->requestor, req->property, _compoundTextAtom, 8,
+                                PropModeReplace, (const unsigned char*)text.c_str(), text.size());
+                servedRequests++;
+                lastActivity = std::chrono::steady_clock::now();
+            }
+            else if (req->target == _textPlainAtom)
+            {
+                XChangeProperty(_display, req->requestor, req->property, _textPlainAtom, 8,
+                                PropModeReplace, (const unsigned char*)text.c_str(), text.size());
+                servedRequests++;
+                lastActivity = std::chrono::steady_clock::now();
+            }
+            else if (req->target == _textPlainUtf8Atom)
+            {
+                XChangeProperty(_display, req->requestor, req->property, _textPlainUtf8Atom, 8,
+                                PropModeReplace, (const unsigned char*)text.c_str(), text.size());
+                servedRequests++;
+                lastActivity = std::chrono::steady_clock::now();
+            }
             else if (req->target == _targetsAtom)
             {
-                Atom targets[2] = { _utf8Atom, XA_STRING };
+                Atom targets[] = { _utf8Atom, XA_STRING, _textAtom, _compoundTextAtom, _textPlainAtom, _textPlainUtf8Atom };
                 XChangeProperty(_display, req->requestor, req->property, XA_ATOM, 32,
-                                PropModeReplace, (unsigned char*)targets, 2);
+                                PropModeReplace, (unsigned char*)targets, sizeof(targets) / sizeof(targets[0]));
                 lastActivity = std::chrono::steady_clock::now();
             }
             else
             {
-                DEBUG(3, "Unsupported target type");
+                char* target_name = XGetAtomName(_display, req->target);
+                DEBUG(3, std::string("Unsupported target type: ") + (target_name ? target_name : "UNKNOWN"));
+                if (target_name) XFree(target_name);
                 respond.xselection.property = None;
             }
 
@@ -89,7 +124,8 @@ void ClipboardOwner::serveRequests(const std::string& text,
         }
 
         // Exit early if we've served requests and been idle
-        if (servedRequests > 0 && std::chrono::steady_clock::now() - lastActivity > std::chrono::milliseconds(idleExitMs))
+        //if (servedRequests > 0 && std::chrono::steady_clock::now() - lastActivity > std::chrono::milliseconds(idleExitMs))
+        if (std::chrono::steady_clock::now() - lastActivity > std::chrono::milliseconds(idleExitMs))
         {
             DEBUG(3, "Exiting clipboard serving after " + std::to_string(servedRequests) + " requests served");
             break;

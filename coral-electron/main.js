@@ -232,7 +232,7 @@ function showCustomAboutWindow() {
         <div class="about-box">
           <div class="title">Coral App</div>
           <div class="version">Version: ${app.getVersion()}</div>
-          <div class="desc">© 2024 Coral Contributors</div>
+          <div class="desc">© 2025 Coral Contributors</div>
           <div class="tip">To transcribe your speech, hold down the trigger key (Alt+z) and start talking.</div>
           <button class="ok-btn" onclick="window.close()">OK</button>
         </div>
@@ -266,7 +266,7 @@ app.whenReady().then(() => {
         dialog.showMessageBox({
           type: 'info',
           title: 'About Coral',
-          message: 'Coral App\nVersion: ' + app.getVersion() + '\n\u00A9 2024 Coral Contributors\n\nTo transcribe your speech, hold down the trigger key (Alt+z) and start talking.',
+          message: 'Coral App\nVersion: ' + app.getVersion() + '\n\u00A9 2025 Coral Contributors\n\nTo transcribe your speech, hold down the trigger key (Alt+z) and start talking.',
           buttons: ['OK']
         });
       }

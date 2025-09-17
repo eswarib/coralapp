@@ -2,6 +2,21 @@
 CXX := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra -O2 -lX11
 
+# Wayland portal support (libportal) - detect pkg name
+PORTAL_PKG := $(shell pkg-config --exists libportal-1 && echo libportal-1 || (pkg-config --exists libportal && echo libportal))
+PORTAL_CFLAGS := $(shell pkg-config --cflags $(PORTAL_PKG) gio-2.0 gobject-2.0 glib-2.0)
+PORTAL_LIBS := $(shell pkg-config --libs $(PORTAL_PKG) gio-2.0 gobject-2.0 glib-2.0)
+CXXFLAGS += -DHAVE_LIBPORTAL $(PORTAL_CFLAGS)
+LIBS += $(PORTAL_LIBS)
+
+# AT-SPI (accessibility) optional support
+ATSPI_CFLAGS := $(shell pkg-config --cflags atspi-2 2>/dev/null)
+ATSPI_LIBS := $(shell pkg-config --libs atspi-2 2>/dev/null)
+ifneq (,$(ATSPI_CFLAGS))
+  CXXFLAGS += -DHAVE_ATSPI $(ATSPI_CFLAGS)
+  LIBS += $(ATSPI_LIBS)
+endif
+
 # xdo static library and include
 XDO_LIB := ../../libxdo/libxdo.a
 XDO_INC := -I../../libxdo
@@ -17,7 +32,7 @@ INCLUDES := -I/usr/local/include \
 LIBDIRS := -L/usr/local/lib -L../lib
 
 # Libraries to link
-LIBS:= -lwhisper -lpthread -lm -lportaudio -lsndfile
+LIBS:= -lwhisper -lpthread -lm -lportaudio -lsndfile $(LIBS)
 
 # Paths
 SRC_DIR := .

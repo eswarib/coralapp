@@ -55,6 +55,7 @@ void TranscriberThread::run()
             
             _textQueue.push(std::make_shared<TextEvent>(text));
             // Delete audio file after transcription
+            
             if (std::remove(audioFile.c_str()) == 0) 
             {
                 DEBUG(3, "Deleted audio file: " + audioFile);
@@ -62,6 +63,7 @@ void TranscriberThread::run()
             {
                 WARN("Failed to delete audio file: " + audioFile);
             }
+            
         }
     } catch (const std::exception& ex) {
         ERROR(std::string("Exception in TranscriberThread: ") + ex.what());

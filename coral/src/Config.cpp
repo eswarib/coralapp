@@ -6,6 +6,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <vector>
 #include "Logger.h"
 #include "Utils.h"
 
@@ -79,20 +80,70 @@ Config::Config(const std::string& filePath)
 std::string Config::getWhisperModelPath() const {
     namespace fs = std::filesystem;
     
-    // Check config path
+    // 1) Config path (with tilde expansion)
     std::string expandedModelPath = Utils::expandTilde(whisperModelPath);
     if (!expandedModelPath.empty() && fs::exists(expandedModelPath)) 
     {
         return expandedModelPath;
     }
 
-    // Fallback path
-    
-    const char* appdir = std::getenv("APPDIR");
-        
+    // 2) Build a set of candidate directories and filenames
+    std::vector<std::string> candidates;
+    auto addCandidatesInDir = [&](const fs::path& dir){
+        candidates.push_back((dir / WhisperModelNameBaseEn).string());
+        candidates.push_back((dir / WhisperModelNameSmallEn).string());
+        candidates.push_back((dir / WhisperModelNameSmallEnQ8).string());
+    };
 
-    const std::string fallbackModelPath = std::string(appdir) + "/usr/share/coral/models/" + WhisperModelNameBaseEn;
-    return fallbackModelPath;
+    const char* appdir = std::getenv("APPDIR");
+    if (appdir && *appdir)
+    {
+        addCandidatesInDir(fs::path(appdir) / "usr/share/coral/models");
+    }
+
+    // System path
+    addCandidatesInDir(fs::path("/usr/share/coral/models"));
+
+    // Executable-relative paths
+    char exePath[4096];
+    ssize_t len = readlink("/proc/self/exe", exePath, sizeof(exePath) - 1);
+    if (len != -1) {
+        exePath[len] = '\0';
+        fs::path exeDir = fs::path(exePath).parent_path();
+        addCandidatesInDir(exeDir / "../share/coral/models");
+        addCandidatesInDir(exeDir / "models");
+    }
+
+    // User models directory
+    const char* home = std::getenv("HOME");
+    if (home && *home)
+    {
+        addCandidatesInDir(fs::path(home) / ".coral/models");
+    }
+
+    for (const auto& c : candidates)
+    {
+        if (fs::exists(c))
+        {
+            INFO("Resolved whisper model path: [" + c + "]");
+            return c;
+        }
+    }
+
+    // Final fallback: prefer APPDIR if available, else system default
+    std::string fallback = (appdir && *appdir)
+        ? (fs::path(appdir) / "usr/share/coral/models" / WhisperModelNameBaseEn).string()
+        : (fs::path("/usr/share/coral/models") / WhisperModelNameBaseEn).string();
+
+    if (!fs::exists(fallback))
+    {
+        ERROR("Whisper model not found. Expected at: " + fallback);
+    }
+    else
+    {
+        INFO("Using fallback whisper model: [" + fallback + "]");
+    }
+    return fallback;
 }
 
 

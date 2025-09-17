@@ -20,6 +20,9 @@ bool X11WindowUtils::isTerminal(Display* display, Window window)
         return false;
     }
 
+    Window topLevel = getTopLevelWindow(display, window);
+    window = topLevel;
+
     XClassHint class_hints;
     if (XGetClassHint(display, window, &class_hints))
     {

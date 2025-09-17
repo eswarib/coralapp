@@ -20,6 +20,10 @@ private:
     Atom _primaryAtom;
     Atom _utf8Atom;
     Atom _targetsAtom;
+    Atom _textAtom;                 // "TEXT"
+    Atom _compoundTextAtom;         // "COMPOUND_TEXT"
+    Atom _textPlainAtom;            // "text/plain"
+    Atom _textPlainUtf8Atom;        // "text/plain;charset=utf-8"
 };
 
 #endif // CLIPBOARD_OWNER_H

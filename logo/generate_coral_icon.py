@@ -2,7 +2,7 @@ from PIL import Image, ImageDraw
 import math
 import os
 
-ICON_SIZE = 32
+ICON_SIZE = 256 
 BG_COLOR = (0, 0, 0, 0)  # Transparent
 WAVE_COLOR = (255, 255, 255, 255)  # White
 WAVE_WIDTH = 3
@@ -20,5 +20,5 @@ for i in range(3):
     draw.line(points, fill=WAVE_COLOR, width=WAVE_WIDTH)
 
 #os.makedirs("logo", exist_ok=True)
-img.save("coral.png")
-print("Saved coral.png")
+img.save("coral_icon.png")
+print("Saved coral_icon.png")

@@ -19,7 +19,7 @@ private:
 
 	static Recorder * sInstance;
 	PaStream* stream_ = nullptr;
-	std::vector<float> recordedSamples_;
+	std::vector<float> mRecordedSamplesVec;
 };
 
 #endif

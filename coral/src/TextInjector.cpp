@@ -1,7 +1,11 @@
+#if defined(_WIN32)
+#include "WindowsInjector.h"
+#else
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <X11/keysym.h>
+#endif
 
 #include "TextInjector.h"
 #include "Logger.h"
@@ -50,7 +54,13 @@ void TextInjector::typeText(const std::string& text)
         DEBUG(3, "TextInjector: injected via AT-SPI EditableText");
         return;
     }
-    // Wayland path first
+    // Windows path
+    #if defined(_WIN32)
+    WindowsInjector::getInstance().typeText(text);
+    return;
+    #endif
+
+    // Wayland path first (Linux)
     if (isWaylandSession())
     {
         DEBUG(3, "Wayland session detected; attempting WaylandInjector");
@@ -61,6 +71,6 @@ void TextInjector::typeText(const std::string& text)
         DEBUG(3, "WaylandInjector not available/failed; falling back to X11 path if possible");
     }
 
-    // X11 fallback / default
+    // X11 fallback / default (Linux)
     X11Injector::getInstance().typeText(text);
 }

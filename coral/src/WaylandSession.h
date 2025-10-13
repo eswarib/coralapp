@@ -23,6 +23,8 @@ private:
     WaylandSession() = default;
 
     bool _initialized = false;
+    std::string _rdpSessionObjectPath;
+    bool _rdpStarted = false;
 
 #ifdef HAVE_LIBPORTAL
     // Forward typedefs instead of including headers here

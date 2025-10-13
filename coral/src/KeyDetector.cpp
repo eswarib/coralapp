@@ -1,4 +1,7 @@
 #include "KeyDetector.h"
+#if defined(_WIN32)
+#include <windows.h>
+#else
 #include <X11/Xlib.h>
 #include <X11/keysym.h>
 #include <X11/extensions/XTest.h>
@@ -7,6 +10,7 @@
 #include <vector>
 #include <sstream>
 #include <algorithm>
+#endif
 
 // Helper: map string to X11 keysym
 KeySym keyNameToKeySym(const std::string& keyName) {
@@ -38,6 +42,32 @@ std::vector<std::string> split(const std::string& s, char delimiter) {
 }
 
 bool KeyDetector::isTriggerKeyPressed(const std::string& keyCombo) {
+#if defined(_WIN32)
+    // Very simple Windows implementation: support Ctrl, Shift, Alt + A-Z keys
+    bool ctrl = (GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0;
+    bool shift = (GetAsyncKeyState(VK_SHIFT) & 0x8000) != 0;
+    bool alt = (GetAsyncKeyState(VK_MENU) & 0x8000) != 0;
+    // Expect formats like "Ctrl+1" or "Ctrl+Shift+V"
+    bool needCtrl = keyCombo.find("Ctrl") != std::string::npos;
+    bool needShift = keyCombo.find("Shift") != std::string::npos;
+    bool needAlt = keyCombo.find("Alt") != std::string::npos;
+
+    // Extract last token as primary key
+    size_t pos = keyCombo.rfind('+');
+    std::string primary = (pos == std::string::npos) ? keyCombo : keyCombo.substr(pos + 1);
+    // Trim spaces
+    primary.erase(std::remove_if(primary.begin(), primary.end(), ::isspace), primary.end());
+    SHORT vkey = 0;
+    if (primary.size() == 1) {
+        char c = primary[0];
+        if (c >= 'A' && c <= 'Z') vkey = c;
+        else if (c >= 'a' && c <= 'z') vkey = toupper(c);
+        else if (c >= '0' && c <= '9') vkey = c;
+    } else if (primary == "F1") vkey = VK_F1; else if (primary == "F2") vkey = VK_F2; // extend as needed
+
+    bool primaryDown = vkey ? ((GetAsyncKeyState(vkey) & 0x8000) != 0) : false;
+    return (!needCtrl || ctrl) && (!needShift || shift) && (!needAlt || alt) && primaryDown;
+#else
     if (keyCombo.find("Fn") != std::string::npos) {
         std::cerr << "[KeyDetector] 'Fn' key cannot be detected in software. Please use another key in config.json.\n";
         return false;
@@ -67,4 +97,5 @@ bool KeyDetector::isTriggerKeyPressed(const std::string& keyCombo) {
     }
     XCloseDisplay(display);
     return allPressed;
+#endif
 } 

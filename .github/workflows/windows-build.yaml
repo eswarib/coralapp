@@ -27,14 +27,14 @@ jobs:
         run: |
           C:\vcpkg\vcpkg.exe install portaudio:x64-windows libsndfile:x64-windows
 
-      - name: Build whisper.cpp (static lib)
+      - name: Build whisper.cpp (static libs)
         shell: cmd
         run: |
           git clone --depth 1 https://github.com/ggerganov/whisper.cpp C:\whispercpp
           cmake -S C:\whispercpp -B C:\whispercpp\build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
-          cmake --build C:\whispercpp\build --config Release --target whisper
+          cmake --build C:\whispercpp\build --config Release --target ggml whisper
 
-      - name: Detect whisper library path
+      - name: Detect whisper and ggml library paths
         shell: pwsh
         run: |
           $candidates = @(
@@ -51,6 +51,10 @@ jobs:
           }
           if (-not $found) { throw 'whisper*.lib not found under C:\whispercpp\build' }
           echo "WHISPERLIB=$found" >> $env:GITHUB_ENV
+
+          $ggml = Get-ChildItem -Path 'C:\whispercpp\build' -Filter 'ggml*.lib' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $ggml) { throw 'ggml*.lib not found under C:\whispercpp\build' }
+          echo "GGMLLIB=$($ggml.FullName)" >> $env:GITHUB_ENV
 
       - name: List whisper build outputs (diagnostic)
         shell: cmd
@@ -70,6 +74,7 @@ jobs:
             -DVCPKG_TARGET_TRIPLET=x64-windows ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DWHISPER_LIBRARY="%WHISPERLIB%" ^
+            -DGGML_LIBRARY="%GGMLLIB%" ^
             -DAPP_VERSION="%APPVER%" ^
             -DBUILD_DATE="%DATE%" ^
             -DGIT_COMMIT="%GITHUB_SHA:~0,7%"

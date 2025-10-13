@@ -1,5 +1,17 @@
-
 #include "stderrSilencer.h"
+#if defined(_WIN32)
+
+stderrSilencer::stderrSilencer() 
+{
+    // No-op on Windows
+}
+
+stderrSilencer::~stderrSilencer() 
+{
+    // No-op on Windows
+}
+
+#else
 #include <cstdio>
 #include <unistd.h>
 #include <fcntl.h>
@@ -22,4 +34,4 @@ stderrSilencer::~stderrSilencer() {
     }
 }
 
-
+#endif

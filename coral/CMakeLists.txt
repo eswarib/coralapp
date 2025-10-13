@@ -102,11 +102,7 @@ else() # WIN32
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/X11.*\\.cpp$")
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/Wayland.*\\.cpp$")
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/A11yInjector\\.cpp$")
-    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/stdoutSilencer\\.cpp$")
-    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/stderrSilencer\\.cpp$")
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/X11WindowUtils\\.cpp$")
-    # Also exclude KeyDetector (X11-based) for now on Windows
-    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/KeyDetector\\.cpp$")
 
     add_executable(coral ${CORAL_SOURCES})
 
@@ -212,17 +208,36 @@ else() # WIN32
 
     # Optional: Whisper library on Windows (user-provided)
     set(WHISPER_HINT "${CMAKE_CURRENT_LIST_DIR}/lib")
-    find_library(WHISPER_LIBRARY NAMES whisper whisper.dll.lib HINTS ${WHISPER_HINT})
+    if(NOT WHISPER_LIBRARY)
+        find_library(WHISPER_LIBRARY NAMES whisper whisper.dll.lib HINTS ${WHISPER_HINT})
+    endif()
     if(WHISPER_LIBRARY)
         target_link_libraries(coral PRIVATE ${WHISPER_LIBRARY})
-        target_include_directories(coral PRIVATE
-            ${CMAKE_CURRENT_LIST_DIR}/../whispercpp/include
-            ${CMAKE_CURRENT_LIST_DIR}/../whispercpp/ggml/include
-        )
         message(STATUS "Using Whisper library: ${WHISPER_LIBRARY}")
     else()
-        message(WARNING "Whisper library not found. Ensure whisper(.lib) is available and set in coral/lib or provide -DWHISPER_LIBRARY=...")
+        message(WARNING "Whisper library not found. Ensure whisper(.lib) is available and set via -DWHISPER_LIBRARY.")
     endif()
+
+    # GGML dep for whisper
+    if(GGML_LIBRARY)
+        target_link_libraries(coral PRIVATE ${GGML_LIBRARY})
+        message(STATUS "Using GGML library: ${GGML_LIBRARY}")
+    else()
+        # try to locate
+        find_library(GGML_LIBRARY NAMES ggml ggml-static ggml.lib HINTS ${WHISPER_HINT})
+        if(GGML_LIBRARY)
+            target_link_libraries(coral PRIVATE ${GGML_LIBRARY})
+            message(STATUS "Using GGML library: ${GGML_LIBRARY}")
+        else()
+            message(WARNING "GGML library not found; whisper may fail to link.")
+        endif()
+    endif()
+
+    # whisper/ggml headers (optional if using system installs)
+    target_include_directories(coral PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}/../whispercpp/include
+        ${CMAKE_CURRENT_LIST_DIR}/../whispercpp/ggml/include
+    )
 
     target_link_libraries(coral PRIVATE ${PORTAUDIO_TARGET} ${SNDFILE_TARGET} user32)
 

@@ -156,8 +156,56 @@ else() # WIN32
 
     # Dependencies via vcpkg recommended:
     #   vcpkg install portaudio:x64-windows libsndfile:x64-windows
-    find_package(PortAudio CONFIG REQUIRED)
-    find_package(sndfile CONFIG REQUIRED)
+    find_package(PortAudio CONFIG QUIET)
+    find_package(sndfile CONFIG QUIET)
+
+    # Resolve PortAudio target across package variants
+    if(TARGET PortAudio::PortAudio)
+        set(PORTAUDIO_TARGET PortAudio::PortAudio)
+        message(STATUS "Found PortAudio target: PortAudio::PortAudio")
+    elseif(TARGET portaudio)
+        set(PORTAUDIO_TARGET portaudio)
+        message(STATUS "Found PortAudio target: portaudio")
+    else()
+        find_library(PORTAUDIO_LIB NAMES portaudio portaudio_static)
+        if(PORTAUDIO_LIB)
+            set(PORTAUDIO_TARGET ${PORTAUDIO_LIB})
+            find_path(PORTAUDIO_INCLUDE_DIR portaudio.h)
+            if(PORTAUDIO_INCLUDE_DIR)
+                target_include_directories(coral PRIVATE ${PORTAUDIO_INCLUDE_DIR})
+            endif()
+            message(STATUS "Found PortAudio library: ${PORTAUDIO_LIB}")
+            if(PORTAUDIO_INCLUDE_DIR)
+                message(STATUS "PortAudio include dir: ${PORTAUDIO_INCLUDE_DIR}")
+            endif()
+        else()
+            message(FATAL_ERROR "PortAudio not found. Install via vcpkg or provide -DPORTAUDIO_LIB.")
+        endif()
+    endif()
+
+    # Resolve libsndfile target across package variants
+    if(TARGET sndfile::sndfile)
+        set(SNDFILE_TARGET sndfile::sndfile)
+        message(STATUS "Found sndfile target: sndfile::sndfile")
+    elseif(TARGET sndfile)
+        set(SNDFILE_TARGET sndfile)
+        message(STATUS "Found sndfile target: sndfile")
+    else()
+        find_library(SNDFILE_LIB NAMES sndfile libsndfile-1)
+        if(SNDFILE_LIB)
+            set(SNDFILE_TARGET ${SNDFILE_LIB})
+            find_path(SNDFILE_INCLUDE_DIR sndfile.h)
+            if(SNDFILE_INCLUDE_DIR)
+                target_include_directories(coral PRIVATE ${SNDFILE_INCLUDE_DIR})
+            endif()
+            message(STATUS "Found sndfile library: ${SNDFILE_LIB}")
+            if(SNDFILE_INCLUDE_DIR)
+                message(STATUS "sndfile include dir: ${SNDFILE_INCLUDE_DIR}")
+            endif()
+        else()
+            message(FATAL_ERROR "libsndfile not found. Install via vcpkg or provide -DSNDFILE_LIB.")
+        endif()
+    endif()
 
     # Optional: Whisper library on Windows (user-provided)
     set(WHISPER_HINT "${CMAKE_CURRENT_LIST_DIR}/lib")
@@ -168,15 +216,12 @@ else() # WIN32
             ${CMAKE_CURRENT_LIST_DIR}/../whispercpp/include
             ${CMAKE_CURRENT_LIST_DIR}/../whispercpp/ggml/include
         )
+        message(STATUS "Using Whisper library: ${WHISPER_LIBRARY}")
     else()
         message(WARNING "Whisper library not found. Ensure whisper(.lib) is available and set in coral/lib or provide -DWHISPER_LIBRARY=...")
     endif()
 
-    target_link_libraries(coral PRIVATE
-        PortAudio::PortAudio
-        sndfile::sndfile
-        user32 # For SendInput in WindowsInjector
-    )
+    target_link_libraries(coral PRIVATE ${PORTAUDIO_TARGET} ${SNDFILE_TARGET} user32)
 
     # Install rules (portable layout)
     install(TARGETS coral RUNTIME DESTINATION .)

@@ -218,18 +218,19 @@ else() # WIN32
         message(WARNING "Whisper library not found. Ensure whisper(.lib) is available and set via -DWHISPER_LIBRARY.")
     endif()
 
-    # GGML dep for whisper
-    if(GGML_LIBRARY)
-        target_link_libraries(coral PRIVATE ${GGML_LIBRARY})
-        message(STATUS "Using GGML library: ${GGML_LIBRARY}")
+    # GGML deps (may consist of multiple libs)
+    if(GGML_LIBRARIES)
+        string(REPLACE ";" "\n  - " _ggml_list "${GGML_LIBRARIES}")
+        message(STATUS "Using GGML libraries:\n  - ${_ggml_list}")
+        separate_arguments(GGML_LIBRARIES)
+        target_link_libraries(coral PRIVATE ${GGML_LIBRARIES})
     else()
-        # try to locate
         find_library(GGML_LIBRARY NAMES ggml ggml-static ggml.lib HINTS ${WHISPER_HINT})
         if(GGML_LIBRARY)
             target_link_libraries(coral PRIVATE ${GGML_LIBRARY})
             message(STATUS "Using GGML library: ${GGML_LIBRARY}")
         else()
-            message(WARNING "GGML library not found; whisper may fail to link.")
+            message(WARNING "GGML libraries not provided and not found; whisper may fail to link.")
         endif()
     endif()
 

@@ -52,9 +52,10 @@ jobs:
           if (-not $found) { throw 'whisper*.lib not found under C:\whispercpp\build' }
           echo "WHISPERLIB=$found" >> $env:GITHUB_ENV
 
-          $ggml = Get-ChildItem -Path 'C:\whispercpp\build' -Filter 'ggml*.lib' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-          if (-not $ggml) { throw 'ggml*.lib not found under C:\whispercpp\build' }
-          echo "GGMLLIB=$($ggml.FullName)" >> $env:GITHUB_ENV
+          $ggmls = Get-ChildItem -Path 'C:\whispercpp\build' -Filter 'ggml*.lib' -Recurse -ErrorAction SilentlyContinue
+          if (-not $ggmls -or $ggmls.Count -eq 0) { throw 'ggml*.lib not found under C:\whispercpp\build' }
+          $ggmlJoined = ($ggmls | ForEach-Object { $_.FullName }) -join ';'
+          echo "GGMLLIBS=$ggmlJoined" >> $env:GITHUB_ENV
 
       - name: List whisper build outputs (diagnostic)
         shell: cmd
@@ -74,7 +75,7 @@ jobs:
             -DVCPKG_TARGET_TRIPLET=x64-windows ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DWHISPER_LIBRARY="%WHISPERLIB%" ^
-            -DGGML_LIBRARY="%GGMLLIB%" ^
+            -DGGML_LIBRARIES="%GGMLLIBS%" ^
             -DAPP_VERSION="%APPVER%" ^
             -DBUILD_DATE="%DATE%" ^
             -DGIT_COMMIT="%GITHUB_SHA:~0,7%"

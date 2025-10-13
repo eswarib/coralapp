@@ -1,4 +1,6 @@
 #include "KeyDetector.h"
+#include <algorithm>
+#include <cctype>
 #if defined(_WIN32)
 #include <windows.h>
 #else
@@ -9,10 +11,10 @@
 #include <unordered_map>
 #include <vector>
 #include <sstream>
-#include <algorithm>
 #endif
 
-// Helper: map string to X11 keysym
+// Helper: map string to X11 keysym (Linux only)
+#if !defined(_WIN32)
 KeySym keyNameToKeySym(const std::string& keyName) {
     static const std::unordered_map<std::string, KeySym> keyMap = {
         {"F1", XK_F1}, {"F2", XK_F2}, {"F3", XK_F3}, {"F4", XK_F4},
@@ -20,26 +22,27 @@ KeySym keyNameToKeySym(const std::string& keyName) {
         {"F9", XK_F9}, {"F10", XK_F10}, {"F11", XK_F11}, {"F12", XK_F12},
         {"Ctrl", XK_Control_L}, {"Alt", XK_Alt_L}, {"Shift", XK_Shift_L},
         {"Super", XK_Super_L}, {"space", XK_space}, {"Num_Lock", XK_Num_Lock},
-        // Add more as needed
     };
     auto it = keyMap.find(keyName);
     if (it != keyMap.end()) return it->second;
-    if (keyName.length() == 1) return XStringToKeysym(keyName.c_str()); // single char
+    if (keyName.length() == 1) return XStringToKeysym(keyName.c_str());
     return NoSymbol;
 }
+#endif
 
-// Helper: split string by delimiter
+// Helper: split string by delimiter (Linux only usage)
+#if !defined(_WIN32)
 std::vector<std::string> split(const std::string& s, char delimiter) {
     std::vector<std::string> tokens;
     std::string token;
     std::istringstream tokenStream(s);
     while (std::getline(tokenStream, token, delimiter)) {
-        // Remove whitespace
         token.erase(std::remove_if(token.begin(), token.end(), ::isspace), token.end());
         tokens.push_back(token);
     }
     return tokens;
 }
+#endif
 
 bool KeyDetector::isTriggerKeyPressed(const std::string& keyCombo) {
 #if defined(_WIN32)

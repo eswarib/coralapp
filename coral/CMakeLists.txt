@@ -107,6 +107,53 @@ else() # WIN32
 
     add_executable(coral ${CORAL_SOURCES})
 
+    # Version info: allow passing APP_VERSION/BUILD_DATE/GIT_COMMIT from CI
+    if(NOT DEFINED APP_VERSION)
+        set(APP_VERSION "0.0.0")
+    endif()
+    if(NOT DEFINED BUILD_DATE)
+        string(TIMESTAMP BUILD_DATE "%Y-%m-%d")
+    endif()
+    if(NOT DEFINED GIT_COMMIT)
+        execute_process(COMMAND git rev-parse --short HEAD
+                        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+                        OUTPUT_VARIABLE GIT_COMMIT OUTPUT_STRIP_TRAILING_WHITESPACE
+                        ERROR_QUIET)
+        if(NOT GIT_COMMIT)
+            set(GIT_COMMIT "unknown")
+        endif()
+    endif()
+
+    # Compute RC numeric version A,B,C,D from APP_VERSION (A.B.C[.D])
+    string(REPLACE "." ";" _ver_list ${APP_VERSION})
+    list(GET _ver_list 0 _v0)
+    list(LENGTH _ver_list _vlen)
+    if(_vlen GREATER 1)
+        list(GET _ver_list 1 _v1)
+    else()
+        set(_v1 0)
+    endif()
+    if(_vlen GREATER 2)
+        list(GET _ver_list 2 _v2)
+    else()
+        set(_v2 0)
+    endif()
+    if(_vlen GREATER 3)
+        list(GET _ver_list 3 _v3)
+    else()
+        set(_v3 0)
+    endif()
+    set(APP_VERSION_RC "${_v0},${_v1},${_v2},${_v3}")
+    set(APP_VERSION_STR ${APP_VERSION})
+
+    # Generate version headers/resources in build dir
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/src/version.h.in
+                   ${CMAKE_CURRENT_BINARY_DIR}/version.h @ONLY)
+    configure_file(${CMAKE_CURRENT_LIST_DIR}/src/version.rc.in
+                   ${CMAKE_CURRENT_BINARY_DIR}/version.rc @ONLY)
+    target_include_directories(coral PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+    target_sources(coral PRIVATE ${CMAKE_CURRENT_BINARY_DIR}/version.rc)
+
     # Dependencies via vcpkg recommended:
     #   vcpkg install portaudio:x64-windows libsndfile:x64-windows
     find_package(PortAudio CONFIG REQUIRED)

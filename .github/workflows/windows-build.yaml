@@ -17,6 +17,12 @@ jobs:
           git clone https://github.com/microsoft/vcpkg C:\vcpkg
           C:\vcpkg\bootstrap-vcpkg.bat
 
+      - name: Compute app version
+        shell: pwsh
+        run: |
+          $pkg = Get-Content coral-electron/package.json | ConvertFrom-Json
+          echo "APPVER=$($pkg.version)" >> $env:GITHUB_ENV
+
       - name: Install dependencies (PortAudio, libsndfile)
         shell: cmd
         run: |
@@ -29,24 +35,37 @@ jobs:
           cmake -S C:\whispercpp -B C:\whispercpp\build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
           cmake --build C:\whispercpp\build --config Release --target whisper
 
+      - name: Clean build dir
+        shell: cmd
+        run: |
+          if exist build-win rmdir /S /Q build-win
+
       - name: Configure coral (CMake)
         shell: cmd
         run: |
-          cmake -S coral -B build -G "Visual Studio 17 2022" -A x64 ^
+          cmake -S coral -B build-win -G "Visual Studio 17 2022" -A x64 ^
             -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake ^
             -DVCPKG_TARGET_TRIPLET=x64-windows ^
             -DCMAKE_BUILD_TYPE=Release ^
-            -DWHISPER_LIBRARY="C:\whispercpp\build\Release\whisper.lib"
+            -DWHISPER_LIBRARY="C:\whispercpp\build\Release\whisper.lib" ^
+            -DAPP_VERSION="%APPVER%" ^
+            -DBUILD_DATE="%DATE%" ^
+            -DGIT_COMMIT="%GITHUB_SHA:~0,7%"
 
       - name: Build coral
         shell: cmd
         run: |
-          cmake --build build --config Release
+          cmake --build build-win --config Release
+
+      - name: Rename binary with version
+        shell: cmd
+        run: |
+          ren build-win\Release\coral.exe coral-%APPVER%.exe
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: coral-windows-x64
+          name: coral-windows-x64-v${{ env.APPVER }}
           path: |
-            build/Release/coral.exe
+            build-win/Release/coral-%APPVER%.exe
 

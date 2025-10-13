@@ -85,15 +85,18 @@ jobs:
         run: |
           cmake --build build-win --config Release
 
-      - name: Rename binary with version
-        shell: cmd
+      - name: Locate and version the EXE
+        shell: pwsh
         run: |
-          ren build-win\Release\coral.exe coral-%APPVER%.exe
+          $exe = Get-ChildItem -Path "build-win" -Filter "coral.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+          if (-not $exe) { throw "coral.exe not found under build-win" }
+          $dest = Join-Path $exe.Directory.FullName ("coral-" + $env:APPVER + ".exe")
+          Copy-Item $exe.FullName $dest -Force
+          echo "EXE_PATH=$dest" >> $env:GITHUB_ENV
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: coral-windows-x64-v${{ env.APPVER }}
-          path: |
-            build-win/Release/coral-%APPVER%.exe
+          path: ${{ env.EXE_PATH }}
 

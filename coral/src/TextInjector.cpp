@@ -9,11 +9,15 @@
 
 #include "TextInjector.h"
 #include "Logger.h"
+#if !defined(_WIN32)
 #include "X11WindowUtils.h"
+#endif
 #include "ClipboardOwner.h"
 #include "WaylandDetector.h"
 #include "WaylandInjector.h"
+#if !defined(_WIN32)
 #include "X11Injector.h"
+#endif
 #include "A11yInjector.h"
 #include <cstring>
 #include <vector>
@@ -23,10 +27,12 @@
 #include <chrono>
 
 
+#if !defined(_WIN32)
 extern "C" 
 {
 #include "xdo.h"
 }
+#endif
 
 TextInjector* TextInjector::sInstance = nullptr;
 
@@ -48,17 +54,18 @@ TextInjector::~TextInjector()
 
 void TextInjector::typeText(const std::string& text)
 {
+    // Windows path
+    #if defined(_WIN32)
+    WindowsInjector::getInstance().typeText(text);
+    return;
+    #else
     // AT-SPI first (cleanest when available)
     if (A11yInjector::getInstance().typeText(text))
     {
         DEBUG(3, "TextInjector: injected via AT-SPI EditableText");
         return;
     }
-    // Windows path
-    #if defined(_WIN32)
-    WindowsInjector::getInstance().typeText(text);
-    return;
-    #endif
+    
 
     // Wayland path first (Linux)
     if (isWaylandSession())
@@ -73,4 +80,5 @@ void TextInjector::typeText(const std::string& text)
 
     // X11 fallback / default (Linux)
     X11Injector::getInstance().typeText(text);
+    #endif
 }

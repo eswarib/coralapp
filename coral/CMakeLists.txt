@@ -97,13 +97,16 @@ if(UNIX)
 
 else() # WIN32
     # Collect sources and exclude Linux-only files
-    file(GLOB_RECURSE CORAL_SOURCES
-        "src/*.cpp"
-    )
-    # Exclude X11/Wayland/AT-SPI sources from Windows build
+    file(GLOB_RECURSE CORAL_SOURCES "src/*.cpp")
+    # Exclude Linux-only sources from Windows build
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/X11.*\\.cpp$")
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/Wayland.*\\.cpp$")
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/A11yInjector\\.cpp$")
+    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/stdoutSilencer\\.cpp$")
+    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/stderrSilencer\\.cpp$")
+    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/X11WindowUtils\\.cpp$")
+    # Also exclude KeyDetector (X11-based) for now on Windows
+    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/KeyDetector\\.cpp$")
 
     add_executable(coral ${CORAL_SOURCES})
 

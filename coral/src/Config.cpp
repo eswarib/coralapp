@@ -3,12 +3,17 @@
 #include <cstdlib>  // for getenv
 #include <fstream>
 #include <cstdlib>
+#if !defined(_WIN32)
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#endif
 #include <vector>
 #include "Logger.h"
 #include "Utils.h"
+#if defined(_WIN32)
+#include <windows.h>
+#endif
 
 namespace fs = std::filesystem;
 
@@ -95,6 +100,28 @@ std::string Config::getWhisperModelPath() const {
         candidates.push_back((dir / WhisperModelNameSmallEnQ8).string());
     };
 
+    #if defined(_WIN32)
+    // Windows: exe-relative and user data paths
+    char exePathWin[MAX_PATH];
+    DWORD got = GetModuleFileNameA(NULL, exePathWin, MAX_PATH);
+    if (got > 0 && got < MAX_PATH)
+    {
+        fs::path exeDir = fs::path(exePathWin).parent_path();
+        addCandidatesInDir(exeDir / "models");
+        addCandidatesInDir(exeDir / "resources" / "models");
+    }
+
+    const char* appData = std::getenv("APPDATA");
+    if (appData && *appData)
+    {
+        addCandidatesInDir(fs::path(appData) / "Coral" / "models");
+    }
+    const char* localAppData = std::getenv("LOCALAPPDATA");
+    if (localAppData && *localAppData)
+    {
+        addCandidatesInDir(fs::path(localAppData) / "Coral" / "models");
+    }
+    #else
     const char* appdir = std::getenv("APPDIR");
     if (appdir && *appdir)
     {
@@ -104,7 +131,7 @@ std::string Config::getWhisperModelPath() const {
     // System path
     addCandidatesInDir(fs::path("/usr/share/coral/models"));
 
-    // Executable-relative paths
+    // Executable-relative paths (Linux)
     char exePath[4096];
     ssize_t len = readlink("/proc/self/exe", exePath, sizeof(exePath) - 1);
     if (len != -1) {
@@ -113,6 +140,7 @@ std::string Config::getWhisperModelPath() const {
         addCandidatesInDir(exeDir / "../share/coral/models");
         addCandidatesInDir(exeDir / "models");
     }
+    #endif
 
     // User models directory
     const char* home = std::getenv("HOME");
@@ -130,10 +158,30 @@ std::string Config::getWhisperModelPath() const {
         }
     }
 
-    // Final fallback: prefer APPDIR if available, else system default
+    #if defined(_WIN32)
+    // Windows fallback: try APPDATA then exe-relative models
+    std::string fallback;
+    const char* appDataFB = std::getenv("APPDATA");
+    if (appDataFB && *appDataFB)
+    {
+        fallback = (fs::path(appDataFB) / "Coral" / "models" / WhisperModelNameBaseEn).string();
+    }
+    if (fallback.empty() || !fs::exists(fallback))
+    {
+        char exePathFB[MAX_PATH];
+        DWORD gotFB = GetModuleFileNameA(NULL, exePathFB, MAX_PATH);
+        if (gotFB > 0 && gotFB < MAX_PATH)
+        {
+            fs::path exeDir = fs::path(exePathFB).parent_path();
+            fallback = (exeDir / "models" / WhisperModelNameBaseEn).string();
+        }
+    }
+    #else
+    // Final fallback (Linux): prefer APPDIR if available, else system default
     std::string fallback = (appdir && *appdir)
         ? (fs::path(appdir) / "usr/share/coral/models" / WhisperModelNameBaseEn).string()
         : (fs::path("/usr/share/coral/models") / WhisperModelNameBaseEn).string();
+    #endif
 
     if (!fs::exists(fallback))
     {
@@ -167,10 +215,11 @@ void Config::copyConfigFileOnFirstRun()
 
         fs::copy_file(defaultConfigPath, userConfigPath, fs::copy_options::overwrite_existing);
 
-        // Set ownership to the current user
+        #if !defined(_WIN32)
         uid_t uid = getuid();
         gid_t gid = getgid();
         chown(userConfigPath.c_str(), uid, gid);
+        #endif
     }
 }
 

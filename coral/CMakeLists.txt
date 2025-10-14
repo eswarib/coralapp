@@ -155,10 +155,10 @@ else() # WIN32
 
     # Dependencies via vcpkg (static recommended):
     #   vcpkg install portaudio:x64-windows-static libsndfile:x64-windows-static
-    find_package(PortAudio CONFIG REQUIRED)
+    find_package(PortAudio CONFIG QUIET)
     find_package(sndfile CONFIG REQUIRED)
 
-    # Resolve PortAudio imported target
+    # Resolve PortAudio target or fallback to library path
     if(TARGET PortAudio::PortAudio)
         set(PORTAUDIO_TARGET PortAudio::PortAudio)
         message(STATUS "Using PortAudio target: PortAudio::PortAudio")
@@ -166,7 +166,17 @@ else() # WIN32
         set(PORTAUDIO_TARGET portaudio)
         message(STATUS "Using PortAudio target: portaudio")
     else()
-        message(FATAL_ERROR "PortAudio imported target not found. Ensure vcpkg toolchain is set and portaudio installed.")
+        find_library(PORTAUDIO_LIB NAMES portaudio portaudio_static)
+        if(PORTAUDIO_LIB)
+            set(PORTAUDIO_TARGET ${PORTAUDIO_LIB})
+            find_path(PORTAUDIO_INCLUDE_DIR portaudio.h)
+            if(PORTAUDIO_INCLUDE_DIR)
+                target_include_directories(coral PRIVATE ${PORTAUDIO_INCLUDE_DIR})
+            endif()
+            message(STATUS "Using PortAudio library: ${PORTAUDIO_LIB}")
+        else()
+            message(FATAL_ERROR "PortAudio not found. Ensure vcpkg toolchain is set and portaudio installed.")
+        endif()
     endif()
 
     # Resolve libsndfile imported target (static brings codec deps transitively)
@@ -214,7 +224,7 @@ else() # WIN32
         ${CMAKE_CURRENT_LIST_DIR}/../whispercpp/ggml/include
     )
 
-    target_link_libraries(coral PRIVATE ${PORTAUDIO_TARGET} ${SNDFILE_TARGET} user32)
+    target_link_libraries(coral PRIVATE ${PORTAUDIO_TARGET} ${SNDFILE_TARGET} user32 winmm setupapi ole32 oleaut32 uuid)
 
     # Install rules (portable layout)
     install(TARGETS coral RUNTIME DESTINATION .)

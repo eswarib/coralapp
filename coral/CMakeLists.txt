@@ -156,7 +156,9 @@ else() # WIN32
     # Dependencies via vcpkg (static recommended):
     #   vcpkg install portaudio:x64-windows-static libsndfile:x64-windows-static
     find_package(PortAudio CONFIG QUIET)
-    find_package(sndfile CONFIG REQUIRED)
+    find_package(sndfile CONFIG QUIET)
+    # vcpkg sometimes exposes libsndfile as "unofficial-sndfile"
+    find_package(unofficial-sndfile CONFIG QUIET)
 
     # Resolve PortAudio target or fallback to library path
     if(TARGET PortAudio::PortAudio)
@@ -183,11 +185,27 @@ else() # WIN32
     if(TARGET sndfile::sndfile)
         set(SNDFILE_TARGET sndfile::sndfile)
         message(STATUS "Using sndfile target: sndfile::sndfile")
+    elseif(TARGET SndFile::sndfile)
+        set(SNDFILE_TARGET SndFile::sndfile)
+        message(STATUS "Using sndfile target: SndFile::sndfile")
+    elseif(TARGET unofficial::sndfile::sndfile)
+        set(SNDFILE_TARGET unofficial::sndfile::sndfile)
+        message(STATUS "Using sndfile target: unofficial::sndfile::sndfile")
+    elseif(TARGET unofficial::libsndfile::libsndfile)
+        set(SNDFILE_TARGET unofficial::libsndfile::libsndfile)
+        message(STATUS "Using sndfile target: unofficial::libsndfile::libsndfile")
     elseif(TARGET sndfile)
         set(SNDFILE_TARGET sndfile)
         message(STATUS "Using sndfile target: sndfile")
     else()
-        message(FATAL_ERROR "libsndfile imported target not found. Ensure vcpkg toolchain is set and libsndfile installed.")
+        # Fallback: try to find raw library; may require codec libs separately
+        find_library(SNDFILE_LIB NAMES sndfile libsndfile-1)
+        if(SNDFILE_LIB)
+            set(SNDFILE_TARGET ${SNDFILE_LIB})
+            message(STATUS "Using sndfile library: ${SNDFILE_LIB}")
+        else()
+            message(FATAL_ERROR "libsndfile imported target not found. Ensure vcpkg toolchain is set and libsndfile installed.")
+        endif()
     endif()
 
     # Optional: Whisper library on Windows (user-provided)

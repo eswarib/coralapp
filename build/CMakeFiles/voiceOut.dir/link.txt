@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/voiceOut.dir/main.cpp.o CMakeFiles/voiceOut.dir/recorder.cpp.o CMakeFiles/voiceOut.dir/transcriber.cpp.o CMakeFiles/voiceOut.dir/textInjector.cpp.o -o voiceOut  -Wl,-rpath,/home/eswari/gitcode/voiceOut/whisper.cpp/build/src -lportaudio -lasound -lm -lpthread -lsndfile /home/eswari/gitcode/voiceOut/whisper.cpp/build/src/libwhisper.so

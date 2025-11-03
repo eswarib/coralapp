@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/voice_typing.dir/main.cpp.o CMakeFiles/voice_typing.dir/audio.cpp.o CMakeFiles/voice_typing.dir/whisperInterface.cpp.o CMakeFiles/voice_typing.dir/typer.cpp.o -o voice_typing  -lportaudio -lasound -lm -lpthread -lsndfile

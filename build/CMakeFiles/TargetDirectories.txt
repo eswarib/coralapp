@@ -1,3 +1,0 @@
-/home/eswari/gitcode/voiceOut/build/CMakeFiles/voiceOut.dir
-/home/eswari/gitcode/voiceOut/build/CMakeFiles/edit_cache.dir
-/home/eswari/gitcode/voiceOut/build/CMakeFiles/rebuild_cache.dir

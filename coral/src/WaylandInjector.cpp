@@ -1,6 +1,8 @@
 #include "WaylandInjector.h"
 #include "WaylandSession.h"
 #include "Logger.h"
+#include <cstdlib>
+#include <string>
 
 WaylandInjector& WaylandInjector::getInstance()
 {
@@ -13,7 +15,16 @@ bool WaylandInjector::typeText(const std::string& text)
     auto& session = WaylandSession::getInstance();
     if (!session.ensureInitialized())
     {
-        DEBUG(3, "WaylandInjector: session unavailable; falling back to X11");
+        const char* de = std::getenv("XDG_CURRENT_DESKTOP");
+        std::string deStr = de ? de : "";
+        if (!deStr.empty())
+        {
+            DEBUG(3, std::string("WaylandInjector: session unavailable under desktop '") + deStr + "'; if Unity/GTK backend, RemoteDesktop/Clipboard portals are typically unavailable. Falling back to X11");
+        }
+        else
+        {
+            DEBUG(3, "WaylandInjector: session unavailable; falling back to X11");
+        }
         return false;
     }
 
@@ -29,7 +40,16 @@ bool WaylandInjector::typeText(const std::string& text)
     }
     else
     {
-        DEBUG(3, "WaylandInjector: clipboard write not available; will type text");
+        const char* de = std::getenv("XDG_CURRENT_DESKTOP");
+        std::string deStr = de ? de : "";
+        if (!deStr.empty())
+        {
+            DEBUG(3, std::string("WaylandInjector: clipboard write not available under desktop '") + deStr + "'; if Unity/GTK backend, clipboard portal may be missing. Will type text");
+        }
+        else
+        {
+            DEBUG(3, "WaylandInjector: clipboard write not available; will type text");
+        }
     }
 
     // Fallback: type the text via portal input

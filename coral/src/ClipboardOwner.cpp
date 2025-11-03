@@ -1,10 +1,18 @@
 #include "ClipboardOwner.h"
 #include "Logger.h"
-#include <X11/Xatom.h>
 #include <cstring>
 #include <thread>
 #include <chrono>
 
+#if defined(_WIN32)
+#include <windows.h>
+#else
+#include <X11/Xatom.h>
+#endif
+
+#if defined(_WIN32)
+ClipboardOwner::ClipboardOwner() {}
+#else
 ClipboardOwner::ClipboardOwner(Display* display, Window ownerWindow)
     : _display(display), _window(ownerWindow)
 {
@@ -22,12 +30,58 @@ ClipboardOwner::ClipboardOwner(Display* display, Window ownerWindow)
     XFlush(_display);
     XSync(_display, False);
 }
+#endif
 
 void ClipboardOwner::serveRequests(const std::string& text,
                                    int timeoutMs,
                                    int pollIntervalMs,
                                    int idleExitMs)
 {
+#if defined(_WIN32)
+    // Windows: Set clipboard content once and wait briefly to simulate service window
+    auto start = std::chrono::steady_clock::now();
+    int servedRequests = 0;
+
+    if (OpenClipboard(NULL))
+    {
+        EmptyClipboard();
+
+        const size_t bytesNeeded = (text.size() + 1) * sizeof(wchar_t);
+        HGLOBAL hglbCopy = GlobalAlloc(GMEM_MOVEABLE, bytesNeeded);
+        if (hglbCopy)
+        {
+            wchar_t* target = static_cast<wchar_t*>(GlobalLock(hglbCopy));
+            if (target)
+            {
+                int written = MultiByteToWideChar(CP_UTF8, 0, text.c_str(), -1, target, (int)(bytesNeeded / sizeof(wchar_t)));
+                (void)written;
+                GlobalUnlock(hglbCopy);
+                SetClipboardData(CF_UNICODETEXT, hglbCopy);
+                servedRequests++;
+            }
+            else
+            {
+                GlobalFree(hglbCopy);
+            }
+        }
+
+        CloseClipboard();
+    }
+
+    while (std::chrono::steady_clock::now() - start < std::chrono::milliseconds(timeoutMs))
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(pollIntervalMs));
+    }
+
+    if (servedRequests == 0)
+    {
+        DEBUG(3, "No clipboard requests were served during timeout period (Windows)");
+    }
+    else
+    {
+        DEBUG(3, "Clipboard text set (Windows)");
+    }
+#else
     XEvent event;
     auto start = std::chrono::steady_clock::now();
     auto lastActivity = start;
@@ -115,12 +169,11 @@ void ClipboardOwner::serveRequests(const std::string& text,
                 char* target_name = XGetAtomName(_display, req->target);
                 DEBUG(3, std::string("Unsupported target type: ") + (target_name ? target_name : "UNKNOWN"));
                 if (target_name) XFree(target_name);
-                respond.xselection.property = None;
-            }
 
-            XSendEvent(_display, req->requestor, 0, 0, &respond);
-            XFlush(_display);
-            lastActivity = std::chrono::steady_clock::now();
+                XSendEvent(_display, req->requestor, 0, 0, &respond);
+                XFlush(_display);
+                lastActivity = std::chrono::steady_clock::now();
+            }
         }
 
         // Exit early if we've served requests and been idle
@@ -134,11 +187,13 @@ void ClipboardOwner::serveRequests(const std::string& text,
         std::this_thread::sleep_for(std::chrono::milliseconds(pollIntervalMs));
     }
     
-    if (servedRequests == 0) {
+    if (servedRequests == 0) 
+    {
         DEBUG(3, "No clipboard requests were served during timeout period");
-    } else {
+    } 
+    else 
+    {
         DEBUG(3, "Served " + std::to_string(servedRequests) + " clipboard requests");
     }
+#endif
 }
-
-

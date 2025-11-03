@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coral — Dictation App</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f9fbff;
+      --primary: #2563eb;
+      --secondary: #1e40af;
+      --text: #111827;
+      --muted: #6b7280;
+      --card-bg: #eff6ff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      text-align: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    header {
+      margin-bottom: 2rem;
+    }
+
+    header img {
+      width: 120px;
+      height: auto;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    p.subtitle {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+
+    a.button {
+      display: inline-block;
+      background-color: var(--primary);
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s ease;
+    }
+
+    a.button:hover {
+      background-color: var(--secondary);
+    }
+
+    video, img.screenshot {
+      margin-top: 2rem;
+      max-width: 700px;
+      width: 100%;
+      border-radius: 0.75rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    }
+
+    section.features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin: 4rem auto;
+      max-width: 900px;
+    }
+
+    .feature {
+      background: var(--card-bg);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .feature h3 {
+      margin-top: 0;
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 3rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="coral-logo.png" alt="Coral Logo">
+    <h1>Speak with Coral</h1>
+    <p class="subtitle">The free and open source dictation app</p>
+    <a href="https://github.com/yourusername/coral/releases" class="button">Download Coral</a>
+  </header>
+
+  <!-- Optional: add a demo video or screenshot -->
+  <img src="screenshot.png" alt="Coral demo screenshot" class="screenshot">
+
+  <section class="features">
+    <div class="feature">
+      <h3>Free</h3>
+      <p>Coral is open to everyone — no paywalls or subscriptions.</p>
+    </div>
+    <div class="feature">
+      <h3>Private</h3>
+      <p>Your voice never leaves your device. No cloud processing.</p>
+    </div>
+    <div class="feature">
+      <h3>Simple</h3>
+      <p>One tool, one goal — convert your speech to text instantly.</p>
+    </div>
+    <div class="feature">
+      <h3>Open Source</h3>
+      <p>Contribute, extend, or fork Coral freely on GitHub.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Coral — Built with 💙 by [Your Name]</p>
+  </footer>
+
+</body>
+</html>
+

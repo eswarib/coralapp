@@ -307,3 +307,16 @@ ipcMain.handle('select-folder', async () => {
   if (result.canceled || !result.filePaths.length) return null;
   return result.filePaths[0];
 });
+
+// IPC handler for selecting a model file instead of a folder
+ipcMain.handle('select-model-file', async () => {
+  const result = await dialog.showOpenDialog({
+    properties: ['openFile'],
+    filters: [
+      { name: 'Whisper models', extensions: ['bin', 'gguf'] },
+      { name: 'All Files', extensions: ['*'] }
+    ]
+  });
+  if (result.canceled || !result.filePaths.length) return null;
+  return result.filePaths[0];
+});

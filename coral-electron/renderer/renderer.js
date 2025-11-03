@@ -84,11 +84,11 @@ function renderForm(cfg) {
       label.appendChild(input);
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.textContent = 'Select Folder';
+      btn.textContent = 'Select File';
       btn.onclick = () => {
-        ipcRenderer.invoke('select-folder').then(folderPath => {
-          if (folderPath) {
-            input.value = folderPath;
+        ipcRenderer.invoke('select-model-file').then(filePath => {
+          if (filePath) {
+            input.value = filePath;
           }
         });
       };
@@ -185,6 +185,19 @@ saveBtn.onclick = (e) => {
     } else {
       newConfig[el.name] = el.value;
     }
+  }
+  // Validate that whisperModelPath is a file (not a folder)
+  try {
+    const modelPath = newConfig['whisperModelPath'];
+    if (!modelPath || !fs.existsSync(modelPath) || !fs.statSync(modelPath).isFile()) {
+      statusDiv.textContent = 'Please select a valid model file (.bin or .gguf).';
+      statusDiv.style.color = 'red';
+      return;
+    }
+  } catch (_) {
+    statusDiv.textContent = 'Please select a valid model file (.bin or .gguf).';
+    statusDiv.style.color = 'red';
+    return;
   }
   fs.writeFile(configPath, JSON.stringify(newConfig, null, 2), (err) => {
     if (err) {

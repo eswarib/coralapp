@@ -13,6 +13,10 @@
 #include <cstdlib>
 #include "version.h"
 #include <iostream>
+#if !defined(_WIN32)
+#include <fcntl.h>
+#include <unistd.h>
+#endif
 
 int main(int argc, char* argv[]) 
 {
@@ -57,6 +61,35 @@ int main(int argc, char* argv[])
         ConcurrentQueue<std::shared_ptr<TextEvent>> textEventQueue;
         KeyDetector keyDetector;
 
+        // Signal the Electron frontend if permissions are missing.
+        // Two independent checks:
+        //   NEED_INPUT_GROUP  → user not in 'input' group (evdev key detection fails)
+        //   NEED_UINPUT_RULE  → /dev/uinput not accessible (text injection fails)
+#if !defined(_WIN32)
+        if (!keyDetector.hasEvdevAccess())
+        {
+            std::cout << "NEED_INPUT_GROUP" << std::endl;
+            WARN("evdev not available — key detection may not work on Wayland. "
+                 "Add user to 'input' group: sudo usermod -aG input $USER");
+        }
+
+        // Check uinput access separately — user may be in 'input' group
+        // but /dev/uinput still has no udev rule.
+        {
+            int uinputFd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
+            if (uinputFd < 0)
+            {
+                std::cout << "NEED_UINPUT_RULE" << std::endl;
+                WARN("/dev/uinput not accessible — text injection via virtual keyboard unavailable. "
+                     "A udev rule is needed: KERNEL==\"uinput\", GROUP=\"input\", MODE=\"0660\"");
+            }
+            else
+            {
+                close(uinputFd);
+            }
+        }
+#endif
+
         RecorderThread recorderThread(config, audioEventQueue, keyDetector);
         TranscriberThread transcriberThread(config, audioEventQueue, textEventQueue);
         InjectorThread injectorThread(config, textEventQueue);
@@ -64,6 +97,10 @@ int main(int argc, char* argv[])
         recorderThread.start();
         transcriberThread.start();
         injectorThread.start();
+
+        // Signal frontend that backend is up and all threads are running
+        std::cout << "BACKEND_READY" << std::endl;
+        INFO("All threads started — backend is ready");
 
         // Main thread waits indefinitely until externally interrupted
         while (true) {

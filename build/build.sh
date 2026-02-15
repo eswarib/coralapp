@@ -1,11 +1,82 @@
 #!/bin/bash
 set -eu
 
-# Paths
+# ── Install build dependencies ──────────────────────────────────────────────
+install_deps() {
+    echo "Checking build dependencies..."
+
+    # Build-time packages required to compile and link the backend
+    local DEPS=(
+        build-essential      # g++, make, etc.
+        cmake                # needed to build whisper.cpp
+        pkg-config           # used by Makefile to find libs
+        nodejs               # needed for version extraction & Electron
+        npm                  # Electron frontend build
+        wget                 # model downloads
+        libx11-dev           # X11 core
+        libxtst-dev          # X11 XTest (key simulation)
+        libxinerama-dev      # X11 multi-monitor support
+        libxkbcommon-dev     # keyboard keymap handling
+        portaudio19-dev      # audio recording
+        libsndfile1-dev      # audio file I/O
+        libportal-dev        # Wayland portal support
+        libglib2.0-dev       # GLib/GIO/GObject (used by libportal)
+        libfuse2             # needed to run AppImage tools
+    )
+
+    # Optional but useful
+    local OPTIONAL_DEPS=(
+        libatspi2.0-dev      # AT-SPI accessibility (optional)
+        libxdo-dev           # xdotool library (optional, fallback)
+    )
+
+    local missing=()
+    for pkg in "${DEPS[@]}"; do
+        if ! dpkg -s "$pkg" &>/dev/null; then
+            missing+=("$pkg")
+        fi
+    done
+
+    local opt_missing=()
+    for pkg in "${OPTIONAL_DEPS[@]}"; do
+        if ! dpkg -s "$pkg" &>/dev/null; then
+            opt_missing+=("$pkg")
+        fi
+    done
+
+    if [ ${#missing[@]} -gt 0 ]; then
+        echo "Installing missing required packages: ${missing[*]}"
+        sudo apt-get update
+        sudo apt-get install -y "${missing[@]}"
+    else
+        echo "All required packages are installed."
+    fi
+
+    if [ ${#opt_missing[@]} -gt 0 ]; then
+        echo "Installing optional packages (if available): ${opt_missing[*]}"
+        sudo apt-get install -y "${opt_missing[@]}" 2>/dev/null || true
+    fi
+
+    # appimagetool — download if not on PATH
+    if ! command -v appimagetool &>/dev/null; then
+        echo "appimagetool not found, downloading..."
+        wget -q -O /tmp/appimagetool "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage"
+        chmod +x /tmp/appimagetool
+        sudo mv /tmp/appimagetool /usr/local/bin/appimagetool
+        echo "appimagetool installed to /usr/local/bin/"
+    fi
+
+    echo "All dependencies satisfied."
+}
+
+install_deps
+
+# ── Paths ────────────────────────────────────────────────────────────────────
 ELECTRON_DIR="../coral-electron"
 BACKEND_DIR="../coral"
 APPDIR="../coral.appdir"
 SCRIPTS_DIR="../coral/scripts"
+WHISPER_DIR="../whisper.cpp"
 
 # Check if required directories exist
 if [ ! -d "$ELECTRON_DIR" ]; then
@@ -15,6 +86,12 @@ fi
 
 if [ ! -d "$BACKEND_DIR" ]; then
     echo "Error: Backend directory not found: $BACKEND_DIR"
+    exit 1
+fi
+
+if [ ! -d "$WHISPER_DIR" ]; then
+    echo "Error: whisper.cpp directory not found: $WHISPER_DIR"
+    echo "Clone it with: git clone https://github.com/ggerganov/whisper.cpp.git $WHISPER_DIR"
     exit 1
 fi
 
@@ -36,7 +113,20 @@ else
         "$BACKEND_DIR/src/version.h.in" > "$BACKEND_DIR/src/version.h"
 fi
 
-# Build backend
+# ── Build whisper.cpp shared libraries ────────────────────────────────────────
+echo "Building whisper.cpp..."
+pushd "$WHISPER_DIR"
+cmake -B build -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release -j$(nproc)
+popd
+
+# Copy whisper libraries into coral/lib
+mkdir -p "$BACKEND_DIR/lib"
+cp "$WHISPER_DIR"/build/src/libwhisper.so*       "$BACKEND_DIR/lib/"
+cp "$WHISPER_DIR"/build/ggml/src/libggml*.so*    "$BACKEND_DIR/lib/"
+echo "whisper.cpp build complete — libraries copied to $BACKEND_DIR/lib/"
+
+# ── Build coral backend ──────────────────────────────────────────────────────
 pushd "$BACKEND_DIR"
 make clean
 make all
@@ -47,7 +137,7 @@ echo "Backend build complete."
 # Optional: Build Electron frontend
 echo "Building Electron frontend..."
 pushd "$ELECTRON_DIR"
-npm ci
+npm install
 # npm run build   # Uncomment if you have a build script
 
 # Remove devDependencies to keep node_modules small

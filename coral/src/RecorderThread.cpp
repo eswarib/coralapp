@@ -9,21 +9,30 @@
 #include <memory>
 #include <filesystem>
 
-namespace {
-std::string generateUniqueFilename() {
+namespace
+{
+std::string generateUniqueFilename()
+{
     // Get cross-platform temp directory
     std::filesystem::path baseTmp;
-    try {
+    try
+    {
         baseTmp = std::filesystem::temp_directory_path();
-    } catch (...) {
+    }
+    catch (...)
+    {
         baseTmp = std::filesystem::path("/tmp");
     }
     
     // Create coral subfolder in temp
     std::filesystem::path coralTmpDir = baseTmp / "coral";
-    try { 
+    try
+    { 
         std::filesystem::create_directories(coralTmpDir); 
-    } catch (...) {}
+    }
+    catch (...)
+    {
+    }
     
     // Generate unique filename with timestamp
     auto now = std::chrono::system_clock::now();
@@ -40,56 +49,88 @@ std::string generateUniqueFilename() {
 RecorderThread::RecorderThread(const Config& config,
                                ConcurrentQueue<std::shared_ptr<AudioEvent>>& audioQueue,
                                KeyDetector& keyDetector)
-    : _config(config), _audioQueue(audioQueue), _keyDetector(keyDetector), _running(false) {}
+    : mConfig(config), mAudioQueue(audioQueue), mKeyDetector(keyDetector), mRunning(false)
+{
+}
 
-RecorderThread::~RecorderThread() {
+RecorderThread::~RecorderThread()
+{
     stop();
 }
 
-void RecorderThread::start() {
-    _running = true;
-    _thread = std::thread(&RecorderThread::run, this);
+void RecorderThread::start()
+{
+    mRunning = true;
+    mThread = std::thread(&RecorderThread::run, this);
 }
 
-void RecorderThread::stop() {
-    _running = false;
-    if (_thread.joinable()) {
-        _thread.join();
+void RecorderThread::stop()
+{
+    mRunning = false;
+    if (mThread.joinable())
+    {
+        mThread.join();
     }
 }
 
-void RecorderThread::run() {
-    INFO("RecorderThread started, waiting for trigger keys...");
-    while (_running) {
-        std::string pressedKey;
-        if (_keyDetector.isTriggerKeyPressed(_config.getTriggerKey())) {
-            pressedKey = _config.getTriggerKey();
-        } 
-        else if (_keyDetector.isTriggerKeyPressed(_config.getCmdTriggerKey())) 
+void RecorderThread::run()
+{
+    INFO("RecorderThread started, waiting for trigger keys (push-to-talk toggle)...");
+
+    // Simple toggle implementation using rising-edge detection.
+    // States: Idle (not recording) and Recording. Transition on key press events.
+    while (mRunning)
+    {
+        // Read current pressed state for both keys
+        bool triggerPressed = mKeyDetector.isTriggerKeyPressed(mConfig.getTriggerKey());
+        bool cmdPressed = mKeyDetector.isTriggerKeyPressed(mConfig.getCmdTriggerKey());
+
+        // Rising edges
+        bool triggerRising = triggerPressed && !mPrevTriggerPressed;
+        bool cmdRising = cmdPressed && !mPrevCmdPressed;
+
+        std::string risingKey;
+        if (triggerRising)
         {
-            DEBUG(3, "cmdTriggerKey detected");
-            pressedKey = _config.getCmdTriggerKey();
+            DEBUG(3, "triggerKey rising edge detected");
+            risingKey = mConfig.getTriggerKey();
         }
-        if (!pressedKey.empty()) 
+        else if (cmdRising)
         {
-            std::cout << "TRIGGER_DOWN" << std::endl;
-            std::string audioFile = generateUniqueFilename();
-            DEBUG(3, "Starting recording to: " + audioFile);
-            Recorder::getInstance()->startRecording();
-            // Wait for key release
-            while ((_keyDetector.isTriggerKeyPressed(pressedKey)) && _running) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            DEBUG(3, "cmdTriggerKey rising edge detected");
+            risingKey = mConfig.getCmdTriggerKey();
+        }
+
+        if (!risingKey.empty())
+        {
+            if (!mIsRecording)
+            {
+                // Start recording
+                std::cout << "TRIGGER_DOWN" << std::endl;
+                DEBUG(3, "Starting recording (toggle ON)");
+                Recorder::getInstance()->startRecording();
+                mIsRecording = true;
+                mActiveTriggerKey = risingKey;
             }
-            std::cout << "TRIGGER_UP" << std::endl;
-            Recorder::getInstance()->stopRecording(audioFile);
-            DEBUG(3, "Finished recording: " + audioFile);
-            DEBUG(3, "Inserting audio file into queue: " + audioFile + ", triggered by: " + pressedKey);
-            DEBUG(3, "AudioEvent created with trigger key: " + pressedKey);
-            _audioQueue.push(std::make_shared<AudioEvent>(audioFile, pressedKey));
-            DEBUG(3, "Queue size after push: " + std::to_string(_audioQueue.size()));
-        } else {
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            else
+            {
+                // Stop recording and enqueue
+                std::cout << "TRIGGER_UP" << std::endl;
+                std::string audioFile = generateUniqueFilename();
+                Recorder::getInstance()->stopRecording(audioFile);
+                DEBUG(3, "Finished recording (toggle OFF): " + audioFile);
+                DEBUG(3, "Inserting audio file into queue: " + audioFile + ", triggered by: " + mActiveTriggerKey);
+                mAudioQueue.push(std::make_shared<AudioEvent>(audioFile, mActiveTriggerKey));
+                DEBUG(3, "Queue size after push: " + std::to_string(mAudioQueue.size()));
+                mIsRecording = false;
+                mActiveTriggerKey.clear();
+            }
         }
+
+        // Save previous states for edge detection and throttle loop
+        mPrevTriggerPressed = triggerPressed;
+        mPrevCmdPressed = cmdPressed;
+        std::this_thread::sleep_for(std::chrono::milliseconds(50));
     }
 }
 

@@ -30,7 +30,7 @@ echo "Backend build complete."
 # Optional: Build Electron frontend
 echo "Building Electron frontend..."
 pushd "$ELECTRON_DIR"
-npm ci
+npm install
 # npm run build   # Uncomment if you have a build script
 
 # Remove devDependencies to keep node_modules small

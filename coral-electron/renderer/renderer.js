@@ -32,7 +32,7 @@ if (process.env.APPIMAGE) {
   // Development fallback
   configPath = path.join(__dirname, '../..', 'coral', 'conf', 'config.json');
 }
-const form = document.getElementById('configForm');
+const configForm = document.getElementById('configForm');
 const saveBtn = document.getElementById('saveBtn');
 const defaultBtn = document.getElementById('defaultBtn');
 const statusDiv = document.getElementById('status');
@@ -69,30 +69,75 @@ function formatKeyComboFromEvent(e) {
   return parts.join('+');
 }
 
-function renderForm(cfg) {
-  form.innerHTML = '';
-  for (const [key, value] of Object.entries(cfg)) {
+function renderMainForm(cfg) {
+  configForm.innerHTML = '';
+  const primaryKeys = new Set(['triggerKey', 'cmdTriggerKey', 'whisperModelPath']);
+
+  const renderField = (key, value) => {
     const label = document.createElement('label');
     label.textContent = key;
     let input;
     if (key === 'whisperModelPath') {
-      input = document.createElement('input');
-      input.type = 'text';
-      input.value = value;
-      input.name = key;
-      input.id = 'whisperModelPathInput';
-      label.appendChild(input);
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = 'Select File';
-      btn.onclick = () => {
-        ipcRenderer.invoke('select-model-file').then(filePath => {
-          if (filePath) {
-            input.value = filePath;
-          }
-        });
+      // Custom UI: toolbar-like label + pill selector
+      label.textContent = 'Model';
+      label.className = 'toolbar-label';
+      const hidden = document.createElement('input');
+      hidden.type = 'hidden';
+      hidden.name = key;
+      hidden.value = value;
+      // Derive current model display
+      const displayForPath = (p) => {
+        const v = (p || '').toLowerCase();
+        if (v.includes('ggml-base.en.bin')) return 'Whisper base';
+        if (v.includes('ggml-small.en-q8_0.bin') || v.includes('ggml-small.en.bin')) return 'Whisper small';
+        return 'Custom whisper';
       };
-      label.appendChild(btn);
+      let currentLabel = displayForPath(value);
+      const dropdown = document.createElement('div');
+      dropdown.className = 'dropdown';
+      const pill = document.createElement('span');
+      pill.className = 'pill-select';
+      pill.textContent = currentLabel;
+      const menu = document.createElement('div');
+      menu.className = 'dropdown-menu';
+      menu.style.display = 'none';
+      const items = ['Whisper base', 'Whisper small', 'Custom whisper'];
+      items.forEach(txt => {
+        const it = document.createElement('div');
+        it.className = 'dropdown-item';
+        it.textContent = txt;
+        it.onclick = async () => {
+          pill.textContent = txt;
+          menu.style.display = 'none';
+          if (txt === 'Whisper base') {
+            hidden.value = 'ggml-base.en.bin';
+          } else if (txt === 'Whisper small') {
+            // Prefer q8 if available in search paths; backend will resolve
+            hidden.value = 'ggml-small.en-q8_0.bin';
+          } else {
+            // Custom: open file picker and set absolute path
+            const fp = await ipcRenderer.invoke('select-model-file');
+            if (fp) {
+              hidden.value = fp;
+            }
+          }
+          requestResize();
+        };
+        menu.appendChild(it);
+      });
+      pill.onclick = () => {
+        menu.style.display = (menu.style.display === 'none') ? 'block' : 'none';
+        requestResize();
+      };
+      dropdown.appendChild(pill);
+      dropdown.appendChild(menu);
+      label.appendChild(dropdown);
+      // subtle hint of current mapping
+      const hint = document.createElement('span');
+      hint.className = 'muted';
+      hint.textContent = `(current: ${currentLabel})`;
+      label.appendChild(hint);
+      label.appendChild(hidden);
     } else if (key === 'cmdTriggerKey') {
       input = document.createElement('input');
       input.type = 'text';
@@ -133,9 +178,34 @@ function renderForm(cfg) {
       input.name = key;
       label.appendChild(input);
     }
-    form.appendChild(label);
+    configForm.appendChild(label);
+  };
+
+  for (const [key, value] of Object.entries(cfg)) {
+    if (primaryKeys.has(key)) {
+      renderField(key, value);
+    }
   }
+  requestResize();
 }
+
+function requestResize() {
+  try {
+    const formBottom = configForm.getBoundingClientRect().bottom;
+    const desired = Math.ceil(window.scrollY + formBottom + 24);
+    ipcRenderer.send('resize-window', desired);
+    // Recheck shortly after layout/paint to catch late style recalcs
+    setTimeout(() => {
+      const formBottom2 = configForm.getBoundingClientRect().bottom;
+      const desired2 = Math.ceil(window.scrollY + formBottom2 + 24);
+      ipcRenderer.send('resize-window', desired2);
+    }, 50);
+  } catch (_) {}
+}
+
+window.addEventListener('load', () => {
+  requestResize();
+});
 
 function loadConfig() {
   // alert("Inside loadConfig()");
@@ -156,7 +226,7 @@ function loadConfig() {
     }
     try {
       config = JSON.parse(data);
-      renderForm(config);
+      renderMainForm(config);
       statusDiv.textContent = '';
       statusDiv.style.color = '';
       statusDiv.style.fontSize = '';
@@ -175,8 +245,8 @@ function loadConfig() {
 
 saveBtn.onclick = (e) => {
   e.preventDefault();
-  const newConfig = {};
-  for (const el of form.elements) {
+  const newConfig = { ...config };
+  for (const el of configForm.elements) {
     if (!el.name) continue;
     if (el.tagName === 'SELECT') {
       newConfig[el.name] = el.value === 'true';
@@ -186,6 +256,19 @@ saveBtn.onclick = (e) => {
       newConfig[el.name] = el.value;
     }
   }
+  // Validate model selection: allow known tokens or a valid file
+  try {
+    const modelPath = newConfig['whisperModelPath'];
+    const tokens = ['ggml-base.en.bin', 'ggml-small.en.bin', 'ggml-small.en-q8_0.bin'];
+    const isToken = tokens.includes(modelPath);
+    if (!isToken) {
+      if (!modelPath || !fs.existsSync(modelPath) || !fs.statSync(modelPath).isFile()) {
+        statusDiv.textContent = 'Please select a valid model (choose preset or browse a file).';
+        statusDiv.style.color = 'red';
+        return;
+      }
+    }
+  } catch (_) {}
   // Validate that whisperModelPath is a file (not a folder)
   try {
     const modelPath = newConfig['whisperModelPath'];
@@ -208,6 +291,8 @@ saveBtn.onclick = (e) => {
       try {
         window?.require && ipcRenderer.send('config-updated');
       } catch (_) {}
+      // Close the window after applying
+      setTimeout(() => { try { window.close(); } catch (_) {} }, 150);
     }
   });
 };

@@ -11,21 +11,16 @@
 #include "Logger.h"
 #if !defined(_WIN32)
 #include "X11WindowUtils.h"
+#include "X11Injector.h"
+#include "UInputInjector.h"
 #endif
 #include "ClipboardOwner.h"
-#include "WaylandDetector.h"
-#include "WaylandInjector.h"
-#if !defined(_WIN32)
-#include "X11Injector.h"
-#endif
-#include "A11yInjector.h"
 #include <cstring>
 #include <vector>
 #include <string>
-#include <algorithm> // For std::transform
+#include <algorithm>
 #include <thread>
 #include <chrono>
-
 
 #if !defined(_WIN32)
 extern "C" 
@@ -59,26 +54,18 @@ void TextInjector::typeText(const std::string& text)
     WindowsInjector::getInstance().typeText(text);
     return;
     #else
-    // AT-SPI first (cleanest when available)
-    if (A11yInjector::getInstance().typeText(text))
+    // uinput first — works on both X11 and Wayland via /dev/uinput
+    if (UInputInjector::getInstance().isAvailable())
     {
-        DEBUG(3, "TextInjector: injected via AT-SPI EditableText");
-        return;
-    }
-    
-
-    // Wayland path first (Linux)
-    if (isWaylandSession())
-    {
-        DEBUG(3, "Wayland session detected; attempting WaylandInjector");
-        if (WaylandInjector::getInstance().typeText(text))
+        if (UInputInjector::getInstance().typeText(text))
         {
+            DEBUG(3, "TextInjector: injected via uinput (kernel virtual keyboard)");
             return;
         }
-        DEBUG(3, "WaylandInjector not available/failed; falling back to X11 path if possible");
+        DEBUG(3, "TextInjector: uinput injection failed; falling back to X11");
     }
 
-    // X11 fallback / default (Linux)
+    // X11 fallback (clipboard + Ctrl+V)
     X11Injector::getInstance().typeText(text);
     #endif
 }

@@ -1,7 +1,7 @@
 const { ipcMain } = require('electron');
 
 ipcMain.handle('getAppVersion', () => app.getVersion())
-const { app, Tray, Menu, BrowserWindow, dialog} = require('electron');
+const { app, Tray, Menu, BrowserWindow, dialog, screen } = require('electron');
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
@@ -25,6 +25,7 @@ if (process.env.APPIMAGE) {
 
 let tray = null;
 let configWindow = null;
+let devWindow = null;
 let backendProcess = null;
 let animationInterval = null;
 let currentFrame = 0;
@@ -35,8 +36,10 @@ function createConfigWindow() {
     return;
   }
   configWindow = new BrowserWindow({
-    width: 500,
-    height: 600,
+    width: 520,
+    height: 360,
+    useContentSize: true,
+    resizable: true,
     autoHideMenuBar: true,
     title: 'Settings', // Changed from 'Edit Config' to 'Settings'
     webPreferences: {
@@ -49,6 +52,30 @@ function createConfigWindow() {
   configWindow.loadFile(path.join(__dirname, 'renderer', 'index.html'));
   configWindow.on('closed', () => {
     configWindow = null;
+  });
+}
+
+function createDevWindow() {
+  if (devWindow) {
+    devWindow.focus();
+    return;
+  }
+  devWindow = new BrowserWindow({
+    width: 520,
+    height: 380,
+    useContentSize: true,
+    resizable: true,
+    autoHideMenuBar: true,
+    title: 'Developer Settings',
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+  devWindow.setMenuBarVisibility(false);
+  devWindow.loadFile(path.join(__dirname, 'renderer', 'dev.html'));
+  devWindow.on('closed', () => {
+    devWindow = null;
   });
 }
 
@@ -87,6 +114,91 @@ function stopTrayAnimation() {
     animationInterval = null;
     tray.setImage(originalIconPath);
   }
+}
+
+// Prompt user to set up input permissions for hotkey detection and text injection.
+// Two things are needed:
+//   1. User in 'input' group  → access to /dev/input/event* (key detection via evdev)
+//   2. udev rule for uinput   → access to /dev/uinput (text injection via virtual keyboard)
+// Similar to how Wireshark asks for packet-capture permissions on first run.
+let inputGroupPromptShown = false;
+function promptInputGroupPermission() {
+    if (inputGroupPromptShown) return;  // only ask once per session
+    inputGroupPromptShown = true;
+
+    const { execSync } = require('child_process');
+    const currentUser = os.userInfo().username;
+
+    // Check if both permissions are already in place
+    let hasInputGroup = false;
+    let hasUinputRule = false;
+    try {
+        const groups = execSync('groups', { encoding: 'utf-8' });
+        hasInputGroup = groups.includes('input');
+    } catch (_) {}
+    try {
+        hasUinputRule = fs.existsSync('/etc/udev/rules.d/99-coral-uinput.rules');
+    } catch (_) {}
+
+    if (hasInputGroup && hasUinputRule) return;  // all set
+
+    dialog.showMessageBox({
+        type: 'warning',
+        title: 'Keyboard Access Required',
+        message: 'Coral needs access to keyboard input devices for hotkey detection and text injection.\n\n' +
+                 'This is a one-time setup that requires your password:\n' +
+                 '  • Adds your user to the "input" group\n' +
+                 '  • Enables the virtual keyboard device (/dev/uinput)\n\n' +
+                 'You will need to log out and back in for the change to take effect.',
+        buttons: ['Grant Access', 'Skip'],
+        defaultId: 0,
+        cancelId: 1,
+    }).then((result) => {
+        if (result.response === 0) {
+            // Single pkexec call with a shell script that does both steps
+            const { exec } = require('child_process');
+            const setupCmd = `pkexec sh -c '` +
+                `usermod -aG input ${currentUser} && ` +
+                `echo "KERNEL==\\"uinput\\", GROUP=\\"input\\", MODE=\\"0660\\"" > /etc/udev/rules.d/99-coral-uinput.rules && ` +
+                `udevadm control --reload-rules && ` +
+                `udevadm trigger /dev/uinput` +
+                `'`;
+            exec(setupCmd, (error) => {
+                if (error) {
+                    dialog.showErrorBox('Permission Error',
+                        'Failed to set up input permissions:\n' + error.message +
+                        '\n\nYou can do it manually:\n' +
+                        'sudo usermod -aG input ' + currentUser + '\n' +
+                        'echo \'KERNEL=="uinput", GROUP="input", MODE="0660"\' | sudo tee /etc/udev/rules.d/99-coral-uinput.rules\n' +
+                        'sudo udevadm control --reload-rules && sudo udevadm trigger /dev/uinput');
+                    stopBackend();
+                    app.quit();
+                } else {
+                    dialog.showMessageBox({
+                        type: 'info',
+                        title: 'Setup Complete',
+                        message: 'Input permissions have been configured.\n\n' +
+                                 'Please reboot your computer for the changes to take effect,\n' +
+                                 'then start Coral again.',
+                        buttons: ['Reboot Now', 'Later'],
+                        defaultId: 0,
+                        cancelId: 1,
+                    }).then((res) => {
+                        stopBackend();
+                        if (res.response === 0) {
+                            const { exec } = require('child_process');
+                            exec('systemctl reboot');
+                        }
+                        app.quit();
+                    });
+                }
+            });
+        } else {
+            // User clicked Skip — quit anyway since the app won't work without permissions
+            stopBackend();
+            app.quit();
+        }
+    });
 }
 
 function startBackend() {
@@ -152,11 +264,15 @@ function startBackend() {
     const rl = readline.createInterface({ input: backendProcess.stdout });
     rl.on('line', (line) => {
         if (line === 'TRIGGER_DOWN') {
-            //console.log('Trigger key pressed (TRIGGER_DOWN)');
             startTrayAnimation();
         } else if (line === 'TRIGGER_UP') {
-            //console.log('Trigger key released (TRIGGER_UP)');
             stopTrayAnimation();
+        } else if (line === 'NEED_INPUT_GROUP' || line === 'NEED_UINPUT_RULE') {
+            // Close welcome first, then show permission dialog
+            closeWelcomeWindow();
+            promptInputGroupPermission();
+        } else if (line === 'BACKEND_READY') {
+            updateWelcomeReady();
         }
     });
     backendProcess.on('error', (err) => {
@@ -193,10 +309,13 @@ async function restartBackend() {
   }, 200);
 }
 
-function showCustomAboutWindow() {
-  const aboutWin = new BrowserWindow({
-    width: 400,
-    height: 240,
+let welcomeWindow = null;
+
+function showWelcomeWindow() {
+  if (welcomeWindow) return;
+  welcomeWindow = new BrowserWindow({
+    width: 420,
+    height: 260,
     resizable: false,
     minimizable: false,
     maximizable: false,
@@ -210,36 +329,63 @@ function showCustomAboutWindow() {
       contextIsolation: true,
     },
   });
-  aboutWin.once('ready-to-show', () => {
-    aboutWin.show();
+  welcomeWindow.once('ready-to-show', () => {
+    welcomeWindow.show();
   });
-  const aboutHtml = `
+  welcomeWindow.on('closed', () => { welcomeWindow = null; });
+
+  const welcomeHtml = `
     <html>
       <head>
-        <title>About Coral</title>
+        <title>Coral</title>
         <style>
           body { font-family: sans-serif; background: #fff; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
           .about-box { margin-top: 30px; padding: 24px 24px 16px 24px; border-radius: 12px; box-shadow: 0 2px 16px #0002; background: #f8faff; text-align: center; }
           .title { font-size: 1.3em; font-weight: bold; margin-bottom: 8px; }
           .version { color: #555; margin-bottom: 8px; }
           .desc { margin-bottom: 8px; }
-          .tip { color: #0d47a1; font-size: 1em; margin-top: 10px; }
-          .ok-btn { margin-top: 18px; padding: 8px 24px; font-size: 1em; border-radius: 6px; border: 1px solid #0d47a1; background: #e3eaff; color: #0d47a1; cursor: pointer; }
+          .status { color: #888; font-size: 0.95em; margin-top: 12px; }
+          .status.ready { color: #2e7d32; }
+          .tip { color: #0d47a1; font-size: 1em; margin-top: 10px; display: none; }
+          .ok-btn { margin-top: 18px; padding: 8px 24px; font-size: 1em; border-radius: 6px; border: 1px solid #0d47a1; background: #e3eaff; color: #0d47a1; cursor: pointer; display: none; }
           .ok-btn:hover { background: #c5d8fa; }
+          @keyframes dots { 0% { content: ''; } 33% { content: '.'; } 66% { content: '..'; } 100% { content: '...'; } }
+          .loading::after { content: ''; animation: dots 1.2s steps(4, end) infinite; }
         </style>
       </head>
       <body>
         <div class="about-box">
           <div class="title">Coral App</div>
           <div class="version">Version: ${app.getVersion()}</div>
-          <div class="desc">© 2025 Coral Contributors</div>
-          <div class="tip">To transcribe your speech, hold down the trigger key (Alt+z) and start talking.</div>
-          <button class="ok-btn" onclick="window.close()">OK</button>
+          <div class="desc">&copy; 2025 Coral Contributors</div>
+          <div class="status loading" id="status">Starting up, checking permissions</div>
+          <div class="tip" id="tip">Press the trigger key (Alt+Z) to start/stop recording.</div>
+          <button class="ok-btn" id="okBtn" onclick="window.close()">OK</button>
         </div>
       </body>
     </html>
   `;
-  aboutWin.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(aboutHtml));
+  welcomeWindow.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(welcomeHtml));
+}
+
+function updateWelcomeReady() {
+  if (!welcomeWindow) return;
+  try {
+    welcomeWindow.webContents.executeJavaScript(`
+      document.getElementById('status').className = 'status ready';
+      document.getElementById('status').textContent = 'Ready!';
+      document.getElementById('tip').style.display = 'block';
+      document.getElementById('okBtn').style.display = 'inline-block';
+    `);
+    // Auto-close after 5 seconds if the user doesn't click OK
+    setTimeout(() => {
+      try { if (welcomeWindow) welcomeWindow.close(); } catch (_) {}
+    }, 5000);
+  } catch (_) {}
+}
+
+function closeWelcomeWindow() {
+  try { if (welcomeWindow) welcomeWindow.close(); } catch (_) {}
 }
 
 const gotLock = app.requestSingleInstanceLock();
@@ -262,6 +408,7 @@ app.whenReady().then(() => {
   tray = new Tray(originalIconPath);
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Settings', click: createConfigWindow },
+    { label: 'Developer Settings', click: createDevWindow },
     { label: 'About', click: () => {
         dialog.showMessageBox({
           type: 'info',
@@ -276,8 +423,8 @@ app.whenReady().then(() => {
   ]);
   tray.setToolTip('Coral App');
   tray.setContextMenu(contextMenu);
+  showWelcomeWindow();
   startBackend();
-  showCustomAboutWindow();
 });
 
 app.on('window-all-closed', (e) => {
@@ -297,6 +444,21 @@ ipcMain.on('show-config', () => {
 // Restart backend when renderer reports config changes
 ipcMain.on('config-updated', () => {
   restartBackend();
+});
+
+// Allow renderers to request window height resize to fit content
+ipcMain.on('resize-window', (event, contentHeight) => {
+  try {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (!win) return;
+    const [currentWidth] = win.getContentSize();
+    const minH = 200;
+    const display = screen.getDisplayMatching(win.getBounds()) || screen.getPrimaryDisplay();
+    const workH = (display && display.workAreaSize && display.workAreaSize.height) ? display.workAreaSize.height : 900;
+    const maxH = Math.max(320, workH - 80);
+    const padded = Math.max(minH, Math.min(maxH, Math.ceil(Number(contentHeight) || 0) + 20));
+    win.setContentSize(currentWidth, padded);
+  } catch (_) {}
 });
 
 // IPC handler for folder selection

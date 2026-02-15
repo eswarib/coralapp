@@ -2,18 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'">
   <title>Coral Settings</title>
   <style>
-    body { font-family: sans-serif; margin: 20px; }
-    label { display: block; margin-top: 10px; }
-    input, select { width: 100%; padding: 4px; margin-top: 2px; }
-    button { margin-top: 20px; padding: 8px 16px; }
+    body { font-family: sans-serif; margin: 16px; overflow: hidden; }
+    h2 { margin: 0 0 8px 0; font-size: 1.4em; }
+    label { display: block; margin-top: 8px; }
+    input, select { width: 100%; padding: 4px; margin-top: 2px; box-sizing: border-box; }
+    button { margin-top: 16px; padding: 8px 16px; }
+    /* Toolbar-like label and pill styles */
+    .toolbar-label { font-weight: 600; color: #333; margin-top: 12px; }
+    .pill-select { display: inline-block; padding: 6px 12px; border-radius: 8px; border: 1px solid #9bb5f1; background: #e6eefb; color: #0d47a1; cursor: pointer; user-select: none; }
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-menu { position: absolute; top: 100%; left: 0; margin-top: 6px; background: #fff; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.15); z-index: 1000; min-width: 220px; }
+    .dropdown-item { padding: 8px 12px; cursor: pointer; }
+    .dropdown-item:hover { background: #f0f3f7; }
+    .muted { color: #666; font-size: 0.9em; margin-left: 8px; }
   </style>
 </head>
 <body>
 
+  <h2>Settings</h2>
   <form id="configForm"></form>
-  <button id="saveBtn">Save</button>
+
+  <button id="saveBtn">Apply</button>
   <div id="status"></div>
   <script src="renderer.js"></script>
 </body>

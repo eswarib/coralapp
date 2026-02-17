@@ -4,7 +4,7 @@
   "audioChannels": 1,
   "triggerKey": "Alt+z",
   "cmdTriggerKey": "Alt+x",
-  "whisperModelPath": "/home/eswari/gitcode/coral.AppDir/usr/share/coral/models/ggml-base.en.bin",
+  "whisperModelPath": "/disc2/gitcode-personal/coralapp/models/ggml-custom-distill-large-model.bin",
   "whisperLanguage": "en",
   "debugLevel": 5,
   "logFilePath": "/home/eswari/coral.log",

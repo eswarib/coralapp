@@ -28,12 +28,41 @@ bool A11yInjector::typeText(const std::string& text)
         return false;
     }
 
-    // Get the currently focused accessible via event cache
-    AtspiAccessible* focus = atspi_get_focus(&error);
+    // Walk the desktop tree to find the focused accessible.
+    // atspi_get_focus() does not exist in AT-SPI2; instead we iterate
+    // over applications and their children looking for ATSPI_STATE_FOCUSED.
+    AtspiAccessible* focus = nullptr;
+    int nApps = atspi_accessible_get_child_count(desktop, &error);
+    if (error) { g_error_free(error); error = nullptr; }
+    for (int i = 0; i < nApps && !focus; ++i)
+    {
+        AtspiAccessible* app = atspi_accessible_get_child_at_index(desktop, i, &error);
+        if (error) { g_error_free(error); error = nullptr; }
+        if (!app) continue;
+        int nChildren = atspi_accessible_get_child_count(app, &error);
+        if (error) { g_error_free(error); error = nullptr; }
+        for (int j = 0; j < nChildren && !focus; ++j)
+        {
+            AtspiAccessible* child = atspi_accessible_get_child_at_index(app, j, &error);
+            if (error) { g_error_free(error); error = nullptr; }
+            if (!child) continue;
+            AtspiStateSet* states = atspi_accessible_get_state_set(child);
+            if (states && atspi_state_set_contains(states, ATSPI_STATE_FOCUSED))
+            {
+                focus = child;  // found it, don't unref
+            }
+            else
+            {
+                g_object_unref(child);
+            }
+            if (states) g_object_unref(states);
+        }
+        g_object_unref(app);
+    }
     if (!focus)
     {
-        DEBUG(3, std::string("A11yInjector: atspi_get_focus failed: ") + (error ? error->message : "unknown"));
-        if (error) g_error_free(error);
+        DEBUG(3, "A11yInjector: no focused accessible found");
+        g_object_unref(desktop);
         return false;
     }
 

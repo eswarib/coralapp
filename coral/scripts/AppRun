@@ -1,12 +1,18 @@
 #!/bin/bash
 HERE="$(dirname "$(readlink -f "$0")")"
 cd "$HERE"
-if [ -x "./node_modules/.bin/electron" ]; then
-    ./node_modules/.bin/electron . "$@"
-elif command -v electron > /dev/null; then
-    electron . "$@"
-elif command -v npm > /dev/null; then
-    npm start
+export LD_LIBRARY_PATH="$HERE/usr/lib:${LD_LIBRARY_PATH:-}"
+
+# Ubuntu 24.04+ restricts unprivileged user namespaces, which breaks Electron's
+# SUID sandbox inside an AppImage (the chrome-sandbox binary can't be setuid
+# root in a FUSE mount). Use the kernel namespace sandbox instead.
+export ELECTRON_DISABLE_SANDBOX=1
+export ELECTRON_ENABLE_LOGGING=0
+
+if [ -x "./node_modules/electron/dist/electron" ]; then
+    ./node_modules/electron/dist/electron . "$@" 2>/dev/null
+elif [ -x "./node_modules/.bin/electron" ]; then
+    ./node_modules/.bin/electron . "$@" 2>/dev/null
 else
     echo "No Electron runtime found!"
     exit 1

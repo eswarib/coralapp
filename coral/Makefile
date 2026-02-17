@@ -81,7 +81,7 @@ backend:
 
 # Build Electron frontend
 frontend:
-	cd ../coral-electron && npm ci
+	cd ../coral-electron && npm install
 	# Uncomment if you have a build step:
 	# cd ../coral-electron && npm run build
 

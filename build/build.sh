@@ -113,24 +113,64 @@ else
         "$BACKEND_DIR/src/version.h.in" > "$BACKEND_DIR/src/version.h"
 fi
 
-# ── Build whisper.cpp shared libraries ────────────────────────────────────────
+# ── Detect platform ──────────────────────────────────────────────────────────
+IS_WINDOWS=false
+case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*|Windows_NT) IS_WINDOWS=true ;;
+esac
+
+# ── Build whisper.cpp ────────────────────────────────────────────────────────
 echo "Building whisper.cpp..."
 pushd "$WHISPER_DIR"
-cmake -B build -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release
-cmake --build build --config Release -j$(nproc)
+if [ "$IS_WINDOWS" = true ]; then
+    # Windows: static libs, static MSVC runtime, OpenMP statically linked
+    cmake -B build \
+        -DBUILD_SHARED_LIBS=OFF \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded" \
+        -DCMAKE_C_FLAGS="/openmp" \
+        -DCMAKE_CXX_FLAGS="/openmp"
+    cmake --build build --config Release
+else
+    # Linux: shared libs
+    cmake -B build -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release
+    cmake --build build --config Release -j$(nproc)
+fi
 popd
 
 # Copy whisper libraries into coral/lib
 mkdir -p "$BACKEND_DIR/lib"
-cp "$WHISPER_DIR"/build/src/libwhisper.so*       "$BACKEND_DIR/lib/"
-cp "$WHISPER_DIR"/build/ggml/src/libggml*.so*    "$BACKEND_DIR/lib/"
-echo "whisper.cpp build complete — libraries copied to $BACKEND_DIR/lib/"
+if [ "$IS_WINDOWS" = true ]; then
+    cp "$WHISPER_DIR"/build/src/Release/whisper.lib          "$BACKEND_DIR/lib/" 2>/dev/null || \
+    cp "$WHISPER_DIR"/build/src/whisper.lib                  "$BACKEND_DIR/lib/" 2>/dev/null || true
+    cp "$WHISPER_DIR"/build/ggml/src/Release/ggml*.lib       "$BACKEND_DIR/lib/" 2>/dev/null || \
+    cp "$WHISPER_DIR"/build/ggml/src/ggml*.lib               "$BACKEND_DIR/lib/" 2>/dev/null || true
+    echo "whisper.cpp build complete — static libraries copied to $BACKEND_DIR/lib/"
+else
+    cp "$WHISPER_DIR"/build/src/libwhisper.so*       "$BACKEND_DIR/lib/"
+    cp "$WHISPER_DIR"/build/ggml/src/libggml*.so*    "$BACKEND_DIR/lib/"
+    echo "whisper.cpp build complete — shared libraries copied to $BACKEND_DIR/lib/"
+fi
 
 # ── Build coral backend ──────────────────────────────────────────────────────
-pushd "$BACKEND_DIR"
-make clean
-make all
-popd
+if [ "$IS_WINDOWS" = true ]; then
+    # Windows: use CMake
+    pushd "$BACKEND_DIR"
+    cmake -B build \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded" \
+        -DAPP_VERSION="$APP_VERSION" \
+        -DBUILD_DATE="$BUILD_DATE" \
+        -DGIT_COMMIT="$GIT_COMMIT"
+    cmake --build build --config Release
+    popd
+else
+    # Linux: use Makefile
+    pushd "$BACKEND_DIR"
+    make clean
+    make all
+    popd
+fi
 
 echo "Backend build complete."
 

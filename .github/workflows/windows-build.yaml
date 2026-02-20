@@ -29,7 +29,8 @@ jobs:
 
       - name: Build whisper.cpp (static libs)
         shell: cmd
-       it clone --depth 1 https://github.com/ggerganov/whisper.cpp C:\whispercpp
+        run: |
+          git clone --depth 1 https://github.com/ggerganov/whisper.cpp C:\whispercpp
           cmake -S C:\whispercpp -B C:\whispercpp\build ^
             -G "Visual Studio 17 2022" -A x64 ^
             -DCMAKE_BUILD_TYPE=Release ^

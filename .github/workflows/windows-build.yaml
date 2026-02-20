@@ -35,8 +35,7 @@ jobs:
             -G "Visual Studio 17 2022" -A x64 ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DBUILD_SHARED_LIBS=OFF ^
-            -DCMAKE_C_FLAGS="/openmp" ^
-            -DCMAKE_CXX_FLAGS="/openmp"
+            -DGGML_OPENMP=OFF
           cmake --build C:\whispercpp\build --config Release --target ggml whisper
           
       - name: Detect whisper and ggml library paths
@@ -105,7 +104,7 @@ jobs:
             -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
             -property installationPath 2>$null
           $installDir = if ($raw) { $raw.ToString().Trim() } else { $null }
-          $vcDlls = @('msvcp140.dll', 'vcruntime140.dll', 'vcruntime140_1.dll', 'vcomp140.dll')
+          $vcDlls = @('msvcp140.dll', 'vcruntime140.dll', 'vcruntime140_1.dll')
           $bundled = $false
           if ($installDir -and (Test-Path $installDir)) {
             $verFile = Join-Path $installDir "VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.txt"
@@ -113,17 +112,12 @@ jobs:
               $ver = (Get-Content $verFile -Raw).Trim()
               $redistBase = Join-Path $installDir "VC\Tools\MSVC\$ver\redist\x64"
               $crtDir = Get-ChildItem -Path $redistBase -Filter "Microsoft.VC*.CRT" -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
-              $ompDir = Get-ChildItem -Path $redistBase -Filter "Microsoft.VC*.OpenMP" -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
               if ($crtDir) {
                 Copy-Item "$($crtDir.FullName)\msvcp140.dll" $outDir -Force -ErrorAction SilentlyContinue
                 Copy-Item "$($crtDir.FullName)\vcruntime140.dll" $outDir -Force -ErrorAction SilentlyContinue
                 Copy-Item "$($crtDir.FullName)\vcruntime140_1.dll" $outDir -Force -ErrorAction SilentlyContinue
                 Write-Host "Bundled CRT from $($crtDir.FullName)"
                 $bundled = $true
-              }
-              if ($ompDir) {
-                Copy-Item "$($ompDir.FullName)\vcomp140.dll" $outDir -Force -ErrorAction SilentlyContinue
-                Write-Host "Bundled OpenMP from $($ompDir.FullName)"
               }
             }
           }

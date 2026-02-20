@@ -40,7 +40,7 @@ jobs:
             -DCMAKE_C_FLAGS="/MT /openmp" ^
             -DCMAKE_CXX_FLAGS="/MT /openmp"
           cmake --build C:\whispercpp\build --config Release --target ggml whisper
-
+          
       - name: Detect whisper and ggml library paths
         shell: pwsh
         run: |

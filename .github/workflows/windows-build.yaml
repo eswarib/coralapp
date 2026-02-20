@@ -22,10 +22,10 @@ jobs:
           $pkg = Get-Content coral-electron/package.json | ConvertFrom-Json
           echo "APPVER=$($pkg.version)" >> $env:GITHUB_ENV
 
-      - name: Install dependencies (PortAudio, libsndfile) [static]
+      - name: Install dependencies (PortAudio, libsndfile)
         shell: cmd
         run: |
-          C:\vcpkg\vcpkg.exe install portaudio:x64-windows-static libsndfile:x64-windows-static
+          C:\vcpkg\vcpkg.exe install portaudio:x64-windows libsndfile:x64-windows
 
       - name: Build whisper.cpp (static libs)
         shell: cmd
@@ -35,10 +35,8 @@ jobs:
             -G "Visual Studio 17 2022" -A x64 ^
             -DCMAKE_BUILD_TYPE=Release ^
             -DBUILD_SHARED_LIBS=OFF ^
-            -DCMAKE_POLICY_DEFAULT_CMP0091=NEW ^
-            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded ^
-            -DCMAKE_C_FLAGS="/MT /openmp" ^
-            -DCMAKE_CXX_FLAGS="/MT /openmp"
+            -DCMAKE_C_FLAGS="/openmp" ^
+            -DCMAKE_CXX_FLAGS="/openmp"
           cmake --build C:\whispercpp\build --config Release --target ggml whisper
           
       - name: Detect whisper and ggml library paths
@@ -79,10 +77,8 @@ jobs:
         run: |
           cmake -S coral -B build-win -G "Visual Studio 17 2022" -A x64 ^
             -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake ^
-            -DVCPKG_TARGET_TRIPLET=x64-windows-static ^
+            -DVCPKG_TARGET_TRIPLET=x64-windows ^
             -DCMAKE_BUILD_TYPE=Release ^
-            -DCMAKE_POLICY_DEFAULT_CMP0091=NEW ^
-            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded ^
             -DWHISPER_LIBRARY="%WHISPERLIB%" ^
             -DGGML_LIBRARIES="%GGMLLIBS%" ^
             -DAPP_VERSION="%APPVER%" ^
@@ -94,18 +90,46 @@ jobs:
         run: |
           cmake --build build-win --config Release
 
-      - name: Locate and version the EXE
+      - name: Bundle EXE with required DLLs
         shell: pwsh
         run: |
           $exe = Get-ChildItem -Path "build-win" -Filter "coral.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
           if (-not $exe) { throw "coral.exe not found under build-win" }
-          $dest = Join-Path $exe.Directory.FullName ("coral-" + $env:APPVER + ".exe")
-          Copy-Item $exe.FullName $dest -Force
-          echo "EXE_PATH=$dest" >> $env:GITHUB_ENV
+
+          # Create output directory
+          $outDir = "coral-windows-x64-v$env:APPVER"
+          New-Item -ItemType Directory -Path $outDir -Force | Out-Null
+
+          # Copy the exe
+          Copy-Item $exe.FullName (Join-Path $outDir ("coral-" + $env:APPVER + ".exe")) -Force
+
+          # Bundle VC++ runtime DLLs from the Visual Studio installation
+          $vsDir = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath
+          $vcRedistDir = Get-ChildItem -Path "$vsDir\VC\Redist\MSVC" -Directory | Sort-Object Name -Descending | Select-Object -First 1
+          $dllDir = Join-Path $vcRedistDir.FullName "x64\Microsoft.VC143.CRT"
+          if (Test-Path $dllDir) {
+            Copy-Item "$dllDir\msvcp140.dll" $outDir -Force
+            Copy-Item "$dllDir\vcruntime140.dll" $outDir -Force
+            Copy-Item "$dllDir\vcruntime140_1.dll" $outDir -Force -ErrorAction SilentlyContinue
+          }
+
+          # Bundle OpenMP runtime
+          $ompDir = Join-Path $vcRedistDir.FullName "x64\Microsoft.VC143.OpenMP"
+          if (Test-Path $ompDir) {
+            Copy-Item "$ompDir\vcomp140.dll" $outDir -Force
+          }
+
+          # Bundle any vcpkg DLLs (portaudio, sndfile, etc.)
+          $vcpkgBin = "C:\vcpkg\installed\x64-windows\bin"
+          if (Test-Path $vcpkgBin) {
+            Get-ChildItem "$vcpkgBin\*.dll" | Copy-Item -Destination $outDir -Force
+          }
+
+          echo "ARTIFACT_DIR=$outDir" >> $env:GITHUB_ENV
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: coral-windows-x64-v${{ env.APPVER }}
-          path: ${{ env.EXE_PATH }}
+          path: ${{ env.ARTIFACT_DIR }}
 

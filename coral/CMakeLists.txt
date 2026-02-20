@@ -96,9 +96,6 @@ if(UNIX)
 	install(TARGETS coral RUNTIME DESTINATION .)
 
 else() # WIN32
-    # Static link the MSVC runtime — eliminates MSVCP140.dll / VCRUNTIME140.dll dependencies
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
-
     # Collect sources and exclude Linux-only files
     file(GLOB_RECURSE CORAL_SOURCES "src/*.cpp")
     # Exclude Linux-only sources from Windows build

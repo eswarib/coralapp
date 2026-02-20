@@ -19,8 +19,10 @@ jobs:
       - name: Compute app version
         shell: pwsh
         run: |
-          $pkg = Get-Content coral-electron/package.json | ConvertFrom-Json
-          echo "APPVER=$($pkg.version)" >> $env:GITHUB_ENV
+          $json = Get-Content coral-electron/package.json -Raw
+          if ($json -match '"version"\s*:\s*"([^"]+)"') { $ver = $Matches[1] } else { $ver = "0.0.0" }
+          echo "APPVER=$ver" >> $env:GITHUB_ENV
+          Write-Host "APPVER=$ver"
 
       - name: Install dependencies (PortAudio, libsndfile)
         shell: cmd
@@ -98,8 +100,14 @@ jobs:
           $ver = "$($env:APPVER)".Trim()
           $outDir = "coral-windows-x64-v$ver"
           New-Item -ItemType Directory -Path $outDir -Force | Out-Null
-          $exeDest = Join-Path $outDir "coral-$ver.exe"
+          $exeName = "coral-$ver.exe"
+          $exeDest = Join-Path $outDir $exeName
           Copy-Item -Path $exe.FullName -Destination $exeDest -Force
+          # Fix missing .exe: rename coral-* without extension to coral-*.exe
+          Get-ChildItem -Path $outDir -Filter "coral-*" | Where-Object { $_.Extension -ne ".exe" } | ForEach-Object {
+            Rename-Item -Path $_.FullName -NewName $exeName -Force
+            Write-Host "Renamed $($_.Name) to $exeName"
+          }
           Write-Host "Bundled executable: $exeDest"
 
           # VC++ runtime DLLs — use vswhere to find VS install, then VC\Tools\MSVC\<ver>\redist\x64
@@ -193,11 +201,15 @@ jobs:
           Write-Host "Contents of $outDir :"
           Get-ChildItem $outDir | Format-Table Name, Length -AutoSize
 
+          # Create .zip so download has proper extension
+          $zipName = "coral-windows-x64-v$ver.zip"
+          Compress-Archive -Path "$outDir\*" -DestinationPath $zipName -Force
           echo "ARTIFACT_DIR=$outDir" >> $env:GITHUB_ENV
+          echo "ARTIFACT_ZIP=$zipName" >> $env:GITHUB_ENV
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: coral-windows-x64-v${{ env.APPVER }}
-          path: ${{ env.ARTIFACT_DIR }}
+          name: coral-windows-x64-v${{ env.APPVER }}.zip
+          path: ${{ env.ARTIFACT_ZIP }}
 

@@ -130,13 +130,21 @@ jobs:
           if (-not $bundled) {
             Write-Host "VC redist not found via vswhere, downloading from Microsoft..."
             Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vc_redist.x64.exe" -OutFile "vc_redist.x64.exe" -UseBasicParsing
-            & "C:\Program Files\7-Zip\7z.exe" x vc_redist.x64.exe -ovc_extract -y 2>$null
+           
+            Start-Process -FilePath ".\vc_redist.x64.exe" -ArgumentList "/extract:vc_extract", "/quiet" -NoNewWindow -Wait
+            
+            if (-not (Test-Path "vc_extract")) { throw "Redist extraction failed" }
+            
             foreach ($dll in $vcDlls) {
               $f = Get-ChildItem -Path "vc_extract" -Filter $dll -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-              if ($f) { Copy-Item $f.FullName $outDir -Force; Write-Host "Bundled: $dll" }
+              if ($f) {
+                Copy-Item $f.FullName $outDir -Force
+                Write-Host "Bundled: $dll"
+              }
             }
-            Remove-Item -Path "vc_extract" -Recurse -Force -ErrorAction SilentlyContinue
-            Remove-Item -Path "vc_redist.x64.exe" -Force -ErrorAction SilentlyContinue
+            
+            Remove-Item -Recurse -Force vc_extract -ErrorAction SilentlyContinue
+            Remove-Item -Force vc_redist.x64.exe -ErrorAction SilentlyContinue
           }
           if (-not (Test-Path (Join-Path $outDir "msvcp140.dll"))) {
             Write-Host "ERROR: msvcp140.dll not bundled - VC++ runtime missing"

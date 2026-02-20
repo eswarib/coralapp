@@ -96,34 +96,64 @@ jobs:
           $exe = Get-ChildItem -Path "build-win" -Filter "coral.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
           if (-not $exe) { throw "coral.exe not found under build-win" }
 
-          # Create output directory
           $outDir = "coral-windows-x64-v$env:APPVER"
           New-Item -ItemType Directory -Path $outDir -Force | Out-Null
-
-          # Copy the exe
           Copy-Item $exe.FullName (Join-Path $outDir ("coral-" + $env:APPVER + ".exe")) -Force
 
-          # Bundle VC++ runtime DLLs from the Visual Studio installation
-          $vsDir = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath
-          $vcRedistDir = Get-ChildItem -Path "$vsDir\VC\Redist\MSVC" -Directory | Sort-Object Name -Descending | Select-Object -First 1
-          $dllDir = Join-Path $vcRedistDir.FullName "x64\Microsoft.VC143.CRT"
-          if (Test-Path $dllDir) {
-            Copy-Item "$dllDir\msvcp140.dll" $outDir -Force
-            Copy-Item "$dllDir\vcruntime140.dll" $outDir -Force
-            Copy-Item "$dllDir\vcruntime140_1.dll" $outDir -Force -ErrorAction SilentlyContinue
+          # VC++ runtime DLLs — use vswhere to find VS install, then VC\Tools\MSVC\<ver>\redist\x64
+          $raw = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
+            -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 `
+            -property installationPath 2>$null
+          $installDir = if ($raw) { $raw.ToString().Trim() } else { $null }
+          $vcDlls = @('msvcp140.dll', 'vcruntime140.dll', 'vcruntime140_1.dll', 'vcomp140.dll')
+          $bundled = $false
+          if ($installDir -and (Test-Path $installDir)) {
+            $verFile = Join-Path $installDir "VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.txt"
+            if (Test-Path $verFile) {
+              $ver = (Get-Content $verFile -Raw).Trim()
+              $redistBase = Join-Path $installDir "VC\Tools\MSVC\$ver\redist\x64"
+              $crtDir = Get-ChildItem -Path $redistBase -Filter "Microsoft.VC*.CRT" -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
+              $ompDir = Get-ChildItem -Path $redistBase -Filter "Microsoft.VC*.OpenMP" -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
+              if ($crtDir) {
+                Copy-Item "$($crtDir.FullName)\msvcp140.dll" $outDir -Force -ErrorAction SilentlyContinue
+                Copy-Item "$($crtDir.FullName)\vcruntime140.dll" $outDir -Force -ErrorAction SilentlyContinue
+                Copy-Item "$($crtDir.FullName)\vcruntime140_1.dll" $outDir -Force -ErrorAction SilentlyContinue
+                Write-Host "Bundled CRT from $($crtDir.FullName)"
+                $bundled = $true
+              }
+              if ($ompDir) {
+                Copy-Item "$($ompDir.FullName)\vcomp140.dll" $outDir -Force -ErrorAction SilentlyContinue
+                Write-Host "Bundled OpenMP from $($ompDir.FullName)"
+              }
+            }
+          }
+          if (-not $bundled) {
+            Write-Host "VC redist not found via vswhere, downloading from Microsoft..."
+            Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vc_redist.x64.exe" -OutFile "vc_redist.x64.exe" -UseBasicParsing
+            & "C:\Program Files\7-Zip\7z.exe" x vc_redist.x64.exe -ovc_extract -y 2>$null
+            foreach ($dll in $vcDlls) {
+              $f = Get-ChildItem -Path "vc_extract" -Filter $dll -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+              if ($f) { Copy-Item $f.FullName $outDir -Force; Write-Host "Bundled: $dll" }
+            }
+            Remove-Item -Path "vc_extract" -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-Item -Path "vc_redist.x64.exe" -Force -ErrorAction SilentlyContinue
+          }
+          if (-not (Test-Path (Join-Path $outDir "msvcp140.dll"))) {
+            Write-Host "ERROR: msvcp140.dll not bundled - VC++ runtime missing"
+            exit 1
           }
 
-          # Bundle OpenMP runtime
-          $ompDir = Join-Path $vcRedistDir.FullName "x64\Microsoft.VC143.OpenMP"
-          if (Test-Path $ompDir) {
-            Copy-Item "$ompDir\vcomp140.dll" $outDir -Force
-          }
-
-          # Bundle any vcpkg DLLs (portaudio, sndfile, etc.)
+          # Bundle vcpkg DLLs (portaudio, sndfile, etc.)
           $vcpkgBin = "C:\vcpkg\installed\x64-windows\bin"
           if (Test-Path $vcpkgBin) {
-            Get-ChildItem "$vcpkgBin\*.dll" | Copy-Item -Destination $outDir -Force
+            Get-ChildItem "$vcpkgBin\*.dll" | ForEach-Object {
+              Copy-Item $_.FullName $outDir -Force
+              Write-Host "Bundled: $($_.FullName)"
+            }
           }
+
+          Write-Host "Contents of $outDir :"
+          Get-ChildItem $outDir | Format-Table Name, Length -AutoSize
 
           echo "ARTIFACT_DIR=$outDir" >> $env:GITHUB_ENV
 

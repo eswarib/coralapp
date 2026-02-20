@@ -29,11 +29,17 @@ jobs:
 
       - name: Build whisper.cpp (static libs)
         shell: cmd
-        run: |
-          git clone --depth 1 https://github.com/ggerganov/whisper.cpp C:\whispercpp
-          cmake -S C:\whispercpp -B C:\whispercpp\build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
+       it clone --depth 1 https://github.com/ggerganov/whisper.cpp C:\whispercpp
+          cmake -S C:\whispercpp -B C:\whispercpp\build ^
+            -G "Visual Studio 17 2022" -A x64 ^
+            -DCMAKE_BUILD_TYPE=Release ^
+            -DBUILD_SHARED_LIBS=OFF ^
+            -DCMAKE_POLICY_DEFAULT_CMP0091=NEW ^
+            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded ^
+            -DCMAKE_C_FLAGS="/MT /openmp" ^
+            -DCMAKE_CXX_FLAGS="/MT /openmp"
           cmake --build C:\whispercpp\build --config Release --target ggml whisper
-
+          
       - name: Detect whisper and ggml library paths
         shell: pwsh
         run: |
@@ -74,6 +80,8 @@ jobs:
             -DCMAKE_TOOLCHAIN_FILE=C:\vcpkg\scripts\buildsystems\vcpkg.cmake ^
             -DVCPKG_TARGET_TRIPLET=x64-windows-static ^
             -DCMAKE_BUILD_TYPE=Release ^
+            -DCMAKE_POLICY_DEFAULT_CMP0091=NEW ^
+            -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded ^
             -DWHISPER_LIBRARY="%WHISPERLIB%" ^
             -DGGML_LIBRARIES="%GGMLLIBS%" ^
             -DAPP_VERSION="%APPVER%" ^

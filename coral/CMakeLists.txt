@@ -96,6 +96,9 @@ if(UNIX)
 	install(TARGETS coral RUNTIME DESTINATION .)
 
 else() # WIN32
+    # Static link the MSVC runtime — eliminates MSVCP140.dll / VCRUNTIME140.dll dependencies
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
     # Collect sources and exclude Linux-only files
     file(GLOB_RECURSE CORAL_SOURCES "src/*.cpp")
     # Exclude Linux-only sources from Windows build
@@ -103,6 +106,8 @@ else() # WIN32
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/Wayland.*\\.cpp$")
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/A11yInjector\\.cpp$")
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/X11WindowUtils\\.cpp$")
+    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/UInputInjector\\.cpp$")
+    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/ClipboardOwner\\.cpp$")
 
     add_executable(coral ${CORAL_SOURCES})
 

@@ -95,9 +95,12 @@ jobs:
           $exe = Get-ChildItem -Path "build-win" -Filter "coral.exe" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
           if (-not $exe) { throw "coral.exe not found under build-win" }
 
-          $outDir = "coral-windows-x64-v$env:APPVER"
+          $ver = "$($env:APPVER)".Trim()
+          $outDir = "coral-windows-x64-v$ver"
           New-Item -ItemType Directory -Path $outDir -Force | Out-Null
-          Copy-Item $exe.FullName (Join-Path $outDir ("coral-" + $env:APPVER + ".exe")) -Force
+          $exeDest = Join-Path $outDir "coral-$ver.exe"
+          Copy-Item -Path $exe.FullName -Destination $exeDest -Force
+          Write-Host "Bundled executable: $exeDest"
 
           # VC++ runtime DLLs — use vswhere to find VS install, then VC\Tools\MSVC\<ver>\redist\x64
           $raw = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" `
@@ -133,7 +136,7 @@ jobs:
           }
           if (-not $bundled) {
             Write-Host "VC redist not found via vswhere, trying 7-Zip extraction..."
-            Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vc_redist.x64.exe" -OutFile "vc_redist.x64.exe" -UseBasicParsing
+            Invoke-WebRequest -Uri "https://aka.ms/vc14/vc_redist.x64.exe" -OutFile "vc_redist.x64.exe" -UseBasicParsing
             $7z = "C:\Program Files\7-Zip\7z.exe"
             if (-not (Test-Path $7z)) { $7z = "7z" }
             New-Item -ItemType Directory -Path "vc_extract" -Force | Out-Null

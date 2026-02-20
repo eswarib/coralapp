@@ -110,8 +110,18 @@ jobs:
             $verFile = Join-Path $installDir "VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.txt"
             if (Test-Path $verFile) {
               $ver = (Get-Content $verFile -Raw).Trim()
-              $redistBase = Join-Path $installDir "VC\Tools\MSVC\$ver\redist\x64"
-              $crtDir = Get-ChildItem -Path $redistBase -Filter "Microsoft.VC*.CRT" -Directory -ErrorAction SilentlyContinue | Select-Object -First 1
+              # Try Tools\MSVC\redist first, then Redist\MSVC
+              $redistBases = @(
+                (Join-Path $installDir "VC\Tools\MSVC\$ver\redist\x64"),
+                (Join-Path $installDir "VC\Redist\MSVC")
+              )
+              $crtDir = $null
+              foreach ($rb in $redistBases) {
+                if (Test-Path $rb) {
+                  $crtDir = Get-ChildItem -Path $rb -Filter "Microsoft.VC*.CRT" -Directory -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+                  if ($crtDir) { break }
+                }
+              }
               if ($crtDir) {
                 Copy-Item "$($crtDir.FullName)\msvcp140.dll" $outDir -Force -ErrorAction SilentlyContinue
                 Copy-Item "$($crtDir.FullName)\vcruntime140.dll" $outDir -Force -ErrorAction SilentlyContinue
@@ -122,23 +132,46 @@ jobs:
             }
           }
           if (-not $bundled) {
-            Write-Host "VC redist not found via vswhere, downloading from Microsoft..."
+            Write-Host "VC redist not found via vswhere, trying 7-Zip extraction..."
             Invoke-WebRequest -Uri "https://aka.ms/vs/17/release/vc_redist.x64.exe" -OutFile "vc_redist.x64.exe" -UseBasicParsing
-           
-            Start-Process -FilePath ".\vc_redist.x64.exe" -ArgumentList "/extract:vc_extract", "/quiet" -NoNewWindow -Wait
-            
-            if (-not (Test-Path "vc_extract")) { throw "Redist extraction failed" }
-            
+            $7z = "C:\Program Files\7-Zip\7z.exe"
+            if (-not (Test-Path $7z)) { $7z = "7z" }
+            New-Item -ItemType Directory -Path "vc_extract" -Force | Out-Null
+            & $7z x vc_redist.x64.exe -ovc_extract -y 2>$null
+            Get-ChildItem -Path "vc_extract" -Filter "*.cab" -Recurse -ErrorAction SilentlyContinue | ForEach-Object {
+              $cabOut = Join-Path $_.DirectoryName ($_.BaseName + "_ext")
+              New-Item -ItemType Directory -Path $cabOut -Force | Out-Null
+              & $7z x $_.FullName -o"$cabOut" -y 2>$null
+            }
             foreach ($dll in $vcDlls) {
               $f = Get-ChildItem -Path "vc_extract" -Filter $dll -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
               if ($f) {
                 Copy-Item $f.FullName $outDir -Force
                 Write-Host "Bundled: $dll"
+                $bundled = $true
               }
             }
-            
             Remove-Item -Recurse -Force vc_extract -ErrorAction SilentlyContinue
             Remove-Item -Force vc_redist.x64.exe -ErrorAction SilentlyContinue
+            if (-not $bundled) {
+              Write-Host "7-Zip extraction failed, trying NuGet package..."
+              Invoke-WebRequest -Uri "https://www.nuget.org/api/v2/package/VCLibs.VCRuntime.140/1.0.4" -OutFile "vcruntime.nupkg" -UseBasicParsing
+              Expand-Archive -Path "vcruntime.nupkg" -DestinationPath "vcruntime_extract" -Force
+              $nugetBin = Get-ChildItem -Path "vcruntime_extract" -Filter "msvcp140.dll" -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
+              if ($nugetBin) {
+                $nugetDir = $nugetBin.DirectoryName
+                foreach ($dll in $vcDlls) {
+                  $src = Join-Path $nugetDir $dll
+                  if (Test-Path $src) {
+                    Copy-Item $src $outDir -Force
+                    Write-Host "Bundled from NuGet: $dll"
+                    $bundled = $true
+                  }
+                }
+              }
+              Remove-Item -Recurse -Force vcruntime_extract -ErrorAction SilentlyContinue
+              Remove-Item -Force vcruntime.nupkg -ErrorAction SilentlyContinue
+            }
           }
           if (-not (Test-Path (Join-Path $outDir "msvcp140.dll"))) {
             Write-Host "ERROR: msvcp140.dll not bundled - VC++ runtime missing"

@@ -107,7 +107,6 @@ else() # WIN32
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/A11yInjector\\.cpp$")
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/X11WindowUtils\\.cpp$")
     list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/UInputInjector\\.cpp$")
-    list(FILTER CORAL_SOURCES EXCLUDE REGEX "/src/ClipboardOwner\\.cpp$")
 
     add_executable(coral ${CORAL_SOURCES})
 

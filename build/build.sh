@@ -123,14 +123,12 @@ esac
 echo "Building whisper.cpp..."
 pushd "$WHISPER_DIR"
 if [ "$IS_WINDOWS" = true ]; then
-    # Windows: static libs, static MSVC runtime (/MT), OpenMP enabled
+    # Windows: static libs, dynamic runtime, OpenMP enabled
     cmake -B build \
         -DBUILD_SHARED_LIBS=OFF \
         -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_POLICY_DEFAULT_CMP0091=NEW \
-        -DCMAKE_MSVC_RUNTIME_LIBRARY="MultiThreaded" \
-        -DCMAKE_C_FLAGS="/MT /openmp" \
-        -DCMAKE_CXX_FLAGS="/MT /openmp"
+        -DCMAKE_C_FLAGS="/openmp" \
+        -DCMAKE_CXX_FLAGS="/openmp"
     cmake --build build --config Release
 else
     # Linux: shared libs

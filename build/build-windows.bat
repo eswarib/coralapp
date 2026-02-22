@@ -43,7 +43,7 @@ if not exist "%WHISPER_DIR%" (
 
 REM ---- Build whisper.cpp ----
 echo Building whisper.cpp...
-cmake -S "%WHISPER_DIR%" -B "%WHISPER_DIR%\build" -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DGGML_OPENMP=OFF
+cmake -S "%WHISPER_DIR%" -B "%WHISPER_DIR%\build" -G "Visual Studio 18 2026" -A x64 -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DGGML_OPENMP=OFF
 cmake --build "%WHISPER_DIR%\build" --config Release --target ggml whisper
 
 REM ---- Detect whisper and ggml paths ----
@@ -76,5 +76,5 @@ echo GGMLLIBS=%GGMLLIBS%
 REM ---- Build coral ----
 if exist build-win rmdir /s /q build-win
 echo Building coral...
-cmake -S coral -B build-win -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_BUILD_TYPE=Release -DWHISPER_LIBRARY="%WHISPERLIB%" -DGGML_LIBRARIES="%GGMLLIBS%" -DAPP_VERSION="%APPVER%" -DBUILD_DATE="%DATE%" -DGIT_COMMIT="local"
+cmake -S coral -B build-win -G "Visual Studio 18 2026" -A x64 -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_BUILD_TYPE=Release -DWHISPER_LIBRARY="%WHISPERLIB%" -DGGML_LIBRARIES="%GGMLLIBS%" -DAPP_VERSION="%APPVER%" -DBUILD_DATE="%DATE%" -DGIT_COMMIT="local"
 cmake --build build-win --config Release

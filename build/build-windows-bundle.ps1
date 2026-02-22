@@ -1,5 +1,7 @@
 param([string]$AppVer = "0.0.0", [string]$VcpkgRoot = "", [string]$RepoRoot = "")
 
+$ErrorActionPreference = "Stop"
+
 # Ensure we run from repo root
 if ($RepoRoot -and (Test-Path $RepoRoot)) {
     Set-Location -Path $RepoRoot -ErrorAction Stop
@@ -14,6 +16,16 @@ if (-not $exe) { throw "coral.exe not found" }
 
 $ver = $AppVer.Trim()
 $outDir = "coral-windows-x64-v" + $ver
+
+# Check write access before creating output dir (avoids 'unauthorized access' in protected locations)
+$testFile = Join-Path $PWD ".write-test"
+try {
+    [System.IO.File]::WriteAllText($testFile, "test")
+    Remove-Item $testFile -Force -ErrorAction SilentlyContinue
+} catch {
+    throw "No write permission in $PWD. Try running from a user folder (e.g. C:\Users\YourName\coralapp) or Run as Administrator."
+}
+
 New-Item -ItemType Directory -Path $outDir -Force | Out-Null
 Copy-Item $exe.FullName (Join-Path $outDir ("coral-" + $ver + ".exe")) -Force
 

@@ -80,47 +80,8 @@ cmake -S coral -B build-win -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_
 cmake --build build-win --config Release
 
 REM ---- Bundle (use PowerShell for vswhere and file ops) ----
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-"$exe = Get-ChildItem -Path 'build-win' -Filter 'coral.exe' -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1; ^
-if (-not $exe) { throw 'coral.exe not found' }; ^
-$ver = '%APPVER%'.Trim(); ^
-$outDir = 'coral-windows-x64-v' + $ver; ^
-New-Item -ItemType Directory -Path $outDir -Force | Out-Null; ^
-Copy-Item $exe.FullName (Join-Path $outDir ('coral-' + $ver + '.exe')) -Force; ^
-$raw = & \"${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe\" -latest -products * -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath 2>$null; ^
-$installDir = if ($raw) { $raw.ToString().Trim() } else { $null }; ^
-if ($installDir -and (Test-Path $installDir)) { ^
-  $verFile = Join-Path $installDir 'VC\Auxiliary\Build\Microsoft.VCToolsVersion.default.txt'; ^
-  if (Test-Path $verFile) { ^
-    $vcVer = (Get-Content $verFile -Raw).Trim(); ^
-    $crtPath = Join-Path $installDir ('VC\Tools\MSVC\' + $vcVer + '\redist\x64'); ^
-    $crtDir = Get-ChildItem -Path $crtPath -Filter 'Microsoft.VC*.CRT' -Directory -ErrorAction SilentlyContinue | Select-Object -First 1; ^
-    if ($crtDir) { ^
-      Copy-Item (Join-Path $crtDir.FullName 'msvcp140.dll') $outDir -Force; ^
-      Copy-Item (Join-Path $crtDir.FullName 'vcruntime140.dll') $outDir -Force; ^
-      Copy-Item (Join-Path $crtDir.FullName 'vcruntime140_1.dll') $outDir -Force; ^
-      Write-Host 'Bundled VC++ CRT' ^
-    } ^
-  } ^
-}; ^
-if (-not (Test-Path (Join-Path $outDir 'msvcp140.dll'))) { ^
-  $sys32 = $env:SystemRoot + '\System32'; ^
-  if (Test-Path (Join-Path $sys32 'msvcp140.dll')) { ^
-    Copy-Item (Join-Path $sys32 'msvcp140.dll') $outDir -Force; ^
-    Copy-Item (Join-Path $sys32 'vcruntime140.dll') $outDir -Force; ^
-    Copy-Item (Join-Path $sys32 'vcruntime140_1.dll') $outDir -Force; ^
-    Write-Host 'Bundled VC++ CRT from System32' ^
-  } else { ^
-    Write-Host 'WARNING: VC++ DLLs not found - copy msvcp140.dll, vcruntime140.dll, vcruntime140_1.dll manually' ^
-  } ^
-}; ^
-$vcpkgBin = '%VCPKG_ROOT%\installed\x64-windows\bin'; ^
-if (Test-Path $vcpkgBin) { Get-ChildItem $vcpkgBin\*.dll | Copy-Item -Destination $outDir -Force }; ^
-Compress-Archive -Path ($outDir + '\*') -DestinationPath ('coral-windows-x64-v' + $ver + '.zip') -Force; ^
-Write-Host ''; ^
-Write-Host '=== Build complete ==='; ^
-Write-Host \"Output: $outDir\"; ^
-Get-ChildItem $outDir | Format-Table Name, Length -AutoSize"
+REM Unblock script first (fixes "unauthorized access" when .ps1 was downloaded/copied)
+powershell -NoProfile -ExecutionPolicy Bypass -Command "Unblock-File -Path '%~dp0build-windows-bundle.ps1' -ErrorAction SilentlyContinue; & '%~dp0build-windows-bundle.ps1' -AppVer '%APPVER%' -VcpkgRoot '%VCPKG_ROOT%' -RepoRoot '%REPO_ROOT%'"
 
 echo.
 echo Done. Run: coral-windows-x64-v%APPVER%\coral-%APPVER%.exe

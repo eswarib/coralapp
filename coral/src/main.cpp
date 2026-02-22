@@ -1,4 +1,5 @@
 #include "Config.h"
+#include "Utils.h"
 #include "concurrentQueue.h"
 #include "AudioEvent.h"
 #include "TranscriberThread.h"
@@ -31,9 +32,9 @@ int main(int argc, char* argv[])
         } 
         else 
         {
-            const char* home = std::getenv("HOME");
-            if (home) {
-                configPath = std::string(home) + "/.coral/config.json";
+            std::string home = Utils::getHomeDir();
+            if (!home.empty()) {
+                configPath = home + "/.coral/conf/config.json";
             }
             else
             {

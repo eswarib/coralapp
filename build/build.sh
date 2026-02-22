@@ -211,7 +211,7 @@ bash $BACKEND_DIR/scripts/collect-libs.sh $BACKEND_DIR/bin/coral $APPDIR/usr/lib
 
 #copy config
 mkdir -p "$APPDIR/usr/share/coral/conf"
-cp "$BACKEND_DIR/conf/config.json" "$APPDIR/usr/share/coral/conf/config.json"
+cp "$BACKEND_DIR/conf/config-linux.json" "$APPDIR/usr/share/coral/conf/config.json"
 
 MODEL_DIR="$APPDIR/usr/share/coral/models"
 mkdir -p "$MODEL_DIR"

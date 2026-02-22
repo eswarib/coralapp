@@ -163,6 +163,12 @@ jobs:
             exit 1
           }
 
+          # Bundle config (Windows: config.json)
+          if (Test-Path "coral/conf/config.json") {
+            Copy-Item "coral/conf/config.json" (Join-Path $outDir "config.json") -Force
+            Write-Host "Bundled config.json"
+          }
+
           # Bundle vcpkg DLLs (portaudio, sndfile, etc.)
           $vcpkgBin = "C:\vcpkg\installed\x64-windows\bin"
           if (Test-Path $vcpkgBin) {

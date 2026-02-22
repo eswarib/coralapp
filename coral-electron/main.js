@@ -11,17 +11,27 @@ const readline = require('readline');
 let originalIconPath;
 const ANIMATION_FRAME_COUNT = 8;
 let animationFrames = [];
-if (process.env.APPIMAGE) {
-  for (let i = 0; i < ANIMATION_FRAME_COUNT; i++) {
-    animationFrames.push(path.join(process.resourcesPath, 'icons', 'wave_icons', `wave_${i}.png`));
+function resolveIconPaths() {
+  if (process.env.APPIMAGE) {
+    for (let i = 0; i < ANIMATION_FRAME_COUNT; i++) {
+      animationFrames.push(path.join(process.resourcesPath, 'icons', 'wave_icons', `wave_${i}.png`));
+    }
+    originalIconPath = path.join(process.resourcesPath, 'coral.png');
+  } else {
+    const baseDir = __dirname;
+    for (let i = 0; i < ANIMATION_FRAME_COUNT; i++) {
+      animationFrames.push(path.join(baseDir, 'icons', 'wave_icons', `wave_${i}.png`));
+    }
+    // Try coral.png in coral-electron, then logo/coral.png
+    const candidates = [
+      path.join(baseDir, 'coral.png'),
+      path.join(baseDir, '..', 'logo', 'coral.png'),
+      path.join(process.resourcesPath || baseDir, 'coral.png'),
+    ];
+    originalIconPath = candidates.find(p => fs.existsSync(p)) || candidates[0];
   }
-  originalIconPath = path.join(process.resourcesPath, 'coral.png');
-} else {
-  for (let i = 0; i < ANIMATION_FRAME_COUNT; i++) {
-    animationFrames.push(path.join(__dirname, 'icons', 'wave_icons', `wave_${i}.png`));
-  }
-  originalIconPath = path.join(__dirname, 'coral.png');
 }
+resolveIconPaths();
 
 let tray = null;
 let configWindow = null;
@@ -207,18 +217,20 @@ function startBackend() {
         return;
     }
     let coralBinary, configPath, backendCwd, backendEnv;
+    const isWin = process.platform === 'win32';
+    const userConfigDir = path.join(os.homedir(), '.coral');
+    const userConfigPath = path.join(userConfigDir, 'conf', 'config.json');
+
     if (process.env.APPIMAGE)
     {
         // AppImage: binary is in usr/bin/coral
         const appImageMountPath = getAppImageMountPath();
         coralBinary = path.join(appImageMountPath, 'usr', 'bin', 'coral');
         const defaultConfigPath = path.join(appImageMountPath, 'usr', 'share', 'coral', 'conf', 'config.json');
-        const userConfigDir = path.join(os.homedir(), '.coral');
-        const userConfigPath = path.join(userConfigDir, 'config.json');
         try {
             console.log('Checking if user config directory exists:', userConfigDir);
-            if (!fs.existsSync(userConfigDir)) {
-                fs.mkdirSync(userConfigDir, { recursive: true });
+            if (!fs.existsSync(path.dirname(userConfigPath))) {
+                fs.mkdirSync(path.dirname(userConfigPath), { recursive: true });
                 console.log('Created user config directory:', userConfigDir);
             }
             console.log('Checking if user config exists:', userConfigPath);
@@ -244,16 +256,68 @@ function startBackend() {
             LD_LIBRARY_PATH: path.join(appImageMountPath, 'usr', 'lib') + (process.env.LD_LIBRARY_PATH ? (':' + process.env.LD_LIBRARY_PATH) : '')
         };
     }
+    else if (isWin)
+    {
+        // Windows: packaged (MSI) vs development
+        if (app.isPackaged) {
+            // Installed app: coral.exe and resources are in process.resourcesPath
+            coralBinary = path.join(process.resourcesPath, 'coral.exe');
+            if (!fs.existsSync(coralBinary)) {
+                coralBinary = path.join(path.dirname(process.execPath), 'resources', 'coral.exe');
+            }
+        } else {
+            // Development: coral.exe in build-win/Release
+            const repoRoot = path.join(__dirname, '..');
+            coralBinary = path.join(repoRoot, 'build-win', 'Release', 'coral.exe');
+            if (!fs.existsSync(coralBinary)) {
+                coralBinary = path.join(repoRoot, 'build-win', 'coral', 'Release', 'coral.exe');
+            }
+            if (!fs.existsSync(coralBinary)) {
+                const { execSync } = require('child_process');
+                try {
+                    const found = execSync(`dir /s /b "${path.join(repoRoot, 'build-win')}\\coral.exe" 2>nul`, { encoding: 'utf-8' }).trim().split('\n')[0];
+                    if (found && fs.existsSync(found)) coralBinary = found.trim();
+                } catch (_) {}
+            }
+        }
+        const defaultConfigSrc = app.isPackaged
+            ? path.join(process.resourcesPath, 'config.json')
+            : path.join(__dirname, '..', 'coral', 'conf', process.platform === 'win32' ? 'config.json' : 'config-linux.json');
+        try {
+            if (!fs.existsSync(path.dirname(userConfigPath))) {
+                fs.mkdirSync(path.dirname(userConfigPath), { recursive: true });
+                console.log('Created user config directory:', userConfigDir);
+            }
+            if (!fs.existsSync(userConfigPath) && fs.existsSync(defaultConfigSrc)) {
+                fs.copyFileSync(defaultConfigSrc, userConfigPath);
+                console.log('Copied default config to user config (first run):', defaultConfigSrc, '->', userConfigPath);
+            }
+        } catch (e) {
+            console.error('Failed to prepare user config:', e.message);
+        }
+        configPath = userConfigPath;
+        backendCwd = path.dirname(coralBinary);
+        backendEnv = { ...process.env };
+    }
     else
     {
-        // Development: adjust paths as needed
+        // Linux development: use ~/.coral/config.json, copy from config-linux.json on first run
         coralBinary = path.join(__dirname, '..', 'coral', 'bin', 'coral');
-        configPath = path.join(__dirname, '..', 'coral', 'conf', 'config.json');
+        const defaultConfigSrc = path.join(__dirname, '..', 'coral', 'conf', 'config-linux.json');
+        try {
+            if (!fs.existsSync(path.dirname(userConfigPath))) fs.mkdirSync(path.dirname(userConfigPath), { recursive: true });
+            if (!fs.existsSync(userConfigPath) && fs.existsSync(defaultConfigSrc)) {
+                fs.copyFileSync(defaultConfigSrc, userConfigPath);
+            }
+        } catch (e) { console.error('Failed to prepare user config:', e.message); }
+        configPath = userConfigPath;
         backendCwd = path.dirname(coralBinary);
         backendEnv = process.env;
     }
-    // Ensure DISPLAY is set for X11 injection
-    backendEnv.DISPLAY = process.env.DISPLAY || ':0';
+    // Ensure DISPLAY is set for X11 injection (Linux only)
+    if (!isWin) {
+        backendEnv.DISPLAY = process.env.DISPLAY || ':0';
+    }
     backendProcess = spawn(coralBinary, [configPath], {
         cwd: backendCwd,
         detached: false,
@@ -404,8 +468,20 @@ if (!gotLock) {
 app.whenReady().then(() => {
   // Remove the default application menu (File/Edit/View/Window/Help)
   Menu.setApplicationMenu(null);
-  // Tray icon path (use coral.png in usr/share/coral for AppImage)
-  tray = new Tray(originalIconPath);
+  // Tray icon - ensure path exists (Windows may fail silently with bad path)
+  if (!fs.existsSync(originalIconPath)) {
+    console.warn('Tray icon not found at:', originalIconPath, '- tray may not display correctly');
+  }
+  try {
+    tray = new Tray(originalIconPath);
+  } catch (e) {
+    console.error('Failed to create tray:', e.message);
+  }
+  if (!tray) {
+    dialog.showErrorBox('Coral', 'Could not create system tray icon. Ensure coral.png exists in coral-electron or logo folder.');
+    app.quit();
+    return;
+  }
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Settings', click: createConfigWindow },
     { label: 'Developer Settings', click: createDevWindow },

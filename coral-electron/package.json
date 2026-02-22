@@ -4,7 +4,8 @@
   "description": "Electron UI and tray for Coral app",
   "main": "main.js",
   "scripts": {
-    "build:prod": "electron-builder build --dir --linux AppImage"
+    "build:prod": "electron-builder build --dir --linux AppImage",
+    "build:win:msi": "electron-builder build --win msi"
   },
   "author": "Eswari M",
   "license": "MIT",
@@ -15,5 +16,54 @@
     "electron-builder": "^25.1.8",
     "jest": "^30.0.4",
     "mocha": "^11.7.1"
+  },
+  "build": {
+    "appId": "com.coral.app",
+    "productName": "Coral",
+    "directories": {
+      "output": "../build/Release"
+    },
+    "files": [
+      "main.js",
+      "renderer/**",
+      "icons/**",
+      "coral.png"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist/win-resources/coral.exe",
+        "to": "coral.exe"
+      },
+      {
+        "from": "../dist/win-resources",
+        "to": ".",
+        "filter": ["*.dll", "config.json"]
+      },
+      {
+        "from": "../dist/win-resources/models",
+        "to": "models"
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "msi",
+          "arch": ["x64"]
+        }
+      ],
+      "icon": "coral.png",
+      "noMsi": false
+    },
+    "msi": {
+      "oneClick": false,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Coral"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility"
+    }
   }
 }

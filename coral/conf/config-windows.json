@@ -1,0 +1,11 @@
+{
+  "silenceTimeoutSeconds": 300,
+  "audioSampleRate": 16000,
+  "audioChannels": 1,
+  "triggerKey": "Ctrl",
+  "cmdTriggerKey": "Ctrl",
+  "whisperModelPath": "",
+  "whisperLanguage": "en",
+  "debugLevel": 0,
+  "logToConsole": true
+}

@@ -15,7 +15,7 @@ if (process.env.APPIMAGE) {
   const appImageMountPath = getAppImageMountPath();
   const defaultConfigPath = path.join(appImageMountPath, 'usr', 'share', 'coral', 'conf', 'config.json');
   const userConfigDir = path.join(os.homedir(), '.coral');
-  const userConfigPath = path.join(userConfigDir, 'config.json');
+  const userConfigPath = path.join(userConfigDir, 'conf', 'config.json');
   try {
     if (!fs.existsSync(userConfigDir)) {
       fs.mkdirSync(userConfigDir, { recursive: true });
@@ -28,7 +28,16 @@ if (process.env.APPIMAGE) {
   }
   configPath = userConfigPath;
 } else {
-  configPath = path.join(__dirname, '../..', 'coral', 'conf', 'config.json');
+  const userConfigDir = path.join(os.homedir(), '.coral');
+  configPath = path.join(userConfigDir, 'conf', 'config.json');
+  const platformConfig = process.platform === 'win32' ? 'config.json' : 'config-linux.json';
+  const devDefault = path.join(__dirname, '../..', 'coral', 'conf', platformConfig);
+  try {
+    if (!fs.existsSync(path.dirname(configPath))) fs.mkdirSync(path.dirname(configPath), { recursive: true });
+    if (!fs.existsSync(configPath) && fs.existsSync(devDefault)) {
+      fs.copyFileSync(devDefault, configPath);
+    }
+  } catch (e) { console.error('Failed to prepare user config:', e.message); }
 }
 
 const devForm = document.getElementById('devForm');

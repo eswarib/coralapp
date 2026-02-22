@@ -46,11 +46,11 @@ Config::Config(const std::string& filePath)
     INFO("debugLevel:  [" + std::to_string(debugLevel) + "]");
     
     // Default log path is now in the user's .coral directory
-    const char* home = std::getenv("HOME");
-    if (!home) {
-        throw std::runtime_error("HOME environment variable not set");
+    std::string home = Utils::getHomeDir();
+    if (home.empty()) {
+        throw std::runtime_error("Could not determine home directory (HOME or USERPROFILE)");
     }
-    std::string defaultLogPath = std::string(home) + "/.coral/logs/coral.log";
+    std::string defaultLogPath = home + "/.coral/logs/coral.log";
     logFilePath = j.value("logFilePath", defaultLogPath);
     
     // Always expand tilde for the log file path
@@ -143,10 +143,10 @@ std::string Config::getWhisperModelPath() const {
     #endif
 
     // User models directory
-    const char* home = std::getenv("HOME");
-    if (home && *home)
+    std::string homeDir = Utils::getHomeDir();
+    if (!homeDir.empty())
     {
-        addCandidatesInDir(fs::path(home) / ".coral/models");
+        addCandidatesInDir(fs::path(homeDir) / ".coral/models");
     }
 
     for (const auto& c : candidates)
@@ -197,17 +197,41 @@ std::string Config::getWhisperModelPath() const {
 
 void Config::copyConfigFileOnFirstRun() 
 {
-    const char* home = std::getenv("HOME");
-    if (!home) {
-        throw std::runtime_error("HOME environment variable not set");
+    std::string home = Utils::getHomeDir();
+    if (home.empty()) {
+        throw std::runtime_error("Could not determine home directory (HOME or USERPROFILE)");
     }
-    std::string userConfigDir = std::string(home) + "/.coral";
-    std::string userConfigPath = userConfigDir + "/config.json";
+    std::string userConfigDir = home + "/.coral";
+    std::string userConfigPath = userConfigDir + "/conf/config.json";
 
     if (!fs::exists(userConfigPath)) {
-        fs::create_directories(userConfigDir);
+        fs::create_directories(fs::path(userConfigPath).parent_path());
 
-        // Prefer $APPDIR if set, else fallback to system path
+#if defined(_WIN32)
+        // Windows: look for config next to exe, then in repo coral/conf
+        char exePath[MAX_PATH];
+        DWORD got = GetModuleFileNameA(NULL, exePath, MAX_PATH);
+        std::string defaultConfigPath;
+        if (got > 0 && got < MAX_PATH) {
+            fs::path exeDir = fs::path(exePath).parent_path();
+            fs::path repoRoot = exeDir.parent_path().parent_path();  // build-win/Release -> coralapp
+            fs::path candidates[] = {
+                exeDir / "config.json",
+                repoRoot / "coral" / "conf" / "config.json",
+            };
+            for (const auto& p : candidates) {
+                if (fs::exists(p)) {
+                    defaultConfigPath = p.string();
+                    break;
+                }
+            }
+        }
+        if (defaultConfigPath.empty()) {
+            throw std::runtime_error("Default config not found. Place config.json next to coral.exe or in coral/conf/");
+        }
+        fs::copy_file(defaultConfigPath, userConfigPath, fs::copy_options::overwrite_existing);
+#else
+        // Linux: prefer $APPDIR if set, else fallback to system path
         const char* appdir = std::getenv("APPDIR");
         std::string defaultConfigPath = appdir
             ? std::string(appdir) + "/usr/share/coral/config/config.json"
@@ -215,11 +239,10 @@ void Config::copyConfigFileOnFirstRun()
 
         fs::copy_file(defaultConfigPath, userConfigPath, fs::copy_options::overwrite_existing);
 
-        #if !defined(_WIN32)
         uid_t uid = getuid();
         gid_t gid = getgid();
         chown(userConfigPath.c_str(), uid, gid);
-        #endif
+#endif
     }
 }
 

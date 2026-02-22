@@ -7,6 +7,7 @@ class Utils
 {
 public:
     Utils() = delete; // Static class, no instantiation
+    static std::string getHomeDir();
     static std::string expandTilde(const std::string& path);
 };
 

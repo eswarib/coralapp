@@ -263,6 +263,16 @@ else() # WIN32
 
     target_link_libraries(coral PRIVATE ${PORTAUDIO_TARGET} ${SNDFILE_TARGET} user32 winmm setupapi ole32 oleaut32 uuid)
 
+    # Post-build: copy conf/ next to exe (backend looks for exeDir/conf, exeDir/model)
+    add_custom_command(TARGET coral POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:coral>/conf
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:coral>/model
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_CURRENT_LIST_DIR}/conf/config-windows.json
+            $<TARGET_FILE_DIR:coral>/conf/config.json
+        COMMENT "Copying conf/ next to coral.exe for Windows"
+    )
+
     # Install rules (portable layout)
     install(TARGETS coral RUNTIME DESTINATION .)
 endif()

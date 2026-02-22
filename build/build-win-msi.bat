@@ -28,46 +28,42 @@ if not exist "%BUNDLE_DIR%" (
 )
 
 REM ---- Step 2: Stage dist/win-resources for electron-builder ----
+REM Structure: exe + conf/ + model/ next to exe (backend looks for exeDir/conf, exeDir/model)
 echo.
 echo === Step 2: Staging dist/win-resources ===
 set STAGE_DIR=%REPO_ROOT%\dist\win-resources
 if exist "%STAGE_DIR%" rmdir /s /q "%STAGE_DIR%"
 mkdir "%STAGE_DIR%"
-mkdir "%STAGE_DIR%\models"
+mkdir "%STAGE_DIR%\conf"
+mkdir "%STAGE_DIR%\model"
 
-REM coral.exe (electron-builder expects coral.exe, not coral-X.X.X.exe)
+REM coral.exe
 copy /Y "%BUNDLE_DIR%\coral-%APPVER%.exe" "%STAGE_DIR%\coral.exe"
 
 REM DLLs
 copy /Y "%BUNDLE_DIR%\*.dll" "%STAGE_DIR%\" 2>nul
 
-REM config.json (Windows defaults)
-copy /Y "%REPO_ROOT%\coral\conf\config-windows.json" "%STAGE_DIR%\config.json"
-
-REM Model: ggml-small.en.bin
-set MODEL_URL=https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.en.bin
-set MODEL_PATH=%STAGE_DIR%\models\ggml-small.en.bin
-
-if exist "%REPO_ROOT%\models\ggml-small.en.bin" (
-    copy /Y "%REPO_ROOT%\models\ggml-small.en.bin" "%MODEL_PATH%"
-    echo Using local model: models\ggml-small.en.bin
+REM conf/ and model/ from bundle (already created by build-windows-bundle.cmd)
+if exist "%BUNDLE_DIR%\conf\config.json" (
+    copy /Y "%BUNDLE_DIR%\conf\config.json" "%STAGE_DIR%\conf\"
 ) else (
-    echo Downloading ggml-small.en.bin...
-    powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-    "if (-not (Test-Path '%MODEL_PATH%')) { ^
-      Invoke-WebRequest -Uri '%MODEL_URL%' -OutFile '%MODEL_PATH%' -UseBasicParsing; ^
-      Write-Host 'Downloaded ggml-small.en.bin' ^
-    } else { Write-Host 'Model already present' }"
+    copy /Y "%REPO_ROOT%\coral\conf\config-windows.json" "%STAGE_DIR%\conf\config.json"
 )
-
-if not exist "%MODEL_PATH%" (
-    echo Error: Model not found at %MODEL_PATH%. Download failed or path incorrect.
-    exit /b 1
+if exist "%BUNDLE_DIR%\model\ggml-small.en.bin" (
+    copy /Y "%BUNDLE_DIR%\model\ggml-small.en.bin" "%STAGE_DIR%\model\"
+) else (
+    if exist "%REPO_ROOT%\models\ggml-small.en.bin" (
+        copy /Y "%REPO_ROOT%\models\ggml-small.en.bin" "%STAGE_DIR%\model\"
+    ) else (
+        echo Downloading ggml-small.en.bin...
+        powershell -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.en.bin' -OutFile '%STAGE_DIR%\model\ggml-small.en.bin' -UseBasicParsing"
+    )
 )
 
 echo Staged contents:
 dir "%STAGE_DIR%" /b
-dir "%STAGE_DIR%\models" /b
+dir "%STAGE_DIR%\conf" /b
+dir "%STAGE_DIR%\model" /b
 
 REM ---- Step 3: Build MSI with electron-builder ----
 echo.

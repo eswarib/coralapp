@@ -281,7 +281,7 @@ function startBackend() {
             }
         }
         const defaultConfigSrc = app.isPackaged
-            ? path.join(process.resourcesPath, 'config.json')
+            ? path.join(process.resourcesPath, 'conf', 'config.json')
             : path.join(__dirname, '..', 'coral', 'conf', process.platform === 'win32' ? 'config.json' : 'config-linux.json');
         try {
             if (!fs.existsSync(path.dirname(userConfigPath))) {

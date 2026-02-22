@@ -78,10 +78,3 @@ if exist build-win rmdir /s /q build-win
 echo Building coral...
 cmake -S coral -B build-win -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_BUILD_TYPE=Release -DWHISPER_LIBRARY="%WHISPERLIB%" -DGGML_LIBRARIES="%GGMLLIBS%" -DAPP_VERSION="%APPVER%" -DBUILD_DATE="%DATE%" -DGIT_COMMIT="local"
 cmake --build build-win --config Release
-
-REM ---- Bundle (use PowerShell for vswhere and file ops) ----
-REM Unblock script first (fixes "unauthorized access" when .ps1 was downloaded/copied)
-powershell -NoProfile -ExecutionPolicy Bypass -Command "Unblock-File -Path '%~dp0build-windows-bundle.ps1' -ErrorAction SilentlyContinue; & '%~dp0build-windows-bundle.ps1' -AppVer '%APPVER%' -VcpkgRoot '%VCPKG_ROOT%' -RepoRoot '%REPO_ROOT%'"
-
-echo.
-echo Done. Run: coral-windows-x64-v%APPVER%\coral-%APPVER%.exe

@@ -14,7 +14,9 @@
 #include <cstdlib>
 #include "version.h"
 #include <iostream>
-#if !defined(_WIN32)
+#if defined(_WIN32)
+#include <windows.h>
+#else
 #include <fcntl.h>
 #include <unistd.h>
 #endif
@@ -42,6 +44,19 @@ int main(int argc, char* argv[])
                 return 1;
             } 
         }
+#if defined(_WIN32)
+        // Windows: prefer exeDir/conf/config.json when it exists (e.g. Release/conf/config.json)
+        {
+            char exePathWin[4096];
+            if (GetModuleFileNameA(NULL, exePathWin, sizeof(exePathWin)) > 0) {
+                std::filesystem::path exeDir = std::filesystem::path(exePathWin).parent_path();
+                std::filesystem::path exeConf = exeDir / "conf" / "config.json";
+                if (std::filesystem::exists(exeConf)) {
+                    configPath = exeConf.string();
+                }
+            }
+        }
+#endif
         if (!std::filesystem::exists(configPath)) {
             // This INFO call will be buffered by the logger until init() is called.
             INFO("Config file does not exist at $HOME/.coral, this may be the first run of the application, copying the default config file");

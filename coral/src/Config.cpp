@@ -101,12 +101,13 @@ std::string Config::getWhisperModelPath() const {
     };
 
     #if defined(_WIN32)
-    // Windows: exe-relative and user data paths
+    // Windows: exe-relative (conf/ and model/ next to exe) and user data paths
     char exePathWin[MAX_PATH];
     DWORD got = GetModuleFileNameA(NULL, exePathWin, MAX_PATH);
     if (got > 0 && got < MAX_PATH)
     {
         fs::path exeDir = fs::path(exePathWin).parent_path();
+        addCandidatesInDir(exeDir / "model");   // exeDir/model/ (e.g. Release/model)
         addCandidatesInDir(exeDir / "models");
         addCandidatesInDir(exeDir / "resources" / "models");
     }
@@ -208,16 +209,16 @@ void Config::copyConfigFileOnFirstRun()
         fs::create_directories(fs::path(userConfigPath).parent_path());
 
 #if defined(_WIN32)
-        // Windows: look for config next to exe, then in repo coral/conf
+        // Windows: look for config in exeDir/conf/ (e.g. Release/conf/config.json)
         char exePath[MAX_PATH];
         DWORD got = GetModuleFileNameA(NULL, exePath, MAX_PATH);
         std::string defaultConfigPath;
         if (got > 0 && got < MAX_PATH) {
             fs::path exeDir = fs::path(exePath).parent_path();
-            fs::path repoRoot = exeDir.parent_path().parent_path();  // build-win/Release -> coralapp
             fs::path candidates[] = {
+                exeDir / "conf" / "config.json",
                 exeDir / "config.json",
-                repoRoot / "coral" / "conf" / "config.json",
+                exeDir.parent_path().parent_path() / "coral" / "conf" / "config.json",
             };
             for (const auto& p : candidates) {
                 if (fs::exists(p)) {
@@ -227,7 +228,7 @@ void Config::copyConfigFileOnFirstRun()
             }
         }
         if (defaultConfigPath.empty()) {
-            throw std::runtime_error("Default config not found. Place config.json next to coral.exe or in coral/conf/");
+            throw std::runtime_error("Default config not found. Place config in exeDir/conf/config.json or coral/conf/");
         }
         fs::copy_file(defaultConfigPath, userConfigPath, fs::copy_options::overwrite_existing);
 #else

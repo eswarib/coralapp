@@ -37,11 +37,15 @@
       {
         "from": "../dist/win-resources",
         "to": ".",
-        "filter": ["*.dll", "config.json"]
+        "filter": ["*.dll"]
       },
       {
-        "from": "../dist/win-resources/models",
-        "to": "models"
+        "from": "../dist/win-resources/conf",
+        "to": "conf"
+      },
+      {
+        "from": "../dist/win-resources/model",
+        "to": "model"
       }
     ],
     "win": {

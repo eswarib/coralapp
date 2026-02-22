@@ -2,7 +2,7 @@
 # Build coral for Windows — run in Git Bash with Visual Studio 2022 (C++ workload) installed.
 #
 # Prerequisites: Git Bash, Visual Studio 2022, Node.js
-# Optional: set VCPKG_ROOT to use existing vcpkg (default: repo/vcpkg)
+# Optional env: VCPKG_ROOT, WHISPER_DIR (default: repo/vcpkg, repo/whisper.cpp)
 #
 # Usage: cd build && bash build-windows.sh
 set -e
@@ -11,15 +11,16 @@ BUILD_SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 REPO_ROOT="$(cd "$BUILD_SCRIPT_DIR/.." && pwd)"
 cd "$REPO_ROOT"
 
-# Paths
+# Paths (override with env: VCPKG_ROOT, WHISPER_DIR)
 ELECTRON_DIR="$REPO_ROOT/coral-electron"
 BACKEND_DIR="$REPO_ROOT/coral"
-WHISPER_DIR="$REPO_ROOT/whisper.cpp"
+WHISPER_DIR="${WHISPER_DIR:-$REPO_ROOT/whisper.cpp}"
 VCPKG_ROOT="${VCPKG_ROOT:-$REPO_ROOT/vcpkg}"
 
 echo "=== Coral Windows Build ==="
-echo "Repo root: $REPO_ROOT"
-echo "vcpkg:     $VCPKG_ROOT"
+echo "Repo root:  $REPO_ROOT"
+echo "vcpkg:      $VCPKG_ROOT"
+echo "whisper.cpp: $WHISPER_DIR"
 echo ""
 
 # ── Check prerequisites ───────────────────────────────────────────────────────
@@ -76,12 +77,15 @@ cmake -B build \
 cmake --build build --config Release --target ggml whisper
 cd "$REPO_ROOT"
 
-# Detect whisper and ggml lib paths
-WHISPERLIB=$(find "$WHISPER_DIR/build" -name "whisper*.lib" -o -name "whispercpp.lib" 2>/dev/null | head -1)
+# Detect whisper and ggml lib paths (whisper.cpp layout varies by version)
+echo "Listing .lib files in whisper build:"
+find "$WHISPER_DIR/build" -name "*.lib" 2>/dev/null || true
+WHISPERLIB=$(find "$WHISPER_DIR/build" \( -name "whisper*.lib" -o -name "whispercpp.lib" \) 2>/dev/null | head -1)
 GGMLLIBS=$(find "$WHISPER_DIR/build" -name "ggml*.lib" 2>/dev/null | tr '\n' ';' | sed 's/;$//')
 
 if [ -z "$WHISPERLIB" ]; then
-    echo "Error: whisper.lib not found"
+    echo "Error: whisper.lib not found under $WHISPER_DIR/build"
+    echo "Ensure whisper.cpp is at $WHISPER_DIR or set WHISPER_DIR before running."
     exit 1
 fi
 if [ -z "$GGMLLIBS" ]; then

@@ -5,28 +5,273 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'">
   <title>Coral Settings</title>
   <style>
-    body { font-family: sans-serif; margin: 16px; overflow: hidden; }
-    h2 { margin: 0 0 8px 0; font-size: 1.4em; }
-    label { display: block; margin-top: 8px; }
-    input, select { width: 100%; padding: 4px; margin-top: 2px; box-sizing: border-box; }
-    button { margin-top: 16px; padding: 8px 16px; }
-    /* Toolbar-like label and pill styles */
-    .toolbar-label { font-weight: 600; color: #333; margin-top: 12px; }
-    .pill-select { display: inline-block; padding: 6px 12px; border-radius: 8px; border: 1px solid #9bb5f1; background: #e6eefb; color: #0d47a1; cursor: pointer; user-select: none; }
-    .dropdown { position: relative; display: inline-block; }
-    .dropdown-menu { position: absolute; top: 100%; left: 0; margin-top: 6px; background: #fff; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.15); z-index: 1000; min-width: 220px; }
-    .dropdown-item { padding: 8px 12px; cursor: pointer; }
-    .dropdown-item:hover { background: #f0f3f7; }
-    .muted { color: #666; font-size: 0.9em; margin-left: 8px; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #f5f7fa;
+      color: #1a1a2e;
+      padding: 24px;
+      overflow-y: auto;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #e0e4ea;
+    }
+
+    .header-icon {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #4f8ef7, #7c5cfc);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .header h2 {
+      font-size: 1.2em;
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e0e4ea;
+      padding: 4px 0;
+      margin-bottom: 16px;
+    }
+
+    .field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      min-height: 44px;
+    }
+
+    .field + .field {
+      border-top: 1px solid #f0f2f5;
+    }
+
+    .field-label {
+      font-size: 0.88em;
+      font-weight: 500;
+      color: #3a3a4a;
+      flex-shrink: 0;
+      margin-right: 16px;
+    }
+
+    .field-input {
+      flex: 1;
+      max-width: 220px;
+    }
+
+    .field-input input[type="text"],
+    .field-input input[type="number"] {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid #d0d5dd;
+      border-radius: 8px;
+      font-size: 0.88em;
+      background: #fafbfc;
+      color: #1a1a2e;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .field-input input:focus {
+      border-color: #4f8ef7;
+      box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.12);
+    }
+
+    .field-input input[readonly] {
+      cursor: pointer;
+      background: #f5f7fa;
+    }
+
+    .field-input select {
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid #d0d5dd;
+      border-radius: 8px;
+      font-size: 0.88em;
+      background: #fafbfc;
+      color: #1a1a2e;
+      outline: none;
+      cursor: pointer;
+      -webkit-appearance: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23666' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 28px;
+    }
+
+    .field-input select:focus {
+      border-color: #4f8ef7;
+      box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.12);
+    }
+
+    /* Model pill selector */
+    .model-selector {
+      position: relative;
+    }
+
+    .pill-select {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: 8px;
+      border: 1px solid #d0d5dd;
+      background: #fafbfc;
+      color: #1a1a2e;
+      cursor: pointer;
+      font-size: 0.88em;
+      user-select: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .pill-select:hover {
+      border-color: #4f8ef7;
+    }
+
+    .pill-select::after {
+      content: '';
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-right: 1.5px solid #666;
+      border-bottom: 1.5px solid #666;
+      transform: rotate(45deg);
+      margin-top: -3px;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      min-width: 200px;
+      background: #fff;
+      border: 1px solid #e0e4ea;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      overflow: hidden;
+    }
+
+    .dropdown-item {
+      padding: 9px 14px;
+      cursor: pointer;
+      font-size: 0.88em;
+      color: #1a1a2e;
+      transition: background 0.1s;
+    }
+
+    .dropdown-item:hover {
+      background: #f0f3f7;
+    }
+
+    .dropdown-item + .dropdown-item {
+      border-top: 1px solid #f5f5f5;
+    }
+
+    /* Section label */
+    .section-label {
+      font-size: 0.75em;
+      font-weight: 600;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 0 2px;
+      margin-bottom: 6px;
+      margin-top: 4px;
+    }
+
+    /* Action bar */
+    .action-bar {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn {
+      padding: 9px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.88em;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #4f8ef7, #6c63ff);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #3d7ee5, #5a52ed);
+    }
+
+    .btn-secondary {
+      background: #e8ecf1;
+      color: #3a3a4a;
+    }
+
+    .btn-secondary:hover {
+      background: #dce0e6;
+    }
+
+    #status {
+      margin-top: 10px;
+      font-size: 0.82em;
+      min-height: 18px;
+      color: #666;
+    }
+
+    #status.error { color: #d32f2f; }
+    #status.success { color: #2e7d32; }
+
+    /* Shortcut hint text */
+    .hint {
+      font-size: 0.78em;
+      color: #999;
+      margin-top: 3px;
+    }
   </style>
 </head>
 <body>
 
-  <h2>Settings</h2>
+  <div class="header">
+    <div class="header-icon">C</div>
+    <h2>Coral Settings</h2>
+  </div>
+
   <form id="configForm"></form>
 
-  <button id="saveBtn">Apply</button>
+  <div class="action-bar">
+    <button type="button" class="btn btn-primary" id="saveBtn">Apply</button>
+    <button type="button" class="btn btn-secondary" id="defaultBtn">Defaults</button>
+  </div>
   <div id="status"></div>
+
   <script src="renderer.js"></script>
 </body>
-</html> 
+</html>

@@ -1,7 +1,13 @@
 const { ipcMain } = require('electron');
 
-ipcMain.handle('getAppVersion', () => app.getVersion())
 const { app, Tray, Menu, BrowserWindow, dialog, screen } = require('electron');
+app.commandLine.appendSwitch('no-sandbox');
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err);
+});
+
+ipcMain.handle('getAppVersion', () => app.getVersion())
 const path = require('path');
 const os = require('os');
 const fs = require('fs');
@@ -11,18 +17,20 @@ const readline = require('readline');
 let originalIconPath;
 const ANIMATION_FRAME_COUNT = 8;
 let animationFrames = [];
+let transcribeAnimationFrames = [];
 function resolveIconPaths() {
   if (process.env.APPIMAGE) {
     for (let i = 0; i < ANIMATION_FRAME_COUNT; i++) {
       animationFrames.push(path.join(process.resourcesPath, 'icons', 'wave_icons', `wave_${i}.png`));
+      transcribeAnimationFrames.push(path.join(process.resourcesPath, 'icons', 'transcribe_icons', `transcribe_${i}.png`));
     }
     originalIconPath = path.join(process.resourcesPath, 'coral.png');
   } else {
     const baseDir = __dirname;
     for (let i = 0; i < ANIMATION_FRAME_COUNT; i++) {
       animationFrames.push(path.join(baseDir, 'icons', 'wave_icons', `wave_${i}.png`));
+      transcribeAnimationFrames.push(path.join(baseDir, 'icons', 'transcribe_icons', `transcribe_${i}.png`));
     }
-    // Try coral.png in coral-electron, then logo/coral.png
     const candidates = [
       path.join(baseDir, 'coral.png'),
       path.join(baseDir, '..', 'logo', 'coral.png'),
@@ -37,6 +45,8 @@ let tray = null;
 let configWindow = null;
 let devWindow = null;
 let backendProcess = null;
+let backendRl = null;
+let backendStopping = false;
 let animationInterval = null;
 let currentFrame = 0;
 
@@ -47,7 +57,7 @@ function createConfigWindow() {
   }
   configWindow = new BrowserWindow({
     width: 520,
-    height: 360,
+    height: 480,
     useContentSize: true,
     resizable: true,
     autoHideMenuBar: true,
@@ -110,21 +120,27 @@ function isChildAlive(child) {
   }
 }
 
-function startTrayAnimation() {
-  if (animationInterval) return;
+function startTrayAnimation(frames) {
+  if (animationInterval) stopTrayAnimation();
+  const icons = frames || animationFrames;
+  if (!icons.length || !icons.every(f => fs.existsSync(f))) {
+    console.warn('Animation icons not found, skipping tray animation');
+    return;
+  }
   currentFrame = 0;
   animationInterval = setInterval(() => {
-    tray.setImage(animationFrames[currentFrame]);
+    try { tray.setImage(icons[currentFrame]); } catch (_) {}
     currentFrame = (currentFrame + 1) % ANIMATION_FRAME_COUNT;
-  }, 100); // 100ms per frame
+  }, 100);
 }
 function stopTrayAnimation() {
   if (animationInterval) {
     clearInterval(animationInterval);
     animationInterval = null;
-    tray.setImage(originalIconPath);
+    try { tray.setImage(originalIconPath); } catch (_) {}
   }
 }
+
 
 // Prompt user to set up input permissions for hotkey detection and text injection.
 // Two things are needed:
@@ -324,23 +340,36 @@ function startBackend() {
         stdio: ['ignore', 'pipe', 'ignore'], // Enable stdout pipe
         env: backendEnv
     });
+    backendStopping = false;
     // Listen for trigger events from backend
-    const rl = readline.createInterface({ input: backendProcess.stdout });
-    rl.on('line', (line) => {
-        if (line === 'TRIGGER_DOWN') {
-            startTrayAnimation();
-        } else if (line === 'TRIGGER_UP') {
+    if (backendRl) { try { backendRl.close(); } catch (_) {} }
+    backendRl = readline.createInterface({ input: backendProcess.stdout });
+    backendRl.on('line', (line) => {
+        if (backendStopping) return;
+        const trimmed = line.trim();
+        if (trimmed === 'TRIGGER_DOWN') {
+            startTrayAnimation(animationFrames);
+        } else if (trimmed === 'TRIGGER_UP') {
+            startTrayAnimation(transcribeAnimationFrames);
+        } else if (trimmed === 'TRANSCRIBING_DONE') {
             stopTrayAnimation();
-        } else if (line === 'NEED_INPUT_GROUP' || line === 'NEED_UINPUT_RULE') {
-            // Close welcome first, then show permission dialog
+        } else if (trimmed === 'NEED_INPUT_GROUP' || trimmed === 'NEED_UINPUT_RULE') {
             closeWelcomeWindow();
             promptInputGroupPermission();
-        } else if (line === 'BACKEND_READY') {
+        } else if (trimmed === 'BACKEND_READY') {
             updateWelcomeReady();
+        } else if (trimmed === 'CONFIG_RELOADED') {
+            console.log('Backend confirmed config reload');
         }
     });
+    backendRl.on('error', (err) => {
+      if (!backendStopping) console.error('Backend readline error:', err.message);
+    });
+    backendProcess.stdout.on('error', (err) => {
+      if (!backendStopping) console.error('Backend stdout error:', err.message);
+    });
     backendProcess.on('error', (err) => {
-        dialog.showErrorBox('Backend Error', 'Failed to start backend: ' + err.message);
+        console.error('Backend error:', err.message);
     });
     backendProcess.on('exit', (code, signal) => {
         console.log('Backend process exited with code:', code, 'signal:', signal);
@@ -357,8 +386,16 @@ function startBackend() {
 }
 
 function stopBackend() {
+  backendStopping = true;
+  try { stopTrayAnimation(); } catch (_) {}
+  if (backendRl) {
+    try { backendRl.close(); } catch (_) {}
+    backendRl = null;
+  }
   if (backendProcess) {
-    backendProcess.kill();
+    try { backendProcess.stdout.removeAllListeners(); } catch (_) {}
+    try { backendProcess.removeAllListeners(); } catch (_) {}
+    try { backendProcess.kill(); } catch (_) {}
     backendProcess = null;
   }
 }
@@ -370,7 +407,7 @@ async function restartBackend() {
   // slight delay to allow OS to release resources
   setTimeout(() => {
     try { startBackend(); } catch (e) { console.error('Failed to restart backend:', e.message); }
-  }, 200);
+  }, 500);
 }
 
 let welcomeWindow = null;
@@ -517,9 +554,19 @@ ipcMain.on('show-config', () => {
   createConfigWindow();
 });
 
-// Restart backend when renderer reports config changes
+// Signal backend to reload config: SIGUSR1 on Linux/macOS, restart on Windows
 ipcMain.on('config-updated', () => {
-  restartBackend();
+  if (process.platform !== 'win32' && backendProcess && backendProcess.pid && !backendProcess.killed) {
+    try {
+      process.kill(backendProcess.pid, 'SIGUSR1');
+      console.log('Sent SIGUSR1 to backend PID:', backendProcess.pid);
+    } catch (e) {
+      console.error('Failed to send SIGUSR1, falling back to restart:', e.message);
+      restartBackend();
+    }
+  } else {
+    restartBackend();
+  }
 });
 
 // Allow renderers to request window height resize to fit content

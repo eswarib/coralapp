@@ -48,7 +48,7 @@ let config = {};
 
 function renderDevForm(cfg) {
   devForm.innerHTML = '';
-  const primaryKeys = new Set(['triggerKey', 'cmdTriggerKey', 'whisperModelPath']);
+  const primaryKeys = new Set(['triggerKey', 'cmdTriggerKey', 'triggerMode', 'whisperModelPath']);
   const hiddenKeys = new Set(['silenceTimeoutSeconds', 'audioSampleRate', 'audioChannels']);
   for (const [key, value] of Object.entries(cfg)) {
     if (primaryKeys.has(key) || hiddenKeys.has(key)) continue;

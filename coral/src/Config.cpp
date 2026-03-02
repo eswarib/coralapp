@@ -20,16 +20,27 @@ namespace fs = std::filesystem;
 const std::string Config::WhisperModelNameSmallEnQ8 = "ggml-small.en-q8_0.bin";
 const std::string Config::WhisperModelNameSmallEn = "ggml-small.en.bin";
 const std::string Config::WhisperModelNameBaseEn = "ggml-base.en.bin";
-    
- // Loads config from the given file path
-Config::Config(const std::string& filePath) 
+
+Config::Config(const std::string& filePath) : mFilePath(filePath)
 {
-    std::ifstream file(filePath);
-    if (!file) 
+    loadFromFile();
+}
+
+void Config::reload()
+{
+    std::unique_lock lk(mMutex);
+    loadFromFile();
+    INFO("Configuration reloaded from: " + mFilePath);
+}
+
+void Config::loadFromFile()
+{
+    std::ifstream file(mFilePath);
+    if (!file)
     {
-        throw std::runtime_error("Could not open config file: " + filePath);
+        throw std::runtime_error("Could not open config file: " + mFilePath);
     }
-        
+
     nlohmann::json j;
     file >> j;
     silenceTimeoutSeconds = j.value("silenceTimeoutSeconds", DefaultSilenceTimeoutSeconds);
@@ -44,30 +55,26 @@ Config::Config(const std::string& filePath)
     INFO("whisperModelPath:  [" + whisperModelPath + "]");
     debugLevel = j.value("debugLevel", 0);
     INFO("debugLevel:  [" + std::to_string(debugLevel) + "]");
-    
-    // Default log path is now in the user's .coral directory
+
     std::string home = Utils::getHomeDir();
     if (home.empty()) {
         throw std::runtime_error("Could not determine home directory (HOME or USERPROFILE)");
     }
     std::string defaultLogPath = home + "/.coral/logs/coral.log";
     logFilePath = j.value("logFilePath", defaultLogPath);
-    
-    // Always expand tilde for the log file path
+
     logFilePath = Utils::expandTilde(logFilePath);
-    
-    // Ensure the log directory exists
-    try 
+
+    try
     {
         std::filesystem::path logDir = std::filesystem::path(logFilePath).parent_path();
-        if (!std::filesystem::exists(logDir)) 
+        if (!std::filesystem::exists(logDir))
         {
             std::filesystem::create_directories(logDir);
         }
-    } 
-    catch (const std::exception& e) 
+    }
+    catch (const std::exception& e)
     {
-        // Log directory creation failed, but don't crash the app
         std::cerr << "Warning: Could not create log directory: " << e.what() << std::endl;
     }
 
@@ -78,16 +85,29 @@ Config::Config(const std::string& filePath)
     INFO("cmdTriggerKey:  [" + cmdTriggerKey + "]");
     whisperLanguage = j.value("whisperLanguage", std::string("en"));
     INFO("whisperLanguage:  [" + whisperLanguage + "]");
+    triggerMode = j.value("triggerMode", std::string("pushToTalk"));
+    if (triggerMode != "pushToTalk" && triggerMode != "continuous") triggerMode = "pushToTalk";
+    INFO("triggerMode:  [" + triggerMode + "]");
+    doubleTapWindowMs = static_cast<uint32_t>(j.value("doubleTapWindowMs", 300));
+    INFO("doubleTapWindowMs:  [" + std::to_string(doubleTapWindowMs) + "]");
+    recordWindowSeconds = j.value("recordWindowSeconds", 60);
+    INFO("recordWindowSeconds:  [" + std::to_string(recordWindowSeconds) + "]");
 }
-
 
 
 std::string Config::getWhisperModelPath() const {
     namespace fs = std::filesystem;
-    
+
+    // Snapshot the configured path under shared lock
+    std::string configuredPath;
+    {
+        std::shared_lock lk(mMutex);
+        configuredPath = whisperModelPath;
+    }
+
     // 1) Config path (with tilde expansion)
-    std::string expandedModelPath = Utils::expandTilde(whisperModelPath);
-    if (!expandedModelPath.empty() && fs::exists(expandedModelPath)) 
+    std::string expandedModelPath = Utils::expandTilde(configuredPath);
+    if (!expandedModelPath.empty() && fs::exists(expandedModelPath))
     {
         return expandedModelPath;
     }
@@ -101,13 +121,12 @@ std::string Config::getWhisperModelPath() const {
     };
 
     #if defined(_WIN32)
-    // Windows: exe-relative (conf/ and model/ next to exe) and user data paths
     char exePathWin[MAX_PATH];
     DWORD got = GetModuleFileNameA(NULL, exePathWin, MAX_PATH);
     if (got > 0 && got < MAX_PATH)
     {
         fs::path exeDir = fs::path(exePathWin).parent_path();
-        addCandidatesInDir(exeDir / "model");   // exeDir/model/ (e.g. Release/model)
+        addCandidatesInDir(exeDir / "model");
         addCandidatesInDir(exeDir / "models");
         addCandidatesInDir(exeDir / "resources" / "models");
     }
@@ -129,10 +148,8 @@ std::string Config::getWhisperModelPath() const {
         addCandidatesInDir(fs::path(appdir) / "usr/share/coral/models");
     }
 
-    // System path
     addCandidatesInDir(fs::path("/usr/share/coral/models"));
 
-    // Executable-relative paths (Linux)
     char exePath[4096];
     ssize_t len = readlink("/proc/self/exe", exePath, sizeof(exePath) - 1);
     if (len != -1) {
@@ -143,7 +160,6 @@ std::string Config::getWhisperModelPath() const {
     }
     #endif
 
-    // User models directory
     std::string homeDir = Utils::getHomeDir();
     if (!homeDir.empty())
     {
@@ -160,7 +176,6 @@ std::string Config::getWhisperModelPath() const {
     }
 
     #if defined(_WIN32)
-    // Windows fallback: try APPDATA then exe-relative models
     std::string fallback;
     const char* appDataFB = std::getenv("APPDATA");
     if (appDataFB && *appDataFB)
@@ -178,7 +193,6 @@ std::string Config::getWhisperModelPath() const {
         }
     }
     #else
-    // Final fallback (Linux): prefer APPDIR if available, else system default
     std::string fallback = (appdir && *appdir)
         ? (fs::path(appdir) / "usr/share/coral/models" / WhisperModelNameBaseEn).string()
         : (fs::path("/usr/share/coral/models") / WhisperModelNameBaseEn).string();
@@ -196,7 +210,7 @@ std::string Config::getWhisperModelPath() const {
 }
 
 
-void Config::copyConfigFileOnFirstRun() 
+void Config::copyConfigFileOnFirstRun()
 {
     std::string home = Utils::getHomeDir();
     if (home.empty()) {
@@ -209,7 +223,6 @@ void Config::copyConfigFileOnFirstRun()
         fs::create_directories(fs::path(userConfigPath).parent_path());
 
 #if defined(_WIN32)
-        // Windows: look for config in exeDir/conf/ (e.g. Release/conf/config.json)
         char exePath[MAX_PATH];
         DWORD got = GetModuleFileNameA(NULL, exePath, MAX_PATH);
         std::string defaultConfigPath;
@@ -232,7 +245,6 @@ void Config::copyConfigFileOnFirstRun()
         }
         fs::copy_file(defaultConfigPath, userConfigPath, fs::copy_options::overwrite_existing);
 #else
-        // Linux: prefer $APPDIR if set, else fallback to system path
         const char* appdir = std::getenv("APPDIR");
         std::string defaultConfigPath = appdir
             ? std::string(appdir) + "/usr/share/coral/config/config.json"
@@ -246,5 +258,3 @@ void Config::copyConfigFileOnFirstRun()
 #endif
     }
 }
-
-

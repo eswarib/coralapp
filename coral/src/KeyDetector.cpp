@@ -38,24 +38,32 @@ static std::vector<std::string> split(const std::string& s, char delimiter)
 }
 
 // ── evdev key name → Linux KEY_* code ───────────────────────────────────────
+static std::string toLowerStr(const std::string& s)
+{
+    std::string out = s;
+    std::transform(out.begin(), out.end(), out.begin(),
+                   [](unsigned char c){ return std::tolower(c); });
+    return out;
+}
+
 static int keyNameToEvdevCode(const std::string& name)
 {
     static const std::unordered_map<std::string, int> map = {
-        // Modifiers
-        {"Ctrl",  KEY_LEFTCTRL},  {"Control", KEY_LEFTCTRL},
-        {"Alt",   KEY_LEFTALT},   {"Shift",   KEY_LEFTSHIFT},
-        {"Super", KEY_LEFTMETA},  {"Meta",    KEY_LEFTMETA},
+        // Modifiers (lowercase for case-insensitive lookup)
+        {"ctrl",  KEY_LEFTCTRL},  {"control", KEY_LEFTCTRL},
+        {"alt",   KEY_LEFTALT},   {"shift",   KEY_LEFTSHIFT},
+        {"super", KEY_LEFTMETA},  {"meta",    KEY_LEFTMETA},
         // Function keys
-        {"F1", KEY_F1}, {"F2", KEY_F2}, {"F3", KEY_F3}, {"F4", KEY_F4},
-        {"F5", KEY_F5}, {"F6", KEY_F6}, {"F7", KEY_F7}, {"F8", KEY_F8},
-        {"F9", KEY_F9}, {"F10", KEY_F10}, {"F11", KEY_F11}, {"F12", KEY_F12},
+        {"f1", KEY_F1}, {"f2", KEY_F2}, {"f3", KEY_F3}, {"f4", KEY_F4},
+        {"f5", KEY_F5}, {"f6", KEY_F6}, {"f7", KEY_F7}, {"f8", KEY_F8},
+        {"f9", KEY_F9}, {"f10", KEY_F10}, {"f11", KEY_F11}, {"f12", KEY_F12},
         // Special keys
         {"space",    KEY_SPACE},
-        {"Num_Lock", KEY_NUMLOCK},
-        {"Tab",      KEY_TAB},
-        {"Escape",   KEY_ESC},
-        {"Return",   KEY_ENTER},
-        {"Enter",    KEY_ENTER},
+        {"num_lock", KEY_NUMLOCK},
+        {"tab",      KEY_TAB},
+        {"escape",   KEY_ESC},
+        {"return",   KEY_ENTER},
+        {"enter",    KEY_ENTER},
         // Letters a-z
         {"a", KEY_A}, {"b", KEY_B}, {"c", KEY_C}, {"d", KEY_D},
         {"e", KEY_E}, {"f", KEY_F}, {"g", KEY_G}, {"h", KEY_H},
@@ -69,7 +77,7 @@ static int keyNameToEvdevCode(const std::string& name)
         {"4", KEY_4}, {"5", KEY_5}, {"6", KEY_6}, {"7", KEY_7},
         {"8", KEY_8}, {"9", KEY_9},
     };
-    auto it = map.find(name);
+    auto it = map.find(toLowerStr(name));
     if (it != map.end()) return it->second;
     return -1;
 }
@@ -78,13 +86,13 @@ static int keyNameToEvdevCode(const std::string& name)
 static KeySym keyNameToKeySym(const std::string& keyName)
 {
     static const std::unordered_map<std::string, KeySym> keyMap = {
-        {"F1", XK_F1}, {"F2", XK_F2}, {"F3", XK_F3}, {"F4", XK_F4},
-        {"F5", XK_F5}, {"F6", XK_F6}, {"F7", XK_F7}, {"F8", XK_F8},
-        {"F9", XK_F9}, {"F10", XK_F10}, {"F11", XK_F11}, {"F12", XK_F12},
-        {"Ctrl", XK_Control_L}, {"Alt", XK_Alt_L}, {"Shift", XK_Shift_L},
-        {"Super", XK_Super_L}, {"space", XK_space}, {"Num_Lock", XK_Num_Lock},
+        {"f1", XK_F1}, {"f2", XK_F2}, {"f3", XK_F3}, {"f4", XK_F4},
+        {"f5", XK_F5}, {"f6", XK_F6}, {"f7", XK_F7}, {"f8", XK_F8},
+        {"f9", XK_F9}, {"f10", XK_F10}, {"f11", XK_F11}, {"f12", XK_F12},
+        {"ctrl", XK_Control_L}, {"alt", XK_Alt_L}, {"shift", XK_Shift_L},
+        {"super", XK_Super_L}, {"space", XK_space}, {"num_lock", XK_Num_Lock},
     };
-    auto it = keyMap.find(keyName);
+    auto it = keyMap.find(toLowerStr(keyName));
     if (it != keyMap.end()) return it->second;
     if (keyName.length() == 1) return XStringToKeysym(keyName.c_str());
     return NoSymbol;
@@ -285,13 +293,24 @@ bool KeyDetector::isTriggerKeyPressed(const std::string& keyCombo)
     bool ctrl = (GetAsyncKeyState(VK_CONTROL) & 0x8000) != 0;
     bool shift = (GetAsyncKeyState(VK_SHIFT) & 0x8000) != 0;
     bool alt = (GetAsyncKeyState(VK_MENU) & 0x8000) != 0;
-    bool needCtrl = keyCombo.find("Ctrl") != std::string::npos;
-    bool needShift = keyCombo.find("Shift") != std::string::npos;
-    bool needAlt = keyCombo.find("Alt") != std::string::npos;
+    std::string lc = toLowerStr(keyCombo);
+    bool needCtrl = lc.find("ctrl") != std::string::npos || lc.find("control") != std::string::npos;
+    bool needShift = lc.find("shift") != std::string::npos;
+    bool needAlt = lc.find("alt") != std::string::npos;
+
+    // Modifier-only trigger (e.g. "Ctrl", "Alt", "Shift"): pressed when that modifier is held
+    bool modifierOnly = (needCtrl && !needShift && !needAlt) || (!needCtrl && needShift && !needAlt) || (!needCtrl && !needShift && needAlt);
+    if (modifierOnly && keyCombo.find('+') == std::string::npos)
+    {
+        if (needCtrl) return ctrl;
+        if (needShift) return shift;
+        if (needAlt) return alt;
+    }
 
     size_t pos = keyCombo.rfind('+');
     std::string primary = (pos == std::string::npos) ? keyCombo : keyCombo.substr(pos + 1);
     primary.erase(std::remove_if(primary.begin(), primary.end(), ::isspace), primary.end());
+    std::string primaryLc = toLowerStr(primary);
     SHORT vkey = 0;
     if (primary.size() == 1)
     {
@@ -300,8 +319,8 @@ bool KeyDetector::isTriggerKeyPressed(const std::string& keyCombo)
         else if (c >= 'a' && c <= 'z') vkey = toupper(c);
         else if (c >= '0' && c <= '9') vkey = c;
     }
-    else if (primary == "F1") vkey = VK_F1;
-    else if (primary == "F2") vkey = VK_F2;
+    else if (primaryLc == "f1") vkey = VK_F1;
+    else if (primaryLc == "f2") vkey = VK_F2;
 
     bool primaryDown = vkey ? ((GetAsyncKeyState(vkey) & 0x8000) != 0) : false;
     return (!needCtrl || ctrl) && (!needShift || shift) && (!needAlt || alt) && primaryDown;

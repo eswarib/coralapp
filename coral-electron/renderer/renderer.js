@@ -229,21 +229,17 @@ function renderMainForm(cfg) {
 
 function requestResize() {
   try {
-    const formBottom = configForm.getBoundingClientRect().bottom;
-    const desired = Math.ceil(window.scrollY + formBottom + 24);
-    ipcRenderer.send('resize-window', desired);
-    // Recheck shortly after layout/paint to catch late style recalcs
-    setTimeout(() => {
-      const formBottom2 = configForm.getBoundingClientRect().bottom;
-      const desired2 = Math.ceil(window.scrollY + formBottom2 + 24);
-      ipcRenderer.send('resize-window', desired2);
-    }, 50);
+    const measure = () => {
+      const bodyH = document.body ? document.body.scrollHeight : 0;
+      const docH = document.documentElement ? document.documentElement.scrollHeight : 0;
+      return Math.ceil(Math.max(bodyH, docH, 400) + 24);
+    };
+    ipcRenderer.send('resize-window', measure());
+    setTimeout(() => ipcRenderer.send('resize-window', measure()), 80);
+    setTimeout(() => ipcRenderer.send('resize-window', measure()), 250);
+    setTimeout(() => ipcRenderer.send('resize-window', measure()), 600);
   } catch (_) {}
 }
-
-window.addEventListener('load', () => {
-  requestResize();
-});
 
 function loadConfig() {
   fs.readFile(configPath, 'utf8', (err, data) => {

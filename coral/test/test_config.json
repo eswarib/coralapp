@@ -1,0 +1,13 @@
+{
+  "silenceTimeoutSeconds": 300,
+  "audioSampleRate": 16000,
+  "audioChannels": 1,
+  "triggerKey": "Alt+z",
+  "cmdTriggerKey": "Alt+x",
+  "triggerMode": "continuous",
+  "doubleTapWindowMs": 250,
+  "whisperModelPath": "",
+  "whisperLanguage": "en",
+  "debugLevel": 0,
+  "logToConsole": true
+}

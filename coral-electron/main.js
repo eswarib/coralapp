@@ -49,19 +49,39 @@ let backendRl = null;
 let backendStopping = false;
 let animationInterval = null;
 let currentFrame = 0;
+let stopAnimationTimer = null;
+let lastTranscriptionTimer = null;
+let currentTriggerMode = 'pushToTalk';
+
+function clearContinuousModeTimers() {
+  if (stopAnimationTimer) { clearTimeout(stopAnimationTimer); stopAnimationTimer = null; }
+  if (lastTranscriptionTimer) { clearTimeout(lastTranscriptionTimer); lastTranscriptionTimer = null; }
+}
+
+function readTriggerMode() {
+  try {
+    const cfgPath = path.join(os.homedir(), '.coral', 'conf', 'config.json');
+    const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+    currentTriggerMode = cfg.triggerMode || 'pushToTalk';
+  } catch (_) {}
+}
 
 function createConfigWindow() {
   if (configWindow) {
     configWindow.focus();
     return;
   }
+  const display = screen.getPrimaryDisplay();
+  const workH = display.workAreaSize.height;
+  const initH = Math.min(720, workH - 60);
   configWindow = new BrowserWindow({
     width: 520,
-    height: 480,
+    height: initH,
+    show: false,
     useContentSize: true,
     resizable: true,
     autoHideMenuBar: true,
-    title: 'Settings', // Changed from 'Edit Config' to 'Settings'
+    title: 'Settings',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -70,7 +90,10 @@ function createConfigWindow() {
   // Ensure the menu bar is not visible for this window
   configWindow.setMenuBarVisibility(false);
   configWindow.loadFile(path.join(__dirname, 'renderer', 'index.html'));
+  // Fallback: show after 1s even if resize IPC hasn't fired
+  const showTimer = setTimeout(() => { if (configWindow && !configWindow.isVisible()) configWindow.show(); }, 1000);
   configWindow.on('closed', () => {
+    clearTimeout(showTimer);
     configWindow = null;
   });
 }
@@ -348,17 +371,42 @@ function startBackend() {
         if (backendStopping) return;
         const trimmed = line.trim();
         if (trimmed === 'TRIGGER_DOWN') {
+            clearContinuousModeTimers();
             startTrayAnimation(animationFrames);
         } else if (trimmed === 'TRIGGER_UP') {
-            startTrayAnimation(transcribeAnimationFrames);
+            if (currentTriggerMode === 'pushToTalk') {
+                startTrayAnimation(transcribeAnimationFrames);
+            } else {
+                // Continuous mode: 300ms to distinguish chunk restart from user stop
+                clearContinuousModeTimers();
+                stopAnimationTimer = setTimeout(() => {
+                    stopAnimationTimer = null;
+                    // User stopped; keep animation on until last TRANSCRIBING_DONE
+                    lastTranscriptionTimer = setTimeout(() => {
+                        stopTrayAnimation();
+                        lastTranscriptionTimer = null;
+                    }, 2000);
+                }, 300);
+            }
         } else if (trimmed === 'TRANSCRIBING_DONE') {
-            stopTrayAnimation();
+            if (currentTriggerMode === 'pushToTalk') {
+                stopTrayAnimation();
+            } else if (lastTranscriptionTimer) {
+                // Continuous mode: reset timer; stop when no TRANSCRIBING_DONE for 2s
+                clearTimeout(lastTranscriptionTimer);
+                lastTranscriptionTimer = setTimeout(() => {
+                    stopTrayAnimation();
+                    lastTranscriptionTimer = null;
+                }, 2000);
+            }
         } else if (trimmed === 'NEED_INPUT_GROUP' || trimmed === 'NEED_UINPUT_RULE') {
             closeWelcomeWindow();
             promptInputGroupPermission();
         } else if (trimmed === 'BACKEND_READY') {
+            readTriggerMode();
             updateWelcomeReady();
         } else if (trimmed === 'CONFIG_RELOADED') {
+            readTriggerMode();
             console.log('Backend confirmed config reload');
         }
     });
@@ -387,6 +435,7 @@ function startBackend() {
 
 function stopBackend() {
   backendStopping = true;
+  clearContinuousModeTimers();
   try { stopTrayAnimation(); } catch (_) {}
   if (backendRl) {
     try { backendRl.close(); } catch (_) {}
@@ -415,8 +464,8 @@ let welcomeWindow = null;
 function showWelcomeWindow() {
   if (welcomeWindow) return;
   welcomeWindow = new BrowserWindow({
-    width: 420,
-    height: 260,
+    width: 460,
+    height: 300,
     resizable: false,
     minimizable: false,
     maximizable: false,
@@ -435,37 +484,56 @@ function showWelcomeWindow() {
   });
   welcomeWindow.on('closed', () => { welcomeWindow = null; });
 
-  const welcomeHtml = `
-    <html>
-      <head>
-        <title>Coral</title>
-        <style>
-          body { font-family: sans-serif; background: #fff; margin: 0; padding: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; }
-          .about-box { margin-top: 30px; padding: 24px 24px 16px 24px; border-radius: 12px; box-shadow: 0 2px 16px #0002; background: #f8faff; text-align: center; }
-          .title { font-size: 1.3em; font-weight: bold; margin-bottom: 8px; }
-          .version { color: #555; margin-bottom: 8px; }
-          .desc { margin-bottom: 8px; }
-          .status { color: #888; font-size: 0.95em; margin-top: 12px; }
-          .status.ready { color: #2e7d32; }
-          .tip { color: #0d47a1; font-size: 1em; margin-top: 10px; display: none; }
-          .ok-btn { margin-top: 18px; padding: 8px 24px; font-size: 1em; border-radius: 6px; border: 1px solid #0d47a1; background: #e3eaff; color: #0d47a1; cursor: pointer; display: none; }
-          .ok-btn:hover { background: #c5d8fa; }
-          @keyframes dots { 0% { content: ''; } 33% { content: '.'; } 66% { content: '..'; } 100% { content: '...'; } }
-          .loading::after { content: ''; animation: dots 1.2s steps(4, end) infinite; }
-        </style>
-      </head>
-      <body>
-        <div class="about-box">
-          <div class="title">Coral App</div>
-          <div class="version">Version: ${app.getVersion()}</div>
-          <div class="desc">&copy; 2025 Coral Contributors</div>
-          <div class="status loading" id="status">Starting up, checking permissions</div>
-          <div class="tip" id="tip">Press the trigger key (Alt+Z) to start/stop recording.</div>
-          <button class="ok-btn" id="okBtn" onclick="window.close()">OK</button>
-        </div>
-      </body>
-    </html>
-  `;
+  const welcomeHtml = `<html><head><title>Coral</title><style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',system-ui,sans-serif; height:100vh; overflow:hidden;
+           background:linear-gradient(135deg,#f0f4ff 0%,#e8f5e9 40%,#e0f2f1 100%); }
+    .scene { position:absolute; bottom:0; width:100%; height:55%; }
+    .wave { position:absolute; width:200%; left:-50%; border-radius:45%; }
+    .w1 { bottom:-60%; height:100%; background:rgba(13,71,161,0.07); animation:sway 8s ease-in-out infinite; }
+    .w2 { bottom:-65%; height:100%; background:rgba(13,71,161,0.05); animation:sway 6s ease-in-out infinite reverse; }
+    .w3 { bottom:-70%; height:100%; background:rgba(0,150,136,0.04); animation:sway 10s ease-in-out infinite; }
+    @keyframes sway { 0%,100%{transform:translateX(-2%)} 50%{transform:translateX(2%)} }
+    .coral-shape { position:absolute; border-radius:50%; }
+    .c1 { width:80px; height:80px; background:rgba(0,150,136,0.12); bottom:20px; right:40px; }
+    .c2 { width:50px; height:50px; background:rgba(13,71,161,0.1); bottom:50px; right:100px; }
+    .c3 { width:35px; height:35px; background:rgba(76,175,80,0.1); bottom:10px; right:160px; }
+    .c4 { width:60px; height:60px; background:rgba(0,150,136,0.1); bottom:30px; left:30px; }
+    .c5 { width:25px; height:25px; background:rgba(76,175,80,0.08); bottom:60px; left:80px; }
+    .content { position:relative; z-index:1; padding:36px 40px; height:100%; display:flex; flex-direction:column; }
+    .brand { font-size:42px; font-weight:800; letter-spacing:-1px;
+             background:linear-gradient(135deg,#0d47a1,#00897b); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .version { font-size:14px; color:#5c6bc0; font-weight:600; margin-top:4px; letter-spacing:0.5px; }
+    .tagline { margin-top:24px; font-size:15px; color:#455a64; font-weight:300; line-height:1.6; max-width:280px; }
+    .tagline strong { font-weight:600; color:#0d47a1; }
+    .bottom { margin-top:auto; }
+    .status { font-size:13px; color:#90a4ae; }
+    .status.ready { color:#2e7d32; font-weight:600; }
+    .ok-btn { margin-top:12px; padding:8px 28px; font-size:13px; font-weight:600;
+              border-radius:8px; border:none; background:linear-gradient(135deg,#0d47a1,#1565c0);
+              color:#fff; cursor:pointer; display:none; transition:opacity 0.2s; }
+    .ok-btn:hover { opacity:0.85; }
+    @keyframes dots { 0%{content:''} 33%{content:'.'} 66%{content:'..'} 100%{content:'...'} }
+    .loading::after { content:''; animation:dots 1.2s steps(4,end) infinite; }
+    .copy { position:absolute; bottom:12px; right:16px; font-size:11px; color:#b0bec5; z-index:1; }
+  </style></head><body>
+    <div class="scene">
+      <div class="wave w1"></div><div class="wave w2"></div><div class="wave w3"></div>
+      <div class="coral-shape c1"></div><div class="coral-shape c2"></div>
+      <div class="coral-shape c3"></div><div class="coral-shape c4"></div><div class="coral-shape c5"></div>
+    </div>
+    <div class="content">
+      <div class="brand">Coral</div>
+      <div class="version">${app.getVersion()}</div>
+      <div class="tagline"><strong>Double tap</strong> trigger key, <strong>speak</strong>, get the <strong>text</strong></div>
+      <div class="bottom">
+        <div class="status loading" id="status">Starting up</div>
+        <button class="ok-btn" id="okBtn" onclick="window.close()">Got it</button>
+      </div>
+    </div>
+    <div class="copy">&copy; 2025 Coral Contributors</div>
+  </body></html>`;
   welcomeWindow.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(welcomeHtml));
 }
 
@@ -578,9 +646,10 @@ ipcMain.on('resize-window', (event, contentHeight) => {
     const minH = 200;
     const display = screen.getDisplayMatching(win.getBounds()) || screen.getPrimaryDisplay();
     const workH = (display && display.workAreaSize && display.workAreaSize.height) ? display.workAreaSize.height : 900;
-    const maxH = Math.max(320, workH - 80);
-    const padded = Math.max(minH, Math.min(maxH, Math.ceil(Number(contentHeight) || 0) + 20));
+    const maxH = Math.max(320, workH - 60);
+    const padded = Math.max(minH, Math.min(maxH, Math.ceil(Number(contentHeight) || 0) + 12));
     win.setContentSize(currentWidth, padded);
+    if (!win.isVisible()) win.show();
   } catch (_) {}
 });
 

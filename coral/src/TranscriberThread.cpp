@@ -39,7 +39,6 @@ void TranscriberThread::run()
             DEBUG(3, "Transcribing audio file: [" + audioFile + "] + whisper model: [" + _config.getWhisperModelPath() + "] + language: [" + _config.getWhisperLanguage() + "]");
             std::cout << "TRANSCRIBING_START" << std::endl;
             std::string text = Transcriber::getInstance()->transcribeAudio(audioFile, _config.getWhisperModelPath(), _config.getWhisperLanguage());
-            std::cout << "TRANSCRIBING_DONE" << std::endl;
             if (audioEvent->getTriggerKey() == _config.getCmdTriggerKey()) 
             {
                 text = TextUtils::trim(text);
@@ -53,8 +52,11 @@ void TranscriberThread::run()
                 DEBUG(3, "Pushing transcribed text to textEventQueue (triggerKey)");
             }
 
-            
             _textQueue.push(std::make_shared<TextEvent>(text));
+
+            //transcription done the text inserted in queue, 
+            // notify the frontend to stop the animation
+            std::cout << "TRANSCRIBING_DONE" << std::endl;
             
             if (std::remove(audioFile.c_str()) == 0) 
             {

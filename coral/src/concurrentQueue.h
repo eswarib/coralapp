@@ -6,6 +6,7 @@
 #include <condition_variable>
 #include <memory>
 #include <optional>
+#include <chrono>
 
 // Thread-safe queue for inter-thread communication
 // Follows RAII and standard C++17 guidelines
@@ -43,6 +44,18 @@ public:
         {
             return !queue_.empty();
         });
+        T item = std::move(queue_.front());
+        queue_.pop();
+        return item;
+    }
+
+    // Wait for an item with timeout; returns std::nullopt if timeout expires
+    template<typename Rep, typename Period>
+    std::optional<T> waitAndPopWithTimeout(const std::chrono::duration<Rep, Period>& timeout)
+    {
+        std::unique_lock<std::mutex> lock(mutex_);
+        if (!condVar_.wait_for(lock, timeout, [this] { return !queue_.empty(); }))
+            return std::nullopt;
         T item = std::move(queue_.front());
         queue_.pop();
         return item;

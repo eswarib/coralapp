@@ -4,31 +4,44 @@
 #include <fstream>
 
 void testConfigLoad() {
-    Config config("../src/config.json");
-    assert(config.silenceTimeoutSeconds == 300);
-    assert(config.audioSampleRate == 16000);
-    assert(config.audioChannels == 1);
-    assert(config.triggerKey == "Fn");
-    assert(config.whisperModelPath == "../../whispercpp/models/ggml-base.en.bin");
+    Config config("test_config.json");
+    assert(config.getSilenceTimeoutSeconds() == 300);
+    assert(config.getAudioSampleRate() == 16000);
+    assert(config.getAudioChannels() == 1);
+    assert(config.getTriggerKey() == "Alt+z");
+    assert(config.getCmdTriggerKey() == "Alt+x");
+    assert(config.getTriggerMode() == "continuous");
+    assert(config.getDoubleTapWindowMs() == 250);
 }
 
 void testConfigDefaults() {
-    // Simulate missing fields by creating a minimal JSON file
-    std::ofstream out("../src/test_config_minimal.json");
+    std::ofstream out("test_config_minimal.json");
     out << "{}";
     out.close();
-    Config config("../src/test_config_minimal.json");
-    assert(config.silenceTimeoutSeconds == Config::DefaultSilenceTimeoutSeconds);
-    assert(config.audioSampleRate == Config::DefaultAudioSampleRate);
-    assert(config.audioChannels == Config::DefaultAudioChannels);
-    assert(config.triggerKey == Config::DefaultTriggerKey);
-    assert(config.whisperModelPath == Config::DefaultWhisperModelPath);
-    std::remove("../src/test_config_minimal.json");
+    Config config("test_config_minimal.json");
+    assert(config.getSilenceTimeoutSeconds() == Config::DefaultSilenceTimeoutSeconds);
+    assert(config.getAudioSampleRate() == Config::DefaultAudioSampleRate);
+    assert(config.getAudioChannels() == Config::DefaultAudioChannels);
+    assert(config.getTriggerKey() == Config::DefaultTriggerKey);
+    assert(config.getCmdTriggerKey() == "");
+    assert(config.getTriggerMode() == "pushToTalk");
+    assert(config.getDoubleTapWindowMs() == 300);
+    std::remove("test_config_minimal.json");
+}
+
+void testConfigTriggerModeInvalid() {
+    std::ofstream out("test_config_invalid_mode.json");
+    out << R"({"triggerMode": "invalid"})";
+    out.close();
+    Config config("test_config_invalid_mode.json");
+    assert(config.getTriggerMode() == "pushToTalk");
+    std::remove("test_config_invalid_mode.json");
 }
 
 int main() {
     testConfigLoad();
     testConfigDefaults();
+    testConfigTriggerModeInvalid();
     std::cout << "Config tests passed.\n";
     return 0;
-} 
+}

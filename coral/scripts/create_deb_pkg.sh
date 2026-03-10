@@ -7,4 +7,4 @@ fpm -s dir -t deb -n coral -v 1.0.0 \
     ../whispercpp/lib/libwhisper.so.1.7.5=/opt/coral/lib/libwhisper.so.1.7.5 \
     ../whispercpp/lib/libwhisper.so.1.7.5=/opt/coral/lib/libwhisper.so.1 \
     ../whispercpp/lib/libwhisper.so.1.7.5=/opt/coral/lib/libwhisper.so \
-    conf/config.json=/usr/share/coral/conf/config.json
+    conf/config-linux.json=/usr/share/coral/conf/config.json

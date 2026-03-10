@@ -4,9 +4,10 @@
 #include <string>
 #include <fstream>
 #include <stdexcept>
+#include <cstdint>
+#include <shared_mutex>
 #include "json.hpp"
 
-// Config class for application settings loaded from config.json
 class Config
 {
 public:
@@ -20,26 +21,33 @@ public:
     static const std::string WhisperModelNameSmallEn;
     static const std::string WhisperModelNameBaseEn;
 
-
     static void copyConfigFileOnFirstRun();
     static void downloadModelIfNotPresent();
 
     explicit Config(const std::string& filePath);
 
-    int getSilenceTimeoutSeconds() const {return silenceTimeoutSeconds;}
-    int getAudioSampleRate() const { return audioSampleRate;}
-    int getAudioChannels() const { return audioChannels; }
-    std::string getTriggerKey() const { return triggerKey; }
-    //std::string getWhisperModelPath() const { return whisperModelPath; }
-    std::string getWhisperModelPath() const;
-    int getDebugLevel() const { return debugLevel; }
-    std::string getLogFilePath() const { return logFilePath; }
-    bool getLogToConsole() const { return logToConsole; }
-    std::string getCmdTriggerKey() const { return cmdTriggerKey; }
-    std::string getWhisperLanguage() const { return whisperLanguage; }
+    /** Re-read the config file. Thread-safe (exclusive lock). */
+    void reload();
 
+    int getSilenceTimeoutSeconds() const { std::shared_lock lk(mMutex); return silenceTimeoutSeconds; }
+    int getAudioSampleRate() const { std::shared_lock lk(mMutex); return audioSampleRate; }
+    int getAudioChannels() const { std::shared_lock lk(mMutex); return audioChannels; }
+    std::string getTriggerKey() const { std::shared_lock lk(mMutex); return triggerKey; }
+    std::string getWhisperModelPath() const;
+    int getDebugLevel() const { std::shared_lock lk(mMutex); return debugLevel; }
+    std::string getLogFilePath() const { std::shared_lock lk(mMutex); return logFilePath; }
+    bool getLogToConsole() const { std::shared_lock lk(mMutex); return logToConsole; }
+    std::string getCmdTriggerKey() const { std::shared_lock lk(mMutex); return cmdTriggerKey; }
+    std::string getWhisperLanguage() const { std::shared_lock lk(mMutex); return whisperLanguage; }
+    std::string getTriggerMode() const { std::shared_lock lk(mMutex); return triggerMode; }
+    uint32_t getDoubleTapWindowMs() const { std::shared_lock lk(mMutex); return doubleTapWindowMs; }
+    int getRecordWindowSeconds() const { std::shared_lock lk(mMutex); return recordWindowSeconds; }
 
 private:
+    void loadFromFile();
+
+    mutable std::shared_mutex mMutex;
+    std::string mFilePath;
     int silenceTimeoutSeconds;
     int audioSampleRate;
     int audioChannels;
@@ -50,6 +58,9 @@ private:
     bool logToConsole;
     std::string cmdTriggerKey;
     std::string whisperLanguage;
+    std::string triggerMode;   // "pushToTalk" | "continuous"
+    uint32_t doubleTapWindowMs{300};
+    int recordWindowSeconds{5};
 };
 
 #endif // CONFIG_H

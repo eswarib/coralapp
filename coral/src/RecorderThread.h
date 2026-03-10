@@ -9,31 +9,30 @@
 #include "Config.h"
 #include "concurrentQueue.h"
 #include "AudioEvent.h"
-#include "KeyDetector.h"
+#include "RecorderEvent.h"
 
 class RecorderThread
 {
 public:
 	RecorderThread(const Config& config,
 				   ConcurrentQueue<std::shared_ptr<AudioEvent>>& audioQueue,
-				   KeyDetector& keyDetector);
+				   ConcurrentQueue<std::shared_ptr<RecorderEvent>>& recorderEventQueue);
 	~RecorderThread();
 	void start();
 	void stop();
 private:
 	void run();
+	void doStopRecording();
 	std::thread mThread;
 	std::atomic<bool> mRunning;
 	const Config& mConfig;
 	ConcurrentQueue<std::shared_ptr<AudioEvent>>& mAudioQueue;
-	KeyDetector& mKeyDetector;
-	// Push-to-talk toggle state (simple two-state machine: Idle <-> Recording).
-	// Note: If more states (e.g., Paused, Error, Cancelling) are introduced,
-	// consider extracting a small FSM class to manage lifecycle transitions.
+	ConcurrentQueue<std::shared_ptr<RecorderEvent>>& mRecorderEventQueue;
+	// Recording state: Idle <-> Recording. Source: trigger (hold or double-tap) or cmd (hold only).
 	bool mIsRecording{false};
 	std::string mActiveTriggerKey; // which key started recording (trigger or cmd)
-	bool mPrevTriggerPressed{false};
-	bool mPrevCmdPressed{false};
+	enum class RecordingSource { None, Trigger, Cmd };
+	RecordingSource mRecordingSource{RecordingSource::None};
 };
 
 #endif // RECORDER_THREAD_H

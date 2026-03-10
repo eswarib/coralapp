@@ -57,7 +57,7 @@ sh ../coral/scripts/collect-libs.sh
 
 #copy config
 mkdir -p "$APPDIR/usr/share/coral/conf"
-cp ../coral/conf/config.json "$APPDIR/usr/share/coral/conf/config.json"
+cp ../coral/conf/config-linux.json "$APPDIR/usr/share/coral/conf/config.json"
 
 #copy models
 mkdir -p "$APPDIR/usr/share/coral/models"

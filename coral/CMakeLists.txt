@@ -107,20 +107,32 @@ else() # WIN32
 
     add_executable(coral ${CORAL_SOURCES})
 
-    # Version info: allow passing APP_VERSION/BUILD_DATE/GIT_COMMIT from CI
+    # Version info: allow -D or env vars (APPVER, WHISPERLIB, GGMLLIBS from workflow)
     if(NOT DEFINED APP_VERSION)
-        set(APP_VERSION "0.0.0")
+        if(DEFINED ENV{APPVER})
+            set(APP_VERSION "$ENV{APPVER}")
+        else()
+            set(APP_VERSION "0.0.0")
+        endif()
     endif()
     if(NOT DEFINED BUILD_DATE)
-        string(TIMESTAMP BUILD_DATE "%Y-%m-%d")
+        if(DEFINED ENV{BUILD_DATE})
+            set(BUILD_DATE "$ENV{BUILD_DATE}")
+        else()
+            string(TIMESTAMP BUILD_DATE "%Y-%m-%d")
+        endif()
     endif()
     if(NOT DEFINED GIT_COMMIT)
-        execute_process(COMMAND git rev-parse --short HEAD
-                        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
-                        OUTPUT_VARIABLE GIT_COMMIT OUTPUT_STRIP_TRAILING_WHITESPACE
-                        ERROR_QUIET)
-        if(NOT GIT_COMMIT)
-            set(GIT_COMMIT "unknown")
+        if(DEFINED ENV{GIT_COMMIT})
+            set(GIT_COMMIT "$ENV{GIT_COMMIT}")
+        else()
+            execute_process(COMMAND git rev-parse --short HEAD
+                            WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR}
+                            OUTPUT_VARIABLE GIT_COMMIT OUTPUT_STRIP_TRAILING_WHITESPACE
+                            ERROR_QUIET)
+            if(NOT GIT_COMMIT)
+                set(GIT_COMMIT "unknown")
+            endif()
         endif()
     endif()
 
@@ -209,8 +221,11 @@ else() # WIN32
         endif()
     endif()
 
-    # Optional: Whisper library on Windows (user-provided)
+    # Optional: Whisper library on Windows (user-provided or env WHISPERLIB)
     set(WHISPER_HINT "${CMAKE_CURRENT_LIST_DIR}/lib")
+    if(NOT WHISPER_LIBRARY AND DEFINED ENV{WHISPERLIB})
+        set(WHISPER_LIBRARY "$ENV{WHISPERLIB}")
+    endif()
     if(NOT WHISPER_LIBRARY)
         find_library(WHISPER_LIBRARY NAMES whisper whisper.dll.lib HINTS ${WHISPER_HINT})
     endif()
@@ -221,7 +236,10 @@ else() # WIN32
         message(WARNING "Whisper library not found. Ensure whisper(.lib) is available and set via -DWHISPER_LIBRARY.")
     endif()
 
-    # GGML deps (may consist of multiple libs)
+    # GGML deps (may consist of multiple libs; env GGMLLIBS from workflow)
+    if(NOT GGML_LIBRARIES AND DEFINED ENV{GGMLLIBS})
+        set(GGML_LIBRARIES "$ENV{GGMLLIBS}")
+    endif()
     if(GGML_LIBRARIES)
         string(REPLACE ";" "\n  - " _ggml_list "${GGML_LIBRARIES}")
         message(STATUS "Using GGML libraries:\n  - ${_ggml_list}")
@@ -244,6 +262,16 @@ else() # WIN32
     )
 
     target_link_libraries(coral PRIVATE ${PORTAUDIO_TARGET} ${SNDFILE_TARGET} user32 winmm setupapi ole32 oleaut32 uuid)
+
+    # Post-build: copy conf/ next to exe (backend looks for exeDir/conf, exeDir/model)
+    add_custom_command(TARGET coral POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:coral>/conf
+        COMMAND ${CMAKE_COMMAND} -E make_directory $<TARGET_FILE_DIR:coral>/model
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_CURRENT_LIST_DIR}/conf/config-windows.json
+            $<TARGET_FILE_DIR:coral>/conf/config.json
+        COMMENT "Copying conf/ next to coral.exe for Windows"
+    )
 
     # Install rules (portable layout)
     install(TARGETS coral RUNTIME DESTINATION .)

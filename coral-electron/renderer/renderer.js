@@ -16,7 +16,7 @@ if (process.env.APPIMAGE) {
   const appImageMountPath = getAppImageMountPath();
   const defaultConfigPath = path.join(appImageMountPath, 'usr', 'share', 'coral', 'conf', 'config.json');
   const userConfigDir = path.join(os.homedir(), '.coral');
-  const userConfigPath = path.join(userConfigDir, 'config.json');
+  const userConfigPath = path.join(userConfigDir, 'conf', 'config.json');
   try {
     if (!fs.existsSync(userConfigDir)) {
       fs.mkdirSync(userConfigDir, { recursive: true });
@@ -29,19 +29,23 @@ if (process.env.APPIMAGE) {
   }
   configPath = userConfigPath;
 } else {
-  // Development fallback
-  configPath = path.join(__dirname, '../..', 'coral', 'conf', 'config.json');
+  // Development: always use ~/.coral/conf/config.json; copy from platform config on first run
+  const userConfigDir = path.join(os.homedir(), '.coral');
+  configPath = path.join(userConfigDir, 'conf', 'config.json');
+  const platformConfig = process.platform === 'win32' ? 'config.json' : 'config-linux.json';
+  const devDefault = path.join(__dirname, '../..', 'coral', 'conf', platformConfig);
+  try {
+    if (!fs.existsSync(path.dirname(configPath))) fs.mkdirSync(path.dirname(configPath), { recursive: true });
+    if (!fs.existsSync(configPath) && fs.existsSync(devDefault)) {
+      fs.copyFileSync(devDefault, configPath);
+    }
+  } catch (e) { console.error('Failed to prepare user config:', e.message); }
 }
 const configForm = document.getElementById('configForm');
 const saveBtn = document.getElementById('saveBtn');
 const defaultBtn = document.getElementById('defaultBtn');
 const statusDiv = document.getElementById('status');
 
-// alert("renderer.js started");
-document.getElementById('status').textContent = 'renderer.js loaded';
-// alert("Before calling loadConfig()");
-// alert("About to call loadConfig()");
-// alert("typeof loadConfig: " + typeof loadConfig);
 loadConfig();
 
 let config = {};
@@ -69,176 +73,189 @@ function formatKeyComboFromEvent(e) {
   return parts.join('+');
 }
 
+function createField(labelText, inputEl) {
+  const row = document.createElement('div');
+  row.className = 'field';
+  const lbl = document.createElement('div');
+  lbl.className = 'field-label';
+  lbl.textContent = labelText;
+  const wrap = document.createElement('div');
+  wrap.className = 'field-input';
+  wrap.appendChild(inputEl);
+  row.appendChild(lbl);
+  row.appendChild(wrap);
+  return row;
+}
+
 function renderMainForm(cfg) {
   configForm.innerHTML = '';
-  const primaryKeys = new Set(['triggerKey', 'cmdTriggerKey', 'whisperModelPath']);
+  const primaryKeys = ['triggerKey', 'cmdTriggerKey', 'triggerMode'];
+  const modelKey = 'whisperModelPath';
 
-  const renderField = (key, value) => {
-    const label = document.createElement('label');
-    label.textContent = key;
-    let input;
-    if (key === 'whisperModelPath') {
-      // Custom UI: toolbar-like label + pill selector
-      label.textContent = 'Model';
-      label.className = 'toolbar-label';
-      const hidden = document.createElement('input');
-      hidden.type = 'hidden';
-      hidden.name = key;
-      hidden.value = value;
-      // Derive current model display
-      const displayForPath = (p) => {
-        const v = (p || '').toLowerCase();
-        if (v.includes('ggml-base.en.bin')) return 'Whisper base';
-        if (v.includes('ggml-small.en-q8_0.bin') || v.includes('ggml-small.en.bin')) return 'Whisper small';
-        return 'Custom whisper';
-      };
-      let currentLabel = displayForPath(value);
-      const dropdown = document.createElement('div');
-      dropdown.className = 'dropdown';
-      const pill = document.createElement('span');
-      pill.className = 'pill-select';
-      pill.textContent = currentLabel;
-      const menu = document.createElement('div');
-      menu.className = 'dropdown-menu';
-      menu.style.display = 'none';
-      const items = ['Whisper base', 'Whisper small', 'Custom whisper'];
-      items.forEach(txt => {
-        const it = document.createElement('div');
-        it.className = 'dropdown-item';
-        it.textContent = txt;
-        it.onclick = async () => {
-          pill.textContent = txt;
-          menu.style.display = 'none';
-          if (txt === 'Whisper base') {
-            hidden.value = 'ggml-base.en.bin';
-          } else if (txt === 'Whisper small') {
-            // Prefer q8 if available in search paths; backend will resolve
-            hidden.value = 'ggml-small.en-q8_0.bin';
-          } else {
-            // Custom: open file picker and set absolute path
-            const fp = await ipcRenderer.invoke('select-model-file');
-            if (fp) {
-              hidden.value = fp;
-            }
-          }
-          requestResize();
-        };
-        menu.appendChild(it);
-      });
-      pill.onclick = () => {
-        menu.style.display = (menu.style.display === 'none') ? 'block' : 'none';
-        requestResize();
-      };
-      dropdown.appendChild(pill);
-      dropdown.appendChild(menu);
-      label.appendChild(dropdown);
-      // subtle hint of current mapping
-      const hint = document.createElement('span');
-      hint.className = 'muted';
-      hint.textContent = `(current: ${currentLabel})`;
-      label.appendChild(hint);
-      label.appendChild(hidden);
-    } else if (key === 'cmdTriggerKey') {
-      input = document.createElement('input');
-      input.type = 'text';
-      input.readOnly = true;
-      input.placeholder = 'Click, then press shortcut (e.g., ctrl+shift+k)';
-      input.value = value || '';
-      input.name = key;
-      input.addEventListener('keydown', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const combo = formatKeyComboFromEvent(e);
-        if (combo) input.value = combo;
-      });
-      input.addEventListener('focus', () => { statusDiv.textContent = 'Press desired shortcut…'; });
-      input.addEventListener('blur', () => { statusDiv.textContent = ''; });
-      label.appendChild(input);
-    } else if (typeof value === 'boolean') {
-      input = document.createElement('select');
-      ['true', 'false'].forEach(opt => {
-        const option = document.createElement('option');
-        option.value = opt;
-        option.text = opt;
-        if (String(value) === opt) option.selected = true;
-        input.appendChild(option);
-      });
-      input.name = key;
-      label.appendChild(input);
-    } else if (typeof value === 'number') {
-      input = document.createElement('input');
-      input.type = 'number';
-      input.value = value;
-      input.name = key;
-      label.appendChild(input);
-    } else {
-      input = document.createElement('input');
-      input.type = 'text';
-      input.value = value;
-      input.name = key;
-      label.appendChild(input);
-    }
-    configForm.appendChild(label);
+  // --- Trigger settings card ---
+  const triggerLabel = document.createElement('div');
+  triggerLabel.className = 'section-label';
+  triggerLabel.textContent = 'Trigger';
+  configForm.appendChild(triggerLabel);
+
+  const triggerCard = document.createElement('div');
+  triggerCard.className = 'card';
+
+  // triggerKey
+  const triggerInput = document.createElement('input');
+  triggerInput.type = 'text';
+  triggerInput.readOnly = true;
+  triggerInput.placeholder = 'Click, then press shortcut';
+  triggerInput.value = cfg.triggerKey || '';
+  triggerInput.name = 'triggerKey';
+  triggerInput.addEventListener('keydown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const combo = formatKeyComboFromEvent(e);
+    if (combo) triggerInput.value = combo;
+  });
+  triggerInput.addEventListener('focus', () => { statusDiv.textContent = 'Press desired shortcut…'; statusDiv.className = ''; });
+  triggerInput.addEventListener('blur', () => { statusDiv.textContent = ''; });
+  triggerCard.appendChild(createField('Trigger key', triggerInput));
+
+  // cmdTriggerKey
+  const cmdInput = document.createElement('input');
+  cmdInput.type = 'text';
+  cmdInput.readOnly = true;
+  cmdInput.placeholder = 'Click, then press shortcut';
+  cmdInput.value = cfg.cmdTriggerKey || '';
+  cmdInput.name = 'cmdTriggerKey';
+  cmdInput.addEventListener('keydown', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const combo = formatKeyComboFromEvent(e);
+    if (combo) cmdInput.value = combo;
+  });
+  cmdInput.addEventListener('focus', () => { statusDiv.textContent = 'Press desired shortcut…'; statusDiv.className = ''; });
+  cmdInput.addEventListener('blur', () => { statusDiv.textContent = ''; });
+  triggerCard.appendChild(createField('Cmd key', cmdInput));
+
+  // triggerMode
+  const modeSelect = document.createElement('select');
+  modeSelect.name = 'triggerMode';
+  [['pushToTalk', 'Push-to-talk (hold)'], ['continuous', 'Continuous (double-tap)']].forEach(([val, txt]) => {
+    const opt = document.createElement('option');
+    opt.value = val;
+    opt.textContent = txt;
+    if ((cfg.triggerMode || 'pushToTalk') === val) opt.selected = true;
+    modeSelect.appendChild(opt);
+  });
+  triggerCard.appendChild(createField('Mode', modeSelect));
+
+  configForm.appendChild(triggerCard);
+
+  // --- Model card ---
+  const modelLabel = document.createElement('div');
+  modelLabel.className = 'section-label';
+  modelLabel.textContent = 'Model';
+  configForm.appendChild(modelLabel);
+
+  const modelCard = document.createElement('div');
+  modelCard.className = 'card';
+
+  const hidden = document.createElement('input');
+  hidden.type = 'hidden';
+  hidden.name = modelKey;
+  hidden.value = cfg[modelKey] || '';
+
+  const displayForPath = (p) => {
+    const v = (p || '').toLowerCase();
+    if (v.includes('ggml-base.en.bin')) return 'Whisper base';
+    if (v.includes('ggml-small.en-q8_0.bin') || v.includes('ggml-small.en.bin')) return 'Whisper small';
+    if (!v) return 'Whisper base';
+    return 'Custom';
   };
 
-  for (const [key, value] of Object.entries(cfg)) {
-    if (primaryKeys.has(key)) {
-      renderField(key, value);
-    }
-  }
+  const modelWrap = document.createElement('div');
+  modelWrap.className = 'model-selector';
+  const pill = document.createElement('span');
+  pill.className = 'pill-select';
+  pill.textContent = displayForPath(cfg[modelKey]);
+  const menu = document.createElement('div');
+  menu.className = 'dropdown-menu';
+  menu.style.display = 'none';
+
+  ['Whisper base', 'Whisper small', 'Custom'].forEach(txt => {
+    const it = document.createElement('div');
+    it.className = 'dropdown-item';
+    it.textContent = txt;
+    it.onclick = async () => {
+      pill.textContent = txt;
+      menu.style.display = 'none';
+      if (txt === 'Whisper base') hidden.value = 'ggml-base.en.bin';
+      else if (txt === 'Whisper small') hidden.value = 'ggml-small.en-q8_0.bin';
+      else {
+        const fp = await ipcRenderer.invoke('select-model-file');
+        if (fp) hidden.value = fp;
+      }
+      requestResize();
+    };
+    menu.appendChild(it);
+  });
+
+  pill.onclick = () => {
+    menu.style.display = (menu.style.display === 'none') ? 'block' : 'none';
+    requestResize();
+  };
+  document.addEventListener('click', (e) => {
+    if (!modelWrap.contains(e.target)) menu.style.display = 'none';
+  });
+
+  modelWrap.appendChild(pill);
+  modelWrap.appendChild(menu);
+  modelWrap.appendChild(hidden);
+
+  const modelRow = document.createElement('div');
+  modelRow.className = 'field';
+  const modelLbl = document.createElement('div');
+  modelLbl.className = 'field-label';
+  modelLbl.textContent = 'Whisper model';
+  const modelInputWrap = document.createElement('div');
+  modelInputWrap.className = 'field-input';
+  modelInputWrap.appendChild(modelWrap);
+  modelRow.appendChild(modelLbl);
+  modelRow.appendChild(modelInputWrap);
+  modelCard.appendChild(modelRow);
+
+  configForm.appendChild(modelCard);
+
   requestResize();
 }
 
 function requestResize() {
   try {
-    const formBottom = configForm.getBoundingClientRect().bottom;
-    const desired = Math.ceil(window.scrollY + formBottom + 24);
-    ipcRenderer.send('resize-window', desired);
-    // Recheck shortly after layout/paint to catch late style recalcs
-    setTimeout(() => {
-      const formBottom2 = configForm.getBoundingClientRect().bottom;
-      const desired2 = Math.ceil(window.scrollY + formBottom2 + 24);
-      ipcRenderer.send('resize-window', desired2);
-    }, 50);
+    const measure = () => {
+      const bodyH = document.body ? document.body.scrollHeight : 0;
+      const docH = document.documentElement ? document.documentElement.scrollHeight : 0;
+      return Math.ceil(Math.max(bodyH, docH, 400) + 24);
+    };
+    ipcRenderer.send('resize-window', measure());
+    setTimeout(() => ipcRenderer.send('resize-window', measure()), 80);
+    setTimeout(() => ipcRenderer.send('resize-window', measure()), 250);
+    setTimeout(() => ipcRenderer.send('resize-window', measure()), 600);
   } catch (_) {}
 }
 
-window.addEventListener('load', () => {
-  requestResize();
-});
-
 function loadConfig() {
-  // alert("Inside loadConfig()");
-  // alert("configPath: " + configPath);
-  // alert("fs: " + typeof fs);
-  // alert("statusDiv: " + statusDiv);
-  // alert("Trying to load config from: " + configPath); // Debug alert
-  // console.log("Trying to load config from:", configPath); // Debug log
   fs.readFile(configPath, 'utf8', (err, data) => {
     if (err) {
       statusDiv.textContent = 'Failed to load config: ' + err.message;
-      statusDiv.style.color = 'red';
-      statusDiv.style.fontSize = '18px';
-      statusDiv.style.margin = '10px';
-      // alert('Failed to load config: ' + err.message); // Debug alert
-      // console.log('Failed to load config:', err.message); // Debug log
+      statusDiv.className = 'error';
       return;
     }
     try {
       config = JSON.parse(data);
       renderMainForm(config);
       statusDiv.textContent = '';
-      statusDiv.style.color = '';
-      statusDiv.style.fontSize = '';
-      statusDiv.style.margin = '';
-      // console.log('Config loaded:', config); // Debug log
+      statusDiv.className = '';
     } catch (e) {
       statusDiv.textContent = 'Invalid config.json: ' + e.message;
-      statusDiv.style.color = 'red';
-      statusDiv.style.fontSize = '18px';
-      statusDiv.style.margin = '10px';
-      // alert('Invalid config.json: ' + e.message); // Debug alert
-      // console.log('Invalid config.json:', e.message); // Debug log
+      statusDiv.className = 'error';
     }
   });
 }
@@ -246,10 +263,15 @@ function loadConfig() {
 saveBtn.onclick = (e) => {
   e.preventDefault();
   const newConfig = { ...config };
+  const booleanSelects = new Set();
   for (const el of configForm.elements) {
     if (!el.name) continue;
     if (el.tagName === 'SELECT') {
-      newConfig[el.name] = el.value === 'true';
+      if (el.querySelector('option[value="true"]') && el.querySelector('option[value="false"]')) {
+        newConfig[el.name] = el.value === 'true';
+      } else {
+        newConfig[el.name] = el.value;
+      }
     } else if (el.type === 'number') {
       newConfig[el.name] = Number(el.value);
     } else {
@@ -259,40 +281,27 @@ saveBtn.onclick = (e) => {
   // Validate model selection: allow known tokens or a valid file
   try {
     const modelPath = newConfig['whisperModelPath'];
-    const tokens = ['ggml-base.en.bin', 'ggml-small.en.bin', 'ggml-small.en-q8_0.bin'];
+    const tokens = ['ggml-base.en.bin', 'ggml-small.en.bin', 'ggml-small.en-q8_0.bin', ''];
     const isToken = tokens.includes(modelPath);
     if (!isToken) {
-      if (!modelPath || !fs.existsSync(modelPath) || !fs.statSync(modelPath).isFile()) {
-        statusDiv.textContent = 'Please select a valid model (choose preset or browse a file).';
-        statusDiv.style.color = 'red';
+      if (!fs.existsSync(modelPath) || !fs.statSync(modelPath).isFile()) {
+        statusDiv.textContent = 'Please select a valid model file.';
+        statusDiv.className = 'error';
         return;
       }
     }
   } catch (_) {}
-  // Validate that whisperModelPath is a file (not a folder)
-  try {
-    const modelPath = newConfig['whisperModelPath'];
-    if (!modelPath || !fs.existsSync(modelPath) || !fs.statSync(modelPath).isFile()) {
-      statusDiv.textContent = 'Please select a valid model file (.bin or .gguf).';
-      statusDiv.style.color = 'red';
-      return;
-    }
-  } catch (_) {
-    statusDiv.textContent = 'Please select a valid model file (.bin or .gguf).';
-    statusDiv.style.color = 'red';
-    return;
-  }
   fs.writeFile(configPath, JSON.stringify(newConfig, null, 2), (err) => {
     if (err) {
       statusDiv.textContent = 'Failed to save: ' + err.message;
+      statusDiv.className = 'error';
     } else {
-      statusDiv.textContent = 'Saved!';
-      // Notify main process to restart/reload backend
+      statusDiv.textContent = 'Settings saved!';
+      statusDiv.className = 'success';
       try {
         window?.require && ipcRenderer.send('config-updated');
       } catch (_) {}
-      // Close the window after applying
-      setTimeout(() => { try { window.close(); } catch (_) {} }, 150);
+      setTimeout(() => { try { window.close(); } catch (_) {} }, 400);
     }
   });
 };
@@ -305,8 +314,8 @@ defaultBtn.onclick = (e) => {
       const appImageMountPath = getAppImageMountPath();
       defaultConfigPath = path.join(appImageMountPath, 'usr', 'share', 'coral', 'conf', 'config.json');
     } else {
-      // Dev path to default
-      defaultConfigPath = path.join(__dirname, '../..', 'coral', 'conf', 'config.json');
+      const platformConfig = process.platform === 'win32' ? 'config.json' : 'config-linux.json';
+      defaultConfigPath = path.join(__dirname, '../..', 'coral', 'conf', platformConfig);
     }
     const data = fs.readFileSync(defaultConfigPath, 'utf8');
     config = JSON.parse(data);
@@ -315,7 +324,7 @@ defaultBtn.onclick = (e) => {
       if (err) {
         statusDiv.textContent = 'Failed to set defaults: ' + err.message;
       } else {
-        renderForm(config);
+        renderMainForm(config);
         statusDiv.textContent = 'Defaults applied';
         try { ipcRenderer.send('config-updated'); } catch (_) {}
       }
@@ -324,5 +333,3 @@ defaultBtn.onclick = (e) => {
     statusDiv.textContent = 'Failed to load defaults: ' + (ex && ex.message ? ex.message : ex);
   }
 };
-
-loadConfig(); 

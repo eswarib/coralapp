@@ -31,7 +31,7 @@ This will:
 - `VCPKG_ROOT` — default: `%REPO_ROOT%\..\vcpkg`
 - `WHISPER_DIR` — default: `%REPO_ROOT%\..\whispercpp`
 
-**Visual Studio generator:** The script uses `Visual Studio 17 2022`. If you have VS 2019, change to `Visual Studio 16 2019` and `-A x64`.
+**Visual Studio generator:** The script uses `Visual Studio 18 2026`. If you have VS 2022 or 2019, edit `build-windows.bat` and change to `Visual Studio 17 2022` or `Visual Studio 16 2019` respectively.
 
 ## Step 2: Bundle coral.exe with DLLs and config
 

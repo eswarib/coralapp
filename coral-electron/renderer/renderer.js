@@ -232,12 +232,17 @@ function requestResize() {
     const measure = () => {
       const bodyH = document.body ? document.body.scrollHeight : 0;
       const docH = document.documentElement ? document.documentElement.scrollHeight : 0;
-      return Math.ceil(Math.max(bodyH, docH, 400) + 24);
+      const bodyW = document.body ? document.body.scrollWidth : 0;
+      const docW = document.documentElement ? document.documentElement.scrollWidth : 0;
+      const height = Math.ceil(Math.max(bodyH, docH, 400) + 24);
+      const width = Math.ceil(Math.max(bodyW, docW, 480) + 24);
+      return { height, width };
     };
-    ipcRenderer.send('resize-window', measure());
-    setTimeout(() => ipcRenderer.send('resize-window', measure()), 80);
-    setTimeout(() => ipcRenderer.send('resize-window', measure()), 250);
-    setTimeout(() => ipcRenderer.send('resize-window', measure()), 600);
+    const m = measure();
+    ipcRenderer.send('resize-window', m.height, m.width);
+    setTimeout(() => { const m2 = measure(); ipcRenderer.send('resize-window', m2.height, m2.width); }, 80);
+    setTimeout(() => { const m3 = measure(); ipcRenderer.send('resize-window', m3.height, m3.width); }, 250);
+    setTimeout(() => { const m4 = measure(); ipcRenderer.send('resize-window', m4.height, m4.width); }, 600);
   } catch (_) {}
 }
 

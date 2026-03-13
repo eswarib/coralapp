@@ -106,6 +106,13 @@ void Logger::setLogToConsole(bool enable) {
     _logToConsole = enable;
 }
 
+void Logger::setDebugLevel(int level) {
+    std::lock_guard<std::mutex> lock(_mtx);
+    if (level >= 0 && level <= 5) {
+        _currentLevel = level;
+    }
+}
+
 // No longer needs a lock, as public methods are now locking.
 void Logger::logInternal(LogLevel level, const std::string& msg) {
     checkRotate();

@@ -21,6 +21,7 @@ class Logger {
 public:
     static Logger& getInstance();
     void init(const std::string& filename, int debugLevel);
+    void setDebugLevel(int level);
     void log(LogLevel level, const std::string& msg);
     void logf(LogLevel level, const char* fmt, ...);
     void setLogToConsole(bool enable);

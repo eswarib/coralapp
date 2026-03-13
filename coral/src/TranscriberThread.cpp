@@ -4,6 +4,7 @@
 #include "TextUtils.h"
 #include <iostream>
 #include <cstdio>
+#include <filesystem>
 
 TranscriberThread::TranscriberThread(const Config& config,
                                      ConcurrentQueue<std::shared_ptr<AudioEvent>>& audioQueue,
@@ -58,10 +59,29 @@ void TranscriberThread::run()
             // notify the frontend to stop the animation
             std::cout << "TRANSCRIBING_DONE" << std::endl;
             
-            if (std::remove(audioFile.c_str()) == 0) 
+            std::string saveFolder = _config.getSaveAudioToFolder();
+            if (!saveFolder.empty())
+            {
+                try
+                {
+                    std::filesystem::create_directories(saveFolder);
+                    std::filesystem::path src(audioFile);
+                    std::filesystem::path dst = std::filesystem::path(saveFolder) / src.filename();
+                    std::filesystem::copy_file(src, dst, std::filesystem::copy_options::overwrite_existing);
+                    std::filesystem::remove(src);
+                    DEBUG(3, "Saved audio file to: " + dst.string());
+                }
+                catch (const std::exception& e)
+                {
+                    WARN(std::string("Failed to save audio file to ") + saveFolder + ": " + e.what());
+                    try { std::filesystem::remove(audioFile); } catch (...) {}
+                }
+            }
+            else if (std::remove(audioFile.c_str()) == 0)
             {
                 DEBUG(3, "Deleted audio file: " + audioFile);
-            } else 
+            }
+            else
             {
                 WARN("Failed to delete audio file: " + audioFile);
             }

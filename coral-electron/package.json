@@ -5,7 +5,10 @@
   "main": "main.js",
   "scripts": {
     "build:prod": "electron-builder build --dir --linux AppImage",
-    "build:win:msi": "electron-builder build --win msi"
+    "build:win:msi": "electron-builder build --win msi",
+    "build:win:portable": "electron-builder --win portable",
+    "build:win:nsis": "electron-builder --win nsis",
+    "build:win": "electron-builder --win portable nsis"
   },
   "author": "Eswari M",
   "license": "MIT",
@@ -50,10 +53,9 @@
     ],
     "win": {
       "target": [
-        {
-          "target": "msi",
-          "arch": ["x64"]
-        }
+        { "target": "portable", "arch": ["x64"] },
+        { "target": "nsis", "arch": ["x64"] },
+        { "target": "msi", "arch": ["x64"] }
       ],
       "icon": "coral.png",
       "noMsi": false

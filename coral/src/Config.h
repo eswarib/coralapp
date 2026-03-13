@@ -42,6 +42,9 @@ public:
     std::string getTriggerMode() const { std::shared_lock lk(mMutex); return triggerMode; }
     uint32_t getDoubleTapWindowMs() const { std::shared_lock lk(mMutex); return doubleTapWindowMs; }
     int getRecordWindowSeconds() const { std::shared_lock lk(mMutex); return recordWindowSeconds; }
+    std::string getSaveAudioToFolder() const { std::shared_lock lk(mMutex); return saveAudioToFolder; }
+    float getAudioAmplification() const { std::shared_lock lk(mMutex); return audioAmplification; }
+    float getNoiseGateThreshold() const { std::shared_lock lk(mMutex); return noiseGateThreshold; }
 
 private:
     void loadFromFile();
@@ -61,6 +64,9 @@ private:
     std::string triggerMode;   // "pushToTalk" | "continuous"
     uint32_t doubleTapWindowMs{300};
     int recordWindowSeconds{5};
+    std::string saveAudioToFolder;
+    float audioAmplification{2.5f};
+    float noiseGateThreshold{0.001f};
 };
 
 #endif // CONFIG_H

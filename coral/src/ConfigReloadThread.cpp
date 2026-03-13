@@ -52,6 +52,7 @@ void ConfigReloadThread::run()
 
             try {
                 mConfig.reload();
+                Logger::getInstance().setDebugLevel(mConfig.getDebugLevel());
             } catch (const std::exception& e) {
                 ERROR("Config reload failed: " + std::string(e.what()));
                 continue;

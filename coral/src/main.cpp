@@ -3,6 +3,7 @@
 #include "concurrentQueue.h"
 #include "AudioEvent.h"
 #include "RecorderEvent.h"
+#include "Recorder.h"
 #include "TranscriberThread.h"
 #include "InjectorThread.h"
 #include "RecorderThread.h"
@@ -174,6 +175,7 @@ int main(int argc, char* argv[])
         recorderThread.stop();
         transcriberThread.stop();
         injectorThread.stop();
+        Recorder::terminatePortAudio();
         INFO("coral shutting down.");
     } catch (const std::exception& ex) {
         ERROR(std::string("model file is not found. Shutting down the application: ") + ex.what());

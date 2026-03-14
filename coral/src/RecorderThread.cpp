@@ -110,6 +110,7 @@ void RecorderThread::run()
             if (!mIsRecording)
             {
                 std::cout << "TRIGGER_DOWN" << std::endl;
+                Recorder::getInstance()->setAudioParams(mConfig.getAudioAmplification(), mConfig.getNoiseGateThreshold());
                 Recorder::getInstance()->startRecording();
                 mIsRecording = true;
                 mActiveTriggerKey = src;
@@ -127,6 +128,7 @@ void RecorderThread::run()
             {
                 doStopRecording();
                 std::cout << "TRIGGER_DOWN" << std::endl;
+                Recorder::getInstance()->setAudioParams(mConfig.getAudioAmplification(), mConfig.getNoiseGateThreshold());
                 Recorder::getInstance()->startRecording();
                 mIsRecording = true;
                 mActiveTriggerKey = triggerKey;
@@ -138,6 +140,7 @@ void RecorderThread::run()
             if (!mIsRecording)
             {
                 std::cout << "TRIGGER_DOWN" << std::endl;
+                Recorder::getInstance()->setAudioParams(mConfig.getAudioAmplification(), mConfig.getNoiseGateThreshold());
                 Recorder::getInstance()->startRecording();
                 mIsRecording = true;
                 mActiveTriggerKey = triggerKey;

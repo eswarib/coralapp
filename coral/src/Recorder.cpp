@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <cctype>
+#include <cmath>
 #include "stderrSilencer.h"
 #include "stdoutSilencer.h"
 #include "Logger.h"
@@ -13,9 +14,25 @@
 #define OUTPUT_SAMPLE_RATE 16000  // Output 16kHz for Whisper
 #define FRAMES_PER_BUFFER 512
 #define NUM_CHANNELS 1
-#define AUDIO_AMPLIFICATION 10.0f  // Amplify audio by 10x
+
+struct RecordCallbackData {
+    std::vector<float>* samples;
+    float amplification;
+};
 
 Recorder* Recorder::sInstance = nullptr;
+static bool s_paInitialized = false;
+
+bool Recorder::ensurePortAudioInitialized() {
+    if (s_paInitialized) return true;
+    PaError err = Pa_Initialize();
+    if (err == paNoError) {
+        s_paInitialized = true;
+        return true;
+    }
+    std::cerr << "PortAudio init failed: " << Pa_GetErrorText(err) << std::endl;
+    return false;
+}
 
 Recorder* Recorder::getInstance()
 {
@@ -26,12 +43,25 @@ Recorder* Recorder::getInstance()
 	return sInstance;
 }
 
+void Recorder::terminatePortAudio() {
+    if (s_paInitialized) {
+        Pa_Terminate();
+        s_paInitialized = false;
+    }
+}
+
+void Recorder::setAudioParams(float amplification, float noiseGateThreshold) {
+    mAudioAmplification = std::max(0.5f, std::min(20.f, amplification));
+    mNoiseGateThreshold = std::max(0.f, std::min(0.1f, noiseGateThreshold));
+}
+
 Recorder::~Recorder() {
     if (stream_) {
         Pa_StopStream(stream_);
         Pa_CloseStream(stream_);
+        stream_ = nullptr;
     }
-    Pa_Terminate();
+    terminatePortAudio();
 }
 
 static int recordCallback(const void* inputBuffer, void* /*outputBuffer*/,
@@ -40,13 +70,13 @@ static int recordCallback(const void* inputBuffer, void* /*outputBuffer*/,
                          PaStreamCallbackFlags,
                          void* userData)
 {
-    std::vector<float>* recordedSamples = (std::vector<float>*)userData;
+    RecordCallbackData* data = (RecordCallbackData*)userData;
+    std::vector<float>* recordedSamples = data->samples;
+    float amp = data->amplification;
     const float* in = (const float*)inputBuffer;
     if (in != nullptr) {
-        // Amplify the audio and add to buffer
         for (unsigned long i = 0; i < framesPerBuffer; i++) {
-            float amplified = in[i] * AUDIO_AMPLIFICATION;
-            // Clamp to prevent clipping
+            float amplified = in[i] * amp;
             amplified = std::max(-1.0f, std::min(1.0f, amplified));
             recordedSamples->push_back(amplified);
         }
@@ -73,9 +103,9 @@ void Recorder::startRecording()
     DEBUG(3, "Recorder::startRecording --> Entering");
     stderrSilencer silencer;
     stdoutSilencer stdoutSilencer;
-    Pa_Initialize();
+    if (!ensurePortAudioInitialized()) return;
     mRecordedSamplesVec.clear();
-    
+
     // Find microphone input device - try different strategies
     int numDevices = Pa_GetDeviceCount();
     PaDeviceIndex inputDevice = paNoDevice;
@@ -145,8 +175,11 @@ void Recorder::startRecording()
     inputParameters.suggestedLatency = Pa_GetDeviceInfo(inputDevice)->defaultLowInputLatency;
     inputParameters.hostApiSpecificStreamInfo = nullptr;
     
+    static RecordCallbackData cbData;
+    cbData.samples = &mRecordedSamplesVec;
+    cbData.amplification = mAudioAmplification;
     PaError err = Pa_OpenStream(&stream_, &inputParameters, nullptr,
-                               RECORD_SAMPLE_RATE, FRAMES_PER_BUFFER, paClipOff, recordCallback, &mRecordedSamplesVec);
+                               RECORD_SAMPLE_RATE, FRAMES_PER_BUFFER, paClipOff, recordCallback, &cbData);
     
     if (err != paNoError) {
         std::cerr << "Error opening audio stream: " << Pa_GetErrorText(err) << std::endl;
@@ -168,10 +201,16 @@ void Recorder::stopRecording(const std::string& filename)
     Pa_StopStream(stream_);
     Pa_CloseStream(stream_);
     stream_ = nullptr;
-    Pa_Terminate();
 
     // Use the filename as provided by the caller (RecorderThread)
     std::string outFilename = filename;
+
+    // Apply noise gate: zero out samples below threshold
+    if (mNoiseGateThreshold > 0.f) {
+        for (float& s : mRecordedSamplesVec) {
+            if (std::fabs(s) < mNoiseGateThreshold) s = 0.f;
+        }
+    }
 
     // Resample from 48kHz to 16kHz
     std::vector<float> resampledSamples = resample48kTo16k(mRecordedSamplesVec);

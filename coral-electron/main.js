@@ -1,6 +1,6 @@
 const { ipcMain } = require('electron');
 
-const { app, Tray, Menu, BrowserWindow, dialog, screen } = require('electron');
+const { app, Tray, Menu, BrowserWindow, dialog, screen, Notification } = require('electron');
 app.commandLine.appendSwitch('no-sandbox');
 
 process.on('uncaughtException', (err) => {
@@ -44,6 +44,7 @@ resolveIconPaths();
 let tray = null;
 let configWindow = null;
 let devWindow = null;
+let aboutWindow = null;
 let backendProcess = null;
 let backendRl = null;
 let backendStopping = false;
@@ -56,6 +57,22 @@ let currentTriggerMode = 'pushToTalk';
 function clearContinuousModeTimers() {
   if (stopAnimationTimer) { clearTimeout(stopAnimationTimer); stopAnimationTimer = null; }
   if (lastTranscriptionTimer) { clearTimeout(lastTranscriptionTimer); lastTranscriptionTimer = null; }
+}
+
+function showTranscriptionDoneNotification() {
+  if (!Notification.isSupported()) return;
+  try {
+    const cfgPath = path.join(os.homedir(), '.coral', 'conf', 'config.json');
+    const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+    if (cfg.showTranscriptionNotification === false) return;
+  } catch (_) {}
+  try {
+    new Notification({
+      title: 'Coral',
+      body: 'Transcription finished',
+      icon: originalIconPath,
+    }).show();
+  } catch (_) {}
 }
 
 function readTriggerMode() {
@@ -75,7 +92,7 @@ function createConfigWindow() {
   const workH = display.workAreaSize.height;
   const initH = Math.min(720, workH - 60);
   configWindow = new BrowserWindow({
-    width: 520,
+    width: 560,
     height: initH,
     show: false,
     useContentSize: true,
@@ -103,9 +120,13 @@ function createDevWindow() {
     devWindow.focus();
     return;
   }
+  const display = screen.getPrimaryDisplay();
+  const workH = display.workAreaSize.height;
+  const initH = Math.min(640, workH - 60);
   devWindow = new BrowserWindow({
     width: 520,
-    height: 380,
+    height: initH,
+    show: false,
     useContentSize: true,
     resizable: true,
     autoHideMenuBar: true,
@@ -117,9 +138,68 @@ function createDevWindow() {
   });
   devWindow.setMenuBarVisibility(false);
   devWindow.loadFile(path.join(__dirname, 'renderer', 'dev.html'));
+  const devShowTimer = setTimeout(() => { if (devWindow && !devWindow.isVisible()) devWindow.show(); }, 1000);
   devWindow.on('closed', () => {
+    clearTimeout(devShowTimer);
     devWindow = null;
   });
+}
+
+function createAboutWindow() {
+  if (aboutWindow) {
+    aboutWindow.focus();
+    return;
+  }
+  let triggerKeyDisplay = 'Ctrl';
+  try {
+    const cfgPath = path.join(os.homedir(), '.coral', 'conf', 'config.json');
+    const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+    if (cfg.triggerKey) triggerKeyDisplay = cfg.triggerKey;
+  } catch (_) {}
+
+  aboutWindow = new BrowserWindow({
+    width: 420,
+    height: 380,
+    resizable: false,
+    minimizable: true,
+    maximizable: false,
+    autoHideMenuBar: true,
+    title: 'About Coral',
+    webPreferences: {
+      nodeIntegration: false,
+      contextIsolation: true,
+    },
+  });
+  aboutWindow.setMenuBarVisibility(false);
+  aboutWindow.on('closed', () => { aboutWindow = null; });
+
+  const aboutHtml = `<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><title>About Coral</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{overflow:hidden;height:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  background:linear-gradient(135deg,#f0f4ff 0%,#e8f5e9 40%,#e0f2f1 100%);
+  color:#1a1a2e;padding:28px 32px;-webkit-font-smoothing:antialiased}
+.header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(0,150,136,0.15)}
+.header-icon{width:36px;height:36px;background:linear-gradient(135deg,#0d47a1,#00897b);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;font-weight:700}
+.header h2{font-size:1.3em;font-weight:600;background:linear-gradient(135deg,#0d47a1,#00897b);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.version{font-size:13px;color:#5c6bc0;font-weight:600;margin-top:4px}
+.desc{margin-top:16px;font-size:14px;color:#455a64;line-height:1.6}
+.copy{margin-top:20px;font-size:12px;color:#90a4ae}
+.btn{margin-top:20px;padding:9px 24px;border:none;border-radius:8px;font-size:0.9em;font-weight:500;
+  cursor:pointer;background:linear-gradient(135deg,#0d47a1,#00897b);color:#fff;transition:opacity 0.15s}
+.btn:hover{opacity:0.9}
+</style></head><body>
+<div class="header"><div class="header-icon">C</div><h2>Coral</h2></div>
+<div class="version">Version ${app.getVersion()}</div>
+<div class="desc">To transcribe your speech, hold down the trigger key (${triggerKeyDisplay}) and start talking.</div>
+<div class="copy">&copy; 2025 Coral Contributors</div>
+<button class="btn" onclick="window.close()">OK</button>
+</body></html>`;
+  aboutWindow.loadURL('data:text/html;charset=utf-8,' + encodeURIComponent(aboutHtml));
 }
 
 function getAppImageMountPath()
@@ -385,12 +465,14 @@ function startBackend() {
                     lastTranscriptionTimer = setTimeout(() => {
                         stopTrayAnimation();
                         lastTranscriptionTimer = null;
+                        showTranscriptionDoneNotification();
                     }, 2000);
                 }, 300);
             }
         } else if (trimmed === 'TRANSCRIBING_DONE') {
             if (currentTriggerMode === 'pushToTalk') {
                 stopTrayAnimation();
+                showTranscriptionDoneNotification();
             } else if (lastTranscriptionTimer) {
                 // Continuous mode: reset timer; stop when no TRANSCRIBING_DONE for 2s
                 clearTimeout(lastTranscriptionTimer);
@@ -425,7 +507,7 @@ function startBackend() {
     // Log backend process PID for confirmation
     if (backendProcess.pid)
     {
-        console.log('Backend process started with PID:', backendProcess.pid);
+        console.debug('Backend process started with PID:', backendProcess.pid);
     }
     else
     {
@@ -484,6 +566,13 @@ function showWelcomeWindow() {
   });
   welcomeWindow.on('closed', () => { welcomeWindow = null; });
 
+  let triggerKeyDisplay = 'Ctrl';
+  try {
+    const cfgPath = path.join(os.homedir(), '.coral', 'conf', 'config.json');
+    const cfg = JSON.parse(fs.readFileSync(cfgPath, 'utf8'));
+    if (cfg.triggerKey) triggerKeyDisplay = cfg.triggerKey;
+  } catch (_) {}
+
   const welcomeHtml = `<html><head><title>Coral</title><style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -526,7 +615,7 @@ function showWelcomeWindow() {
     <div class="content">
       <div class="brand">Coral</div>
       <div class="version">${app.getVersion()}</div>
-      <div class="tagline"><strong>Double tap</strong> trigger key, <strong>speak</strong>, get the <strong>text</strong></div>
+      <div class="tagline"><strong>Double tap</strong> trigger key (${triggerKeyDisplay}), <strong>speak</strong>, get the <strong>text</strong></div>
       <div class="bottom">
         <div class="status loading" id="status">Starting up</div>
         <button class="ok-btn" id="okBtn" onclick="window.close()">Got it</button>
@@ -549,7 +638,7 @@ function updateWelcomeReady() {
     // Auto-close after 5 seconds if the user doesn't click OK
     setTimeout(() => {
       try { if (welcomeWindow) welcomeWindow.close(); } catch (_) {}
-    }, 5000);
+    }, 3000);
   } catch (_) {}
 }
 
@@ -590,15 +679,7 @@ app.whenReady().then(() => {
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Settings', click: createConfigWindow },
     { label: 'Developer Settings', click: createDevWindow },
-    { label: 'About', click: () => {
-        dialog.showMessageBox({
-          type: 'info',
-          title: 'About Coral',
-          message: 'Coral App\nVersion: ' + app.getVersion() + '\n\u00A9 2025 Coral Contributors\n\nTo transcribe your speech, hold down the trigger key (Alt+z) and start talking.',
-          buttons: ['OK']
-        });
-      }
-    },
+    { label: 'About', click: createAboutWindow },
     { type: 'separator' },
     { label: 'Quit', click: () => { stopBackend(); app.quit(); } },
   ]);
@@ -637,18 +718,25 @@ ipcMain.on('config-updated', () => {
   }
 });
 
-// Allow renderers to request window height resize to fit content
-ipcMain.on('resize-window', (event, contentHeight) => {
+// Allow renderers to request window resize to fit content
+ipcMain.on('resize-window', (event, contentHeight, contentWidth) => {
   try {
     const win = BrowserWindow.fromWebContents(event.sender);
     if (!win) return;
-    const [currentWidth] = win.getContentSize();
+    const [currentWidth, currentHeight] = win.getContentSize();
     const minH = 200;
+    const minW = 540;
     const display = screen.getDisplayMatching(win.getBounds()) || screen.getPrimaryDisplay();
     const workH = (display && display.workAreaSize && display.workAreaSize.height) ? display.workAreaSize.height : 900;
+    const workW = (display && display.workAreaSize && display.workAreaSize.width) ? display.workAreaSize.width : 1600;
     const maxH = Math.max(320, workH - 60);
-    const padded = Math.max(minH, Math.min(maxH, Math.ceil(Number(contentHeight) || 0) + 12));
-    win.setContentSize(currentWidth, padded);
+    const maxW = Math.min(workW - 40, 800);
+    const paddedH = Math.max(minH, Math.min(maxH, Math.ceil(Number(contentHeight) || 0) + 12));
+    const paddedW = contentWidth != null ? Math.max(minW, Math.min(maxW, Math.ceil(Number(contentWidth) || 0) + 24)) : currentWidth;
+    // Never shrink: only expand to fit content (avoids shrink when dropdown closes)
+    const newW = Math.max(currentWidth, paddedW, minW);
+    const newH = Math.max(currentHeight, paddedH);
+    win.setContentSize(newW, newH);
     if (!win.isVisible()) win.show();
   } catch (_) {}
 });

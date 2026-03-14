@@ -2,6 +2,14 @@
 #include <algorithm>
 #include <cctype>
 
+static std::string toLowerStr(const std::string& s)
+{
+    std::string out = s;
+    std::transform(out.begin(), out.end(), out.begin(),
+                   [](unsigned char c){ return static_cast<char>(std::tolower(c)); });
+    return out;
+}
+
 #if defined(_WIN32)
 #include <windows.h>
 #else
@@ -38,14 +46,6 @@ static std::vector<std::string> split(const std::string& s, char delimiter)
 }
 
 // ── evdev key name → Linux KEY_* code ───────────────────────────────────────
-static std::string toLowerStr(const std::string& s)
-{
-    std::string out = s;
-    std::transform(out.begin(), out.end(), out.begin(),
-                   [](unsigned char c){ return std::tolower(c); });
-    return out;
-}
-
 static int keyNameToEvdevCode(const std::string& name)
 {
     static const std::unordered_map<std::string, int> map = {

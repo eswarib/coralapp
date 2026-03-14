@@ -92,6 +92,10 @@ void Config::loadFromFile()
     INFO("doubleTapWindowMs:  [" + std::to_string(doubleTapWindowMs) + "]");
     recordWindowSeconds = j.value("recordWindowSeconds", 60);
     INFO("recordWindowSeconds:  [" + std::to_string(recordWindowSeconds) + "]");
+    saveAudioToFolder = j.value("saveAudioToFolder", std::string());
+    saveAudioToFolder = Utils::expandTilde(saveAudioToFolder);
+    INFO("saveAudioToFolder:  [" + (saveAudioToFolder.empty() ? "(empty, delete after transcribe)" : saveAudioToFolder) + "]");
+    // audioAmplification and noiseGateThreshold: not read from JSON, use defaults (2.5, 0.001)
 }
 
 

@@ -216,24 +216,20 @@ cp "$BACKEND_DIR/conf/config-linux.json" "$APPDIR/usr/share/coral/conf/config.js
 MODEL_DIR="$APPDIR/usr/share/coral/models"
 mkdir -p "$MODEL_DIR"
 
-#copy models - check multiple possible locations
-# Download models if not already present
-download_model() {
-    local url="$1"
-    local dest="$2"
-    if [ ! -f "$dest" ]; then
-        echo "Downloading $dest..."
-        wget -O "$dest" "$url"
-    else
-        echo "$dest already exists, skipping."
-    fi
-}
-
-#download_model "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-tiny.en.bin" "$MODEL_DIR/ggml-tiny.en.bin"
-download_model "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-base.en.bin" "$MODEL_DIR/ggml-base.en.bin"
-#download_model "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.en.bin" "$MODEL_DIR/ggml-small.en.bin"
-#download_model "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-medium.en.bin" "$MODEL_DIR/ggml-medium.en.bin"
-#download_model "https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-large-v3.bin" "$MODEL_DIR/ggml-large-v3.bin"
+# Copy small model from local models folder, or download from Hugging Face if not present
+MODELS_SRC="../models"
+SMALL_MODEL="ggml-small.en.bin"
+SMALL_MODEL_URL="https://huggingface.co/ggerganov/whisper.cpp/resolve/main/ggml-small.en.bin"
+if [ -f "$MODELS_SRC/$SMALL_MODEL" ]; then
+    cp "$MODELS_SRC/$SMALL_MODEL" "$MODEL_DIR/"
+    echo "Copied $SMALL_MODEL from $MODELS_SRC"
+elif [ ! -f "$MODEL_DIR/$SMALL_MODEL" ]; then
+    echo "Downloading $SMALL_MODEL from Hugging Face..."
+    wget -O "$MODEL_DIR/$SMALL_MODEL" "$SMALL_MODEL_URL"
+    echo "Downloaded $SMALL_MODEL"
+else
+    echo "$SMALL_MODEL already in AppDir, skipping."
+fi
 
 
 # Copy icons, desktop file, and AppRun

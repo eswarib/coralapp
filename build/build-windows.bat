@@ -78,3 +78,10 @@ if exist build-win rmdir /s /q build-win
 echo Building coral...
 cmake -S coral -B build-win -G "Visual Studio 18 2026" -A x64 -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake" -DVCPKG_TARGET_TRIPLET=x64-windows -DCMAKE_BUILD_TYPE=Release -DWHISPER_LIBRARY="%WHISPERLIB%" -DGGML_LIBRARIES="%GGMLLIBS%" -DAPP_VERSION="%APPVER%" -DBUILD_DATE="%DATE%" -DGIT_COMMIT="local"
 cmake --build build-win --config Release
+if errorlevel 1 exit /b 1
+
+REM ---- Bundle coral.exe with DLLs, config, model ----
+echo.
+echo === Bundling coral.exe ===
+call "%~dp0build-windows-bundle.cmd" %APPVER% %VCPKG_ROOT%
+if errorlevel 1 exit /b 1

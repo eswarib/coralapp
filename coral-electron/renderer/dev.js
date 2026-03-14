@@ -49,9 +49,11 @@ let config = {};
 function renderDevForm(cfg) {
   devForm.innerHTML = '';
   const primaryKeys = new Set(['triggerKey', 'cmdTriggerKey', 'triggerMode', 'whisperModelPath']);
-  const hiddenKeys = new Set(['silenceTimeoutSeconds', 'audioSampleRate', 'audioChannels']);
+  const hiddenKeys = new Set(['silenceTimeoutSeconds', 'audioSampleRate', 'audioChannels', 'audioAmplification', 'noiseGateThreshold']);
   for (const [key, value] of Object.entries(cfg)) {
     if (primaryKeys.has(key) || hiddenKeys.has(key)) continue;
+    const field = document.createElement('div');
+    field.className = 'field';
     const label = document.createElement('label');
     label.textContent = key;
     let input;
@@ -65,35 +67,38 @@ function renderDevForm(cfg) {
         input.appendChild(option);
       });
       input.name = key;
-      label.appendChild(input);
     } else if (typeof value === 'number') {
       input = document.createElement('input');
       input.type = 'number';
       input.value = value;
       input.name = key;
-      label.appendChild(input);
     } else {
       input = document.createElement('input');
       input.type = 'text';
       input.value = value;
       input.name = key;
-      label.appendChild(input);
     }
-    devForm.appendChild(label);
+    label.className = 'field-label';
+    const wrap = document.createElement('div');
+    wrap.className = 'field-input';
+    wrap.appendChild(input);
+    field.appendChild(label);
+    field.appendChild(wrap);
+    devForm.appendChild(field);
   }
   requestResize();
 }
 
 function requestResize() {
   try {
-    const formBottom = devForm.getBoundingClientRect().bottom;
-    const desired = Math.ceil(window.scrollY + formBottom + 24);
-    ipcRenderer.send('resize-window', desired);
-    setTimeout(() => {
-      const formBottom2 = devForm.getBoundingClientRect().bottom;
-      const desired2 = Math.ceil(window.scrollY + formBottom2 + 24);
-      ipcRenderer.send('resize-window', desired2);
-    }, 50);
+    const measure = () => {
+      const bodyH = document.body ? document.body.scrollHeight : 0;
+      const docH = document.documentElement ? document.documentElement.scrollHeight : 0;
+      return Math.ceil(Math.max(bodyH, docH, 300) + 24);
+    };
+    ipcRenderer.send('resize-window', measure());
+    setTimeout(() => ipcRenderer.send('resize-window', measure()), 80);
+    setTimeout(() => ipcRenderer.send('resize-window', measure()), 250);
   } catch (_) {}
 }
 
@@ -105,17 +110,23 @@ function loadConfig() {
   fs.readFile(configPath, 'utf8', (err, data) => {
     if (err) {
       devStatus.textContent = 'Failed to load config: ' + err.message;
-      devStatus.style.color = 'red';
+      devStatus.className = 'error';
       return;
     }
     try {
       config = JSON.parse(data);
+      if (config.showTranscriptionNotification === undefined) {
+        config.showTranscriptionNotification = true;
+      }
+      if (config.saveAudioToFolder === undefined) {
+        config.saveAudioToFolder = '';
+      }
       renderDevForm(config);
       devStatus.textContent = '';
-      devStatus.style.color = '';
+      devStatus.className = '';
     } catch (e) {
       devStatus.textContent = 'Invalid config.json: ' + e.message;
-      devStatus.style.color = 'red';
+      devStatus.className = 'error';
     }
   });
 }
@@ -136,8 +147,10 @@ devSaveBtn.onclick = (e) => {
   fs.writeFile(configPath, JSON.stringify(newConfig, null, 2), (err) => {
     if (err) {
       devStatus.textContent = 'Failed to save: ' + err.message;
+      devStatus.className = 'error';
     } else {
       devStatus.textContent = 'Saved!';
+      devStatus.className = 'success';
       try {
         window?.require && ipcRenderer.send('config-updated');
       } catch (_) {}
